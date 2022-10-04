@@ -41,6 +41,9 @@ class SectionHeaderView: UICollectionReusableView {
         ])
         
         stackView.addArrangedSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: leadingAnchor)
+        ])
     }
     
     required init?(coder: NSCoder) {

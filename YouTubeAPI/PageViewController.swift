@@ -13,9 +13,7 @@ class MyPageViewController: UIPageViewController {
         .red,
         .green,
         .blue,
-        .cyan,
-        .yellow,
-        .orange
+        .cyan
     ]
     
     var pages: [UIViewController] = [UIViewController]()
@@ -37,7 +35,8 @@ class MyPageViewController: UIPageViewController {
         // instantiate "pages"
         for i in 0..<colors.count {
             let vc = ExampleViewController()
-            vc.theLabel.text = "Page: \(i)"
+            vc.channelNameLabel.text = "Page: \(i)"
+            vc.amoontOfSubscribersLabel.text = "1 000 000" + " " + "Subscribers"
             vc.view.backgroundColor = colors[i]
             pages.append(vc)
         }

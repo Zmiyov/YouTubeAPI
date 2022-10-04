@@ -72,7 +72,15 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         
         labelStackView.addArrangedSubview(titleLabel)
         labelStackView.addArrangedSubview(subtitleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor),
+            subtitleLabel.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor)
+        ])
+        
         stackView.addArrangedSubview(labelStackView)
+        NSLayoutConstraint.activate([
+            labelStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor)
+        ])
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false

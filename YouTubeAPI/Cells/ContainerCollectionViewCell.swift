@@ -14,7 +14,7 @@ class ContainerCollectionViewCell: UICollectionViewCell {
     let myContainerView: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .gray
+        v.backgroundColor = .clear
         return v
     }()
 
@@ -26,9 +26,9 @@ class ContainerCollectionViewCell: UICollectionViewCell {
         addSubview(myContainerView)
         
         NSLayoutConstraint.activate([
-            myContainerView.topAnchor.constraint(equalTo: topAnchor, constant: 40.0),
-            myContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40.0),
-            myContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40.0),
+            myContainerView.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
+            myContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            myContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             myContainerView.heightAnchor.constraint(equalToConstant: 200.0),
             ])
         
