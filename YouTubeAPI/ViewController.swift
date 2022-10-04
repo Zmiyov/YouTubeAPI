@@ -12,8 +12,8 @@ class ViewController: UIViewController {
     
     enum SupplementaryViewKind {
         static let header = "header"
-        static let topLine = "topLine"
-        static let bottomLine = "bottomLine"
+//        static let topLine = "topLine"
+//        static let bottomLine = "bottomLine"
     }
         
     // MARK: Section Definitions
@@ -40,8 +40,6 @@ class ViewController: UIViewController {
         collectionView.register(LandscapeImageCollectionViewCell.self, forCellWithReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-        collectionView.register(LineView.self, forSupplementaryViewOfKind: SupplementaryViewKind.topLine, withReuseIdentifier: LineView.reuseIdentifier)
-        collectionView.register(LineView.self, forSupplementaryViewOfKind: SupplementaryViewKind.bottomLine, withReuseIdentifier: LineView.reuseIdentifier)
                 
         configureDataSource()
     }
@@ -49,18 +47,11 @@ class ViewController: UIViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
-            let lineItemHeight = 1 / layoutEnvironment.traitCollection.displayScale
-            let lineItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .absolute(lineItemHeight))
-            let topLineItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: lineItemSize, elementKind: SupplementaryViewKind.topLine, alignment: .top)
-            let bottomLineItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: lineItemSize, elementKind: SupplementaryViewKind.bottomLine, alignment: .bottom)
             let supplementaryItemContentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-            
             
             let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
             let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: SupplementaryViewKind.header, alignment: .top)
             headerItem.contentInsets = supplementaryItemContentInsets
-            topLineItem.contentInsets = supplementaryItemContentInsets
-            bottomLineItem.contentInsets = supplementaryItemContentInsets
             
             let section = self.sections[sectionIndex]
             
@@ -76,9 +67,8 @@ class ViewController: UIViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
-                section.boundarySupplementaryItems = [topLineItem, bottomLineItem]
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 20, trailing: 0)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 30, trailing: 0)
                 
                 return section
                 
@@ -93,9 +83,9 @@ class ViewController: UIViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging
-                section.boundarySupplementaryItems = [headerItem, bottomLineItem]
+                section.boundarySupplementaryItems = [headerItem]
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 20, trailing: 0)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 30, trailing: 0)
                 
                 return section
             case .square:
@@ -109,7 +99,7 @@ class ViewController: UIViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging
-                section.boundarySupplementaryItems = [headerItem, bottomLineItem]
+                section.boundarySupplementaryItems = [headerItem]
                 
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 20, trailing: 0)
                 
@@ -161,9 +151,6 @@ class ViewController: UIViewController {
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
                 headerView.setTitle(sectionName)
                 return headerView
-            case SupplementaryViewKind.topLine, SupplementaryViewKind.bottomLine:
-                let lineView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LineView.reuseIdentifier, for: indexPath) as! LineView
-                return lineView
             default:
                 return nil
             }
