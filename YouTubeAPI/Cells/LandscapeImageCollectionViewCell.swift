@@ -8,13 +8,13 @@
 
 import UIKit
 
-class StandardAppCollectionViewCell: UICollectionViewCell {
+class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "StandardAppCollectionViewCell"
+    static let reuseIdentifier = "LandscapeImageCollectionViewCell"
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 8
@@ -25,9 +25,6 @@ class StandardAppCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
-        imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        
         
         return imageView
     }()
@@ -37,6 +34,7 @@ class StandardAppCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .label
         label.numberOfLines = 2
+        label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
     }()
@@ -45,6 +43,7 @@ class StandardAppCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .secondaryLabel
+        label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
     }()
@@ -57,48 +56,31 @@ class StandardAppCollectionViewCell: UICollectionViewCell {
         
         return stackView
     }()
-    
-    let installButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.setContentHuggingPriority(.required, for: .horizontal)
-        button.widthAnchor.constraint(equalToConstant: 65).isActive = true
-        
-        return button
-    }()
-    
-    let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        
-        return view
-    }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         stackView.addArrangedSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+        ])
+        
+        
         labelStackView.addArrangedSubview(titleLabel)
         labelStackView.addArrangedSubview(subtitleLabel)
         stackView.addArrangedSubview(labelStackView)
-        stackView.addArrangedSubview(installButton)
         
         addSubview(stackView)
-        addSubview(lineView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            lineView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale),
-            lineView.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor),
-            lineView.trailingAnchor.constraint(equalTo: installButton.trailingAnchor),
-            lineView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -110,7 +92,5 @@ class StandardAppCollectionViewCell: UICollectionViewCell {
         titleLabel.text = app.title
         subtitleLabel.text = app.subtitle
         imageView.backgroundColor = app.color
-        installButton.setTitle(app.formattedPrice, for: .normal)
-        lineView.isHidden = hideBottomLine
     }
 }

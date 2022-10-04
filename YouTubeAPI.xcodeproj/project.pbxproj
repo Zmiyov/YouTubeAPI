@@ -20,6 +20,9 @@
 		A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */; };
 		A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEE228EBA6950006983B /* SectionHeaderView.swift */; };
 		A586DEE628EBA7330006983B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEE528EBA7330006983B /* Item.swift */; };
+		A5E6EEC628EC9AEC008DF5FA /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */; };
+		A5E6EEC828EC9C7C008DF5FA /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */; };
+		A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */; };
 		A5E813B028EBAFD900A676C7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813AF28EBAFD900A676C7 /* App.swift */; };
 		A5E813B228EBB02900A676C7 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813B128EBB02900A676C7 /* UIColor+.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +43,9 @@
 		A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		A586DEE228EBA6950006983B /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		A586DEE528EBA7330006983B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
+		A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5E813AF28EBAFD900A676C7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		A5E813B128EBB02900A676C7 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +86,8 @@
 				A586DEE428EBA7060006983B /* Models */,
 				A586DEE128EBA6390006983B /* Supplementary Views */,
 				A586DECA28EB95280006983B /* ViewController.swift */,
+				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
+				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
 				A5E813B128EBB02900A676C7 /* UIColor+.swift */,
 				A586DECC28EB95280006983B /* Main.storyboard */,
 				A586DECF28EB952C0006983B /* Assets.xcassets */,
@@ -95,6 +103,7 @@
 				A586DEDB28EB9F8B0006983B /* PageVCCollectionViewCell.swift */,
 				A586DEDD28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift */,
 				A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */,
+				A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -190,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E813B028EBAFD900A676C7 /* App.swift in Sources */,
+				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
 				A586DECB28EB95280006983B /* ViewController.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
 				A586DEDC28EB9F8B0006983B /* PageVCCollectionViewCell.swift in Sources */,
@@ -199,6 +209,8 @@
 				A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */,
 				A56BE09628EBB86C00D298EC /* LineView.swift in Sources */,
 				A586DEDE28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift in Sources */,
+				A5E6EEC628EC9AEC008DF5FA /* PageViewController.swift in Sources */,
+				A5E6EEC828EC9C7C008DF5FA /* ExampleViewController.swift in Sources */,
 				A5E813B228EBB02900A676C7 /* UIColor+.swift in Sources */,
 				A56BE09428EBB7B000D298EC /* StoreCategory.swift in Sources */,
 			);

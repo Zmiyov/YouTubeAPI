@@ -18,9 +18,10 @@ class ViewController: UIViewController {
         
     // MARK: Section Definitions
     enum Section: Hashable {
-        case promoted
-        case standard(String)
-        case categories
+        case uiPageVC
+        case landscape(String)
+        case square(String)
+
     }
 
     @IBOutlet var collectionView: UICollectionView!
@@ -35,9 +36,9 @@ class ViewController: UIViewController {
         // MARK: Collection View Setup
         collectionView.collectionViewLayout = createLayout()
         
-        collectionView.register(PromotedAppCollectionViewCell.self, forCellWithReuseIdentifier: PromotedAppCollectionViewCell.reuseIdentifier)
-        collectionView.register(StandardAppCollectionViewCell.self, forCellWithReuseIdentifier: StandardAppCollectionViewCell.reuseIdentifier)
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseIdentifier)
+        collectionView.register(ContainerCollectionViewCell.self, forCellWithReuseIdentifier: ContainerCollectionViewCell.reuseIdentifier)
+        collectionView.register(LandscapeImageCollectionViewCell.self, forCellWithReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier)
+        collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         collectionView.register(LineView.self, forSupplementaryViewOfKind: SupplementaryViewKind.topLine, withReuseIdentifier: LineView.reuseIdentifier)
         collectionView.register(LineView.self, forSupplementaryViewOfKind: SupplementaryViewKind.bottomLine, withReuseIdentifier: LineView.reuseIdentifier)
@@ -64,14 +65,14 @@ class ViewController: UIViewController {
             let section = self.sections[sectionIndex]
             
             switch section {
-            case .promoted:
+            case .uiPageVC:
                 //MARK: Promoted Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.8))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(300))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.7))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
@@ -81,41 +82,37 @@ class ViewController: UIViewController {
                 
                 return section
                 
-            case .standard:
+            case .landscape:
                 //MARK: Standart Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/3))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(250))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 3)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.3))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPagingCentered
+                section.orthogonalScrollingBehavior = .groupPaging
                 section.boundarySupplementaryItems = [headerItem, bottomLineItem]
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 20, trailing: 0)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 20, trailing: 0)
                 
                 return section
-                
-            case .categories:
-                //MARK: Categories Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            case .square:
+                //MARK: Square Section Layout
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let availableLayoutWidth = layoutEnvironment.container.effectiveContentSize.width
-                let groupWidth = availableLayoutWidth * 0.92
-                let remainingWidth = availableLayoutWidth - groupWidth
-                let halfOfRemainingWidth = remainingWidth / 2.0
-                let nonCategorySectionItemInset = CGFloat(4)
-                let itemLeadingAndTrailingInset = halfOfRemainingWidth + nonCategorySectionItemInset
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: itemLeadingAndTrailingInset, bottom: 0, trailing: itemLeadingAndTrailingInset)
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.5))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
+                
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [headerItem]
+                section.orthogonalScrollingBehavior = .groupPaging
+                section.boundarySupplementaryItems = [headerItem, bottomLineItem]
+                
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 20, trailing: 0)
+                
                 return section
             }
         }
@@ -127,21 +124,21 @@ class ViewController: UIViewController {
         dataSource = .init(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             let section = self.sections[indexPath.section]
             switch section {
-            case .promoted:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PromotedAppCollectionViewCell.reuseIdentifier, for: indexPath) as! PromotedAppCollectionViewCell
-                cell.configureCell(item.app!)
+            case .uiPageVC:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCollectionViewCell.reuseIdentifier, for: indexPath) as! ContainerCollectionViewCell
+//                cell.configureCell(item.app!)
                 
                 return cell
-            case .standard:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StandardAppCollectionViewCell.reuseIdentifier, for: indexPath) as! StandardAppCollectionViewCell
+            case .landscape:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier, for: indexPath) as! LandscapeImageCollectionViewCell
                 let isThirdItem = (indexPath.row + 1).isMultiple(of: 3)
                 cell.configureCell(item.app!, hideBottomLine: isThirdItem)
                 
                 return cell
-            case .categories:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reuseIdentifier, for: indexPath) as! CategoryCollectionViewCell
-                let isLastItem = collectionView.numberOfItems(inSection: indexPath.section) == indexPath.row + 1
-                cell.configureCell(item.category!, hideBottomLine: isLastItem)
+            case .square:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
+                let isThirdItem = (indexPath.row + 1).isMultiple(of: 3)
+                cell.configureCell(item.app!, hideBottomLine: isThirdItem)
                 
                 return cell
             }
@@ -153,13 +150,14 @@ class ViewController: UIViewController {
                 let section = self.sections[indexPath.section]
                 let sectionName: String
                 switch section {
-                case .promoted:
+                case .uiPageVC:
                     return nil
-                case .standard(let name):
+                case .landscape(let name):
                     sectionName = name
-                case .categories:
-                    sectionName = "Top Categories"
+                case .square(let name):
+                    sectionName = name
                 }
+                
                 
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
                 headerView.setTitle(sectionName)
@@ -174,18 +172,15 @@ class ViewController: UIViewController {
         
         //MARK: Snapshot definition
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.promoted])
-        snapshot.appendItems(Item.promotedApps, toSection: .promoted)
+        snapshot.appendSections([.uiPageVC])
+        snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
         
-        let popularSection = Section.standard("Popular this week")
-        let essentialSection = Section.standard("Essential picks")
-        let categoriesSection = Section.categories
+        let popularSection = Section.landscape("Playlist name 1")
+        let squareSection = Section.square("Playlist name 2")
         
-        snapshot.appendSections([popularSection, essentialSection, categoriesSection])
+        snapshot.appendSections([popularSection, squareSection])
         snapshot.appendItems(Item.popularApps, toSection: popularSection)
-        snapshot.appendItems(Item.essentialApps, toSection: essentialSection)
-        snapshot.appendItems(Item.categories, toSection: categoriesSection)
-        
+        snapshot.appendItems(Item.essentialApps, toSection: squareSection)
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
     }

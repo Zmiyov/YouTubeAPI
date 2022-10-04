@@ -28,16 +28,6 @@ class SectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    let seeAllButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("See All", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        button.setContentHuggingPriority(.required, for: .horizontal)
-        
-        return button
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -51,7 +41,6 @@ class SectionHeaderView: UICollectionReusableView {
         ])
         
         stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(seeAllButton)
     }
     
     required init?(coder: NSCoder) {

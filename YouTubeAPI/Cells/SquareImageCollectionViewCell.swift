@@ -1,3 +1,4 @@
+
 //
 //  SquareImageCollectionViewCell.swift
 //  YouTubeAPI
@@ -8,62 +9,80 @@
 
 import UIKit
 
-class CategoryCollectionViewCell: UICollectionViewCell {
+class SquareImageCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "CategoryCollectionViewCell"
+    static let reuseIdentifier = "SquareImageCollectionViewCell"
+    
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 8
+        
+        return stackView
+    }()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 6
-        imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        imageView.layer.cornerRadius = 15
+
         
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .label
+        label.numberOfLines = 2
+        label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
     }()
     
-    let stackView: UIStackView = {
+    let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .secondaryLabel
+        label.setContentHuggingPriority(.required, for: .vertical)
+        
+        return label
+    }()
+    
+    let labelStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 30
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.distribution = .equalSpacing
         
         return stackView
     }()
     
-    let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
-        
-        return view
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(titleLabel)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor)
+        ])
+        
+        labelStackView.addArrangedSubview(titleLabel)
+        labelStackView.addArrangedSubview(subtitleLabel)
+        stackView.addArrangedSubview(labelStackView)
+        
         addSubview(stackView)
-        addSubview(lineView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            lineView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     
@@ -71,10 +90,9 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ category: StoreCategory, hideBottomLine: Bool) {
-        titleLabel.text = category.name
-        imageView.backgroundColor = category.color
-        lineView.isHidden = hideBottomLine
+    func configureCell(_ app: App, hideBottomLine: Bool) {
+        titleLabel.text = app.title
+        subtitleLabel.text = app.subtitle
+        imageView.backgroundColor = app.color
     }
 }
-
