@@ -27,13 +27,6 @@ enum Item: Hashable {
         }
     }
     
-    static let promotedApps: [Item] = [
-        .app(App(promotedHeadline: "Now Trending", title: "Game Title", subtitle: "Game Description", price: 3.99)),
-//        .app(App(promotedHeadline: "Limited Time", title: "Game Title", subtitle: "Game Description", price: nil)),
-//        .app(App(promotedHeadline: "New Update", title: "Game Title", subtitle: "Game Description", price: nil)),
-//        .app(App(promotedHeadline: "Just Released", title: "Game Title", subtitle: "Game Description", price: nil))
-    ]
-    
     static let popularApps: [Item] = [
         .app(App(promotedHeadline: nil, title: "Game Title", subtitle: "Game Description", price: nil)),
         .app(App(promotedHeadline: nil, title: "Game Title", subtitle: "Game Description", price: 2.99)),
@@ -55,15 +48,6 @@ enum Item: Hashable {
         .app(App(promotedHeadline: nil, title: "Game Title", subtitle: "Game Description", price: 0.99)),
     ]
 
-    static let categories: [Item] = [
-        .category(StoreCategory(name: "AR Games")),
-        .category(StoreCategory(name: "Indie")),
-        .category(StoreCategory(name: "Strategy")),
-        .category(StoreCategory(name: "Racing")),
-        .category(StoreCategory(name: "Puzzle")),
-        .category(StoreCategory(name: "Board")),
-        .category(StoreCategory(name: "Family")),
-    ]
 }
 
 
