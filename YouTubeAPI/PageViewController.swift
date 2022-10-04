@@ -18,6 +18,9 @@ class MyPageViewController: UIPageViewController {
     
     var pages: [UIViewController] = [UIViewController]()
     
+    var tTime: Timer!
+    var index = 0
+    
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
@@ -42,6 +45,20 @@ class MyPageViewController: UIPageViewController {
         }
         
         setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
+        tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+
+    }
+    
+    @objc func changeSlide() {
+        index += 1
+        if index < self.pages.count {
+            setViewControllers([pages[index]], direction: .forward, animated: true, completion: nil)
+        }
+        else {
+            index = 0
+            setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
+
+        }
     }
     
 }

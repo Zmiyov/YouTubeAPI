@@ -8,6 +8,14 @@
 import UIKit
 
 class ExampleViewController: UIViewController {
+    
+    let backgroungImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .brown
+        image.translatesAutoresizingMaskIntoConstraints = false
+//        image.image = UIImage(systemName: <#T##String#>)
+        return image
+    }()
 
     let channelNameLabel: UILabel = {
         let v = UILabel()
@@ -31,6 +39,14 @@ class ExampleViewController: UIViewController {
         super.viewDidLoad()
         
         view.layer.cornerRadius = 8
+        
+//        view.addSubview(backgroungImage)
+//        NSLayoutConstraint.activate([
+//            backgroungImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            backgroungImage.topAnchor.constraint(equalTo: view.topAnchor),
+//            backgroungImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            backgroungImage.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//            ])
         
         view.addSubview(channelNameLabel)
         view.addSubview(amoontOfSubscribersLabel)

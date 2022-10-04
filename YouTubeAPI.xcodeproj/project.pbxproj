@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A56BE09428EBB7B000D298EC /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BE09328EBB7B000D298EC /* StoreCategory.swift */; };
-		A56BE09628EBB86C00D298EC /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BE09528EBB86C00D298EC /* LineView.swift */; };
 		A586DEC728EB95270006983B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC628EB95270006983B /* AppDelegate.swift */; };
 		A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC828EB95280006983B /* SceneDelegate.swift */; };
-		A586DECB28EB95280006983B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DECA28EB95280006983B /* ViewController.swift */; };
+		A586DECB28EB95280006983B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DECA28EB95280006983B /* MainViewController.swift */; };
 		A586DECE28EB95280006983B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A586DECC28EB95280006983B /* Main.storyboard */; };
 		A586DED028EB952C0006983B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A586DECF28EB952C0006983B /* Assets.xcassets */; };
 		A586DED328EB952C0006983B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A586DED128EB952C0006983B /* LaunchScreen.storyboard */; };
@@ -29,11 +28,10 @@
 
 /* Begin PBXFileReference section */
 		A56BE09328EBB7B000D298EC /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
-		A56BE09528EBB86C00D298EC /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		A586DEC328EB95270006983B /* YouTubeAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubeAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A586DEC628EB95270006983B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A586DEC828EB95280006983B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A586DECA28EB95280006983B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A586DECA28EB95280006983B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A586DECD28EB95280006983B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A586DECF28EB952C0006983B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A586DED228EB952C0006983B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,7 +83,7 @@
 				A586DEDA28EB9F060006983B /* Cells */,
 				A586DEE428EBA7060006983B /* Models */,
 				A586DEE128EBA6390006983B /* Supplementary Views */,
-				A586DECA28EB95280006983B /* ViewController.swift */,
+				A586DECA28EB95280006983B /* MainViewController.swift */,
 				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
 				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
 				A5E813B128EBB02900A676C7 /* UIColor+.swift */,
@@ -112,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				A586DEE228EBA6950006983B /* SectionHeaderView.swift */,
-				A56BE09528EBB86C00D298EC /* LineView.swift */,
 			);
 			path = "Supplementary Views";
 			sourceTree = "<group>";
@@ -200,14 +197,13 @@
 			files = (
 				A5E813B028EBAFD900A676C7 /* App.swift in Sources */,
 				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
-				A586DECB28EB95280006983B /* ViewController.swift in Sources */,
+				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
 				A586DEDC28EB9F8B0006983B /* PageVCCollectionViewCell.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */,
 				A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */,
-				A56BE09628EBB86C00D298EC /* LineView.swift in Sources */,
 				A586DEDE28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift in Sources */,
 				A5E6EEC628EC9AEC008DF5FA /* PageViewController.swift in Sources */,
 				A5E6EEC828EC9C7C008DF5FA /* ExampleViewController.swift in Sources */,
