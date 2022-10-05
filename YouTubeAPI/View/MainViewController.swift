@@ -42,13 +42,23 @@ class MainViewController: UIViewController {
         collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
                 
-//        playlistModel.getVideos()
-        fetchPlaylist()
-//        getFullVideoModel()
+
+        fetchPlaylist { success in
+            getViewCount()
+        }
+
         configureDataSource()
     }
     
-    func fetchPlaylist() {
+//    func fetchItems() {
+//        let queue = DispatchQueue.global()
+//        queue.sync {
+//            fetchPlaylist()
+//            getViewCount()
+//        }
+//    }
+    
+    func fetchPlaylist(completion: (_ success: Bool) -> Void) {
         
         Task {
             do {
@@ -60,23 +70,27 @@ class MainViewController: UIViewController {
                 print(error)
             }
         }
-      
+        completion(true)
     }
     
-    func getFullVideoModel() {
-        
-        let newList = playlistVideos.map { playlistVideoModel in
+    func getViewCount() {
+        print("Work0")
+        for i in 0..<playlistVideos.count {
             Task {
                 do {
-                    let fetchedCount = try await networkController.getViewCountVideos(videoId: playlistVideoModel.videoId)
+                    guard let id = playlistVideos[i].videoId else { return }
+                    let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                     
-//                    playlistVideoModel.count = fetchedCount
+                   
+                    playlistVideos[i].countViews = fetchedCount
+                    print(fetchedCount)
+                    print("Work")
                 } catch {
                     print(error)
+                    print("Error")
                 }
             }
         }
-        print(newList)
     }
     
     

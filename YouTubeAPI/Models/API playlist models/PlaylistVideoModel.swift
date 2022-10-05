@@ -9,10 +9,10 @@ import Foundation
 
 struct PlaylistVideoModel: Decodable {
     
-    var videoId = ""
-    var title = ""
-    var thumbnail = ""
-    var count = ""
+    var videoId: String?
+    var title: String?
+    var thumbnail: String?
+    var countViews: String?
     
     enum CodingKeys: String, CodingKey {
         

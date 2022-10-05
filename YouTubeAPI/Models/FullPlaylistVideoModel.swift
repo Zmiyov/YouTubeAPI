@@ -9,8 +9,8 @@ import Foundation
 
 struct FullPlaylistVideoModel {
     
-    var thumbnail = ""
-    var title = ""
-    var viewCount = ""
-    var videoId = ""
+    var thumbnail: String?
+    var title: String?
+    var viewCount: String?
+    var videoId: String?
 }
