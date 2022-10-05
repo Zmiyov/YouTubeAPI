@@ -30,6 +30,8 @@ class MainViewController: UIViewController {
     
     var sections = [Section]()
     
+    var playlistModel = PlaylistModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +43,7 @@ class MainViewController: UIViewController {
         collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
                 
+        playlistModel.getVideos()
         configureDataSource()
     }
     

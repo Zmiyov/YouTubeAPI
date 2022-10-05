@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A52C75B128ED779600E25651 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B028ED779600E25651 /* Constants.swift */; };
+		A52C75B328ED8ED000E25651 /* PlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B228ED8ED000E25651 /* PlaylistModel.swift */; };
+		A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */; };
+		A52C75BF28EDB34300E25651 /* ResponseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponseItem.swift */; };
 		A56BE09428EBB7B000D298EC /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BE09328EBB7B000D298EC /* StoreCategory.swift */; };
 		A586DEC728EB95270006983B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC628EB95270006983B /* AppDelegate.swift */; };
 		A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC828EB95280006983B /* SceneDelegate.swift */; };
@@ -30,6 +34,10 @@
 /* Begin PBXFileReference section */
 		8471FB9A45A5432094AC9E8C /* Pods-YouTubeAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.release.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.release.xcconfig"; sourceTree = "<group>"; };
 		86AC03B5ED8673E3860B448D /* Pods-YouTubeAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.debug.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.debug.xcconfig"; sourceTree = "<group>"; };
+		A52C75B028ED779600E25651 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A52C75B228ED8ED000E25651 /* PlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistModel.swift; sourceTree = "<group>"; };
+		A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVideoModel.swift; sourceTree = "<group>"; };
+		A52C75BE28EDB34300E25651 /* ResponseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseItem.swift; sourceTree = "<group>"; };
 		A56BE09328EBB7B000D298EC /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
 		A586DEC328EB95270006983B /* YouTubeAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubeAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A586DEC628EB95270006983B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,8 +86,15 @@
 				86AC03B5ED8673E3860B448D /* Pods-YouTubeAPI.debug.xcconfig */,
 				8471FB9A45A5432094AC9E8C /* Pods-YouTubeAPI.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A52C75AF28ED776A00E25651 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A52C75B028ED779600E25651 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		A586DEBA28EB95270006983B = {
@@ -108,6 +123,7 @@
 				A586DEDA28EB9F060006983B /* Cells */,
 				A586DEE428EBA7060006983B /* Models */,
 				A586DEE128EBA6390006983B /* Supplementary Views */,
+				A52C75AF28ED776A00E25651 /* Constants */,
 				A586DECA28EB95280006983B /* MainViewController.swift */,
 				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
 				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
@@ -145,6 +161,9 @@
 				A586DEE528EBA7330006983B /* Item.swift */,
 				A5E813AF28EBAFD900A676C7 /* App.swift */,
 				A56BE09328EBB7B000D298EC /* StoreCategory.swift */,
+				A52C75B228ED8ED000E25651 /* PlaylistModel.swift */,
+				A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */,
+				A52C75BE28EDB34300E25651 /* ResponseItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,7 +179,6 @@
 				A586DEBF28EB95270006983B /* Sources */,
 				A586DEC028EB95270006983B /* Frameworks */,
 				A586DEC128EB95270006983B /* Resources */,
-				F41039CC958C38354F109393 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -240,23 +258,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F41039CC958C38354F109393 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -268,8 +269,12 @@
 				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
+				A52C75BF28EDB34300E25651 /* ResponseItem.swift in Sources */,
 				A586DEDC28EB9F8B0006983B /* PageVCCollectionViewCell.swift in Sources */,
+				A52C75B128ED779600E25651 /* Constants.swift in Sources */,
+				A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
+				A52C75B328ED8ED000E25651 /* PlaylistModel.swift in Sources */,
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */,
 				A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */,
