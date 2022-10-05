@@ -44,21 +44,13 @@ class MainViewController: UIViewController {
                 
 
         fetchPlaylist { success in
-            getViewCount()
+            self.getViewCount()
         }
 
         configureDataSource()
     }
     
-//    func fetchItems() {
-//        let queue = DispatchQueue.global()
-//        queue.sync {
-//            fetchPlaylist()
-//            getViewCount()
-//        }
-//    }
-    
-    func fetchPlaylist(completion: (_ success: Bool) -> Void) {
+    func fetchPlaylist(completion: @escaping (_ success: Bool) -> Void) {
         
         Task {
             do {
@@ -66,11 +58,11 @@ class MainViewController: UIViewController {
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 self.playlistVideos = playlistVideos
                 print(self.playlistVideos)
+                completion(true)
             } catch {
                 print(error)
             }
         }
-        completion(true)
     }
     
     func getViewCount() {
@@ -85,6 +77,7 @@ class MainViewController: UIViewController {
                     playlistVideos[i].countViews = fetchedCount
                     print(fetchedCount)
                     print("Work")
+                    print(self.playlistVideos)
                 } catch {
                     print(error)
                     print("Error")
