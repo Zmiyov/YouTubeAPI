@@ -1,5 +1,5 @@
 //
-//  PlaylistModel.swift
+//  VideoModel.swift
 //  YouTubeAPI
 //
 //  Created by Vladimir Pisarenko on 05.10.2022.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-class PlaylistModel {
+class VideoDecoderModel {
     
-    func getVideos() {
+    func getViewCountVideos() {
         
-        let url = URL(string: Constants.apiUrl)
+        let url = URL(string: Constants.apiVideoUrl)
         guard url != nil else { return }
         
         let session = URLSession.shared
@@ -21,9 +21,8 @@ class PlaylistModel {
             }
             do {
                 let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
                 
-                let response = try decoder.decode(ResponseItem.self, from: data!)
+                let response = try decoder.decode(ResponsePlaylististItem.self, from: data!)
                 print(response)
             } catch {
                 print(error)

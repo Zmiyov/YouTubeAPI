@@ -33,7 +33,6 @@ class ContainerCollectionViewCell: UICollectionViewCell {
             ])
         
         thePageVC = MyPageViewController()
-//        addChild(thePageVC)
         
         thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -45,28 +44,9 @@ class ContainerCollectionViewCell: UICollectionViewCell {
             thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor, constant: 0.0),
             thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor, constant: 0.0),
             ])
-        
-//        thePageVC.didMove(toParent: self)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
-    
-    //    let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-    //    pageViewController.view.frame = view.frame//set frame
-    //    self.addChildViewController(pageViewController)
-    //    view.addSubview(pageViewController.view)
-    //    pageViewController.didMove(toParentViewController: self)
-        
-//        func display(contentController content: UIViewController, on view: UIView) {
-//            self.addChildViewController(content)
-//            content.view.frame = view.bounds
-//            view.addSubview(content.view)
-//            content.didMove(toParentViewController: self)
-//        }
 }

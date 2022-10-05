@@ -1,6 +1,5 @@
-
 //
-//  SquareImageCollectionViewCell.swift
+//  LandscapeImageCollectionViewCell.swift
 //  YouTubeAPI
 //
 //  Created by Vladimir Pisarenko on 04.10.2022.
@@ -9,9 +8,9 @@
 
 import UIKit
 
-class SquareImageCollectionViewCell: UICollectionViewCell {
+class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "SquareImageCollectionViewCell"
+    static let reuseIdentifier = "LandscapeImageCollectionViewCell"
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -26,7 +25,6 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
-
         
         return imageView
     }()
@@ -58,7 +56,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         
         return stackView
     }()
-    
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,9 +66,9 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor)
+            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
         ])
+        
         
         labelStackView.addArrangedSubview(titleLabel)
         labelStackView.addArrangedSubview(subtitleLabel)
@@ -98,7 +96,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ app: App, hideBottomLine: Bool) {
+    func configureCell(_ app: App) {
         titleLabel.text = app.title
         subtitleLabel.text = app.subtitle
         imageView.backgroundColor = app.color

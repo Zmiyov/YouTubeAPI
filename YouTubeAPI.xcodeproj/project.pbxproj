@@ -8,9 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		A52C75B128ED779600E25651 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B028ED779600E25651 /* Constants.swift */; };
-		A52C75B328ED8ED000E25651 /* PlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B228ED8ED000E25651 /* PlaylistModel.swift */; };
+		A52C75B328ED8ED000E25651 /* PlaylistDecoderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B228ED8ED000E25651 /* PlaylistDecoderModel.swift */; };
 		A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */; };
-		A52C75BF28EDB34300E25651 /* ResponseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponseItem.swift */; };
+		A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */; };
+		A52C75C328EDBF8B00E25651 /* VideoDecoderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C228EDBF8B00E25651 /* VideoDecoderModel.swift */; };
+		A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C428EDC09C00E25651 /* VideoModel.swift */; };
+		A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */; };
+		A52C75CA28EDD9BD00E25651 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C928EDD9BD00E25651 /* NetworkController.swift */; };
+		A52C75CC28EDE41500E25651 /* FullPlaylistVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */; };
 		A56BE09428EBB7B000D298EC /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BE09328EBB7B000D298EC /* StoreCategory.swift */; };
 		A586DEC728EB95270006983B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC628EB95270006983B /* AppDelegate.swift */; };
 		A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEC828EB95280006983B /* SceneDelegate.swift */; };
@@ -18,7 +23,6 @@
 		A586DECE28EB95280006983B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A586DECC28EB95280006983B /* Main.storyboard */; };
 		A586DED028EB952C0006983B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A586DECF28EB952C0006983B /* Assets.xcassets */; };
 		A586DED328EB952C0006983B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A586DED128EB952C0006983B /* LaunchScreen.storyboard */; };
-		A586DEDC28EB9F8B0006983B /* PageVCCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEDB28EB9F8B0006983B /* PageVCCollectionViewCell.swift */; };
 		A586DEDE28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEDD28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift */; };
 		A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */; };
 		A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A586DEE228EBA6950006983B /* SectionHeaderView.swift */; };
@@ -35,9 +39,14 @@
 		8471FB9A45A5432094AC9E8C /* Pods-YouTubeAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.release.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.release.xcconfig"; sourceTree = "<group>"; };
 		86AC03B5ED8673E3860B448D /* Pods-YouTubeAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.debug.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.debug.xcconfig"; sourceTree = "<group>"; };
 		A52C75B028ED779600E25651 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A52C75B228ED8ED000E25651 /* PlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistModel.swift; sourceTree = "<group>"; };
+		A52C75B228ED8ED000E25651 /* PlaylistDecoderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDecoderModel.swift; sourceTree = "<group>"; };
 		A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVideoModel.swift; sourceTree = "<group>"; };
-		A52C75BE28EDB34300E25651 /* ResponseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseItem.swift; sourceTree = "<group>"; };
+		A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylististItem.swift; sourceTree = "<group>"; };
+		A52C75C228EDBF8B00E25651 /* VideoDecoderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDecoderModel.swift; sourceTree = "<group>"; };
+		A52C75C428EDC09C00E25651 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseVideoItem.swift; sourceTree = "<group>"; };
+		A52C75C928EDD9BD00E25651 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlaylistVideoModel.swift; sourceTree = "<group>"; };
 		A56BE09328EBB7B000D298EC /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
 		A586DEC328EB95270006983B /* YouTubeAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubeAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A586DEC628EB95270006983B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,7 +56,6 @@
 		A586DECF28EB952C0006983B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A586DED228EB952C0006983B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A586DED428EB952C0006983B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A586DEDB28EB9F8B0006983B /* PageVCCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageVCCollectionViewCell.swift; sourceTree = "<group>"; };
 		A586DEDD28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		A586DEE228EBA6950006983B /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -97,6 +105,38 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		A52C75C028EDB40400E25651 /* API playlist models */ = {
+			isa = PBXGroup;
+			children = (
+				A52C75B228ED8ED000E25651 /* PlaylistDecoderModel.swift */,
+				A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */,
+				A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */,
+			);
+			path = "API playlist models";
+			sourceTree = "<group>";
+		};
+		A52C75C128EDBF4700E25651 /* API video models */ = {
+			isa = PBXGroup;
+			children = (
+				A52C75C228EDBF8B00E25651 /* VideoDecoderModel.swift */,
+				A52C75C428EDC09C00E25651 /* VideoModel.swift */,
+				A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */,
+			);
+			path = "API video models";
+			sourceTree = "<group>";
+		};
+		A52C75C828EDC9E200E25651 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A586DECA28EB95280006983B /* MainViewController.swift */,
+				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
+				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
+				A586DEDA28EB9F060006983B /* Cells */,
+				A586DEE128EBA6390006983B /* Supplementary Views */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A586DEBA28EB95270006983B = {
 			isa = PBXGroup;
 			children = (
@@ -120,13 +160,10 @@
 			children = (
 				A586DEC628EB95270006983B /* AppDelegate.swift */,
 				A586DEC828EB95280006983B /* SceneDelegate.swift */,
-				A586DEDA28EB9F060006983B /* Cells */,
+				A52C75C928EDD9BD00E25651 /* NetworkController.swift */,
 				A586DEE428EBA7060006983B /* Models */,
-				A586DEE128EBA6390006983B /* Supplementary Views */,
+				A52C75C828EDC9E200E25651 /* View */,
 				A52C75AF28ED776A00E25651 /* Constants */,
-				A586DECA28EB95280006983B /* MainViewController.swift */,
-				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
-				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
 				A5E813B128EBB02900A676C7 /* UIColor+.swift */,
 				A586DECC28EB95280006983B /* Main.storyboard */,
 				A586DECF28EB952C0006983B /* Assets.xcassets */,
@@ -139,10 +176,9 @@
 		A586DEDA28EB9F060006983B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				A586DEDB28EB9F8B0006983B /* PageVCCollectionViewCell.swift */,
+				A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */,
 				A586DEDD28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift */,
 				A586DEDF28EB9FE00006983B /* SquareImageCollectionViewCell.swift */,
-				A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -158,12 +194,12 @@
 		A586DEE428EBA7060006983B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A52C75C128EDBF4700E25651 /* API video models */,
+				A52C75C028EDB40400E25651 /* API playlist models */,
 				A586DEE528EBA7330006983B /* Item.swift */,
 				A5E813AF28EBAFD900A676C7 /* App.swift */,
 				A56BE09328EBB7B000D298EC /* StoreCategory.swift */,
-				A52C75B228ED8ED000E25651 /* PlaylistModel.swift */,
-				A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */,
-				A52C75BE28EDB34300E25651 /* ResponseItem.swift */,
+				A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -267,15 +303,19 @@
 			files = (
 				A5E813B028EBAFD900A676C7 /* App.swift in Sources */,
 				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
+				A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */,
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
+				A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */,
+				A52C75CA28EDD9BD00E25651 /* NetworkController.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
-				A52C75BF28EDB34300E25651 /* ResponseItem.swift in Sources */,
-				A586DEDC28EB9F8B0006983B /* PageVCCollectionViewCell.swift in Sources */,
+				A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */,
 				A52C75B128ED779600E25651 /* Constants.swift in Sources */,
 				A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
-				A52C75B328ED8ED000E25651 /* PlaylistModel.swift in Sources */,
+				A52C75B328ED8ED000E25651 /* PlaylistDecoderModel.swift in Sources */,
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
+				A52C75C328EDBF8B00E25651 /* VideoDecoderModel.swift in Sources */,
+				A52C75CC28EDE41500E25651 /* FullPlaylistVideoModel.swift in Sources */,
 				A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */,
 				A586DEC928EB95280006983B /* SceneDelegate.swift in Sources */,
 				A586DEDE28EB9FCD0006983B /* LandscapeImageCollectionViewCell.swift in Sources */,

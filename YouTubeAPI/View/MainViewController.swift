@@ -12,8 +12,6 @@ class MainViewController: UIViewController {
     
     enum SupplementaryViewKind {
         static let header = "header"
-//        static let topLine = "topLine"
-//        static let bottomLine = "bottomLine"
     }
         
     // MARK: Section Definitions
@@ -29,8 +27,9 @@ class MainViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
     var sections = [Section]()
+    let networkController = NetworkController()
+    var playlistVideos = [PlaylistVideoModel]()
     
-    var playlistModel = PlaylistModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +42,43 @@ class MainViewController: UIViewController {
         collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
                 
-        playlistModel.getVideos()
+//        playlistModel.getVideos()
+        fetchPlaylist()
+//        getFullVideoModel()
         configureDataSource()
     }
+    
+    func fetchPlaylist() {
+        
+        Task {
+            do {
+                let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: Constants.apiListUrl)
+                guard let playlistVideos = fetchedPlaylist.items else { return }
+                self.playlistVideos = playlistVideos
+                print(self.playlistVideos)
+            } catch {
+                print(error)
+            }
+        }
+      
+    }
+    
+    func getFullVideoModel() {
+        
+        let newList = playlistVideos.map { playlistVideoModel in
+            Task {
+                do {
+                    let fetchedCount = try await networkController.getViewCountVideos(videoId: playlistVideoModel.videoId)
+                    
+//                    playlistVideoModel.count = fetchedCount
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        print(newList)
+    }
+    
     
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -123,14 +156,14 @@ class MainViewController: UIViewController {
                 return cell
             case .landscape:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier, for: indexPath) as! LandscapeImageCollectionViewCell
-                let isThirdItem = (indexPath.row + 1).isMultiple(of: 3)
-                cell.configureCell(item.app!, hideBottomLine: isThirdItem)
+
+                cell.configureCell(item.app!)
                 
                 return cell
             case .square:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
-                let isThirdItem = (indexPath.row + 1).isMultiple(of: 3)
-                cell.configureCell(item.app!, hideBottomLine: isThirdItem)
+
+                cell.configureCell(item.app!)
                 
                 return cell
             }
@@ -150,7 +183,6 @@ class MainViewController: UIViewController {
                     sectionName = name
                 }
                 
-                
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
                 headerView.setTitle(sectionName)
                 return headerView
@@ -164,12 +196,12 @@ class MainViewController: UIViewController {
         snapshot.appendSections([.uiPageVC])
         snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
         
-        let popularSection = Section.landscape("Playlist name 1")
+        let landscapeSection = Section.landscape("Playlist name 1")
         let squareSection = Section.square("Playlist name 2")
         
-        snapshot.appendSections([popularSection, squareSection])
-        snapshot.appendItems(Item.popularApps, toSection: popularSection)
-        snapshot.appendItems(Item.essentialApps, toSection: squareSection)
+        snapshot.appendSections([landscapeSection, squareSection])
+        snapshot.appendItems(Item.landscapePlaylist, toSection: landscapeSection)
+        snapshot.appendItems(Item.squarePlaylist, toSection: squareSection)
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
     }
