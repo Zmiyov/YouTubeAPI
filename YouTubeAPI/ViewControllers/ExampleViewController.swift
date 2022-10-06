@@ -12,6 +12,7 @@ class ExampleViewController: UIViewController {
     var backgroungImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .brown
+        image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
 
         return image
@@ -63,7 +64,4 @@ class ExampleViewController: UIViewController {
             amoontOfSubscribersLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4)
         ])
     }
-    
-    
 }
-

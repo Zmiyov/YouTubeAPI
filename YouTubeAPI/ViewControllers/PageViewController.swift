@@ -15,6 +15,7 @@ class MyPageViewController: UIPageViewController {
         .blue,
         .cyan
     ]
+    
     let networkManager = NetworkController()
     
 //    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
@@ -40,13 +41,26 @@ class MyPageViewController: UIPageViewController {
         dataSource = self
         delegate = nil
 
+//        getChannels { [self] success in
+////            print("Channel", channels)
+//            DispatchQueue.main.async { [self] in
+//                showChannels { [self] success in
+//                    self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+//                }
+//            }
+//        }
+        
         getChannels { [self] success in
-//            print("Channel", channels)
-            DispatchQueue.main.async { [self] in
-                showChannels { [self] success in
-                    self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
-                }
+            
+            getUploadsAndSubscriberCount { [self] success in
+                
+                    showChannels { [self] success in
+                        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+                    }
+                
             }
+
+  
         }
     }
     
@@ -75,12 +89,30 @@ class MyPageViewController: UIPageViewController {
         }
     }
     
+    func getUploadsAndSubscriberCount(completion: @escaping (_ success: Bool) -> Void) {
+        for i in 0..<channels.count {
+            Task {
+                do {
+                    guard let id = channels[i].channelId else { return }
+                    let fetchedCount = try await networkManager.getChannels(channelId: id)
+                   
+                    channels[i].uploads = fetchedCount.uploads
+                    channels[i].subscriberCount = fetchedCount.subscriberCount
+                    
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        completion(true)
+    }
+    
     func showChannels(completion: @escaping (_ success: Bool) -> Void) {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
             vc.channelNameLabel.text = channels[i].channelTitle
             vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount
-            vc.view.backgroundColor = colors[i]
+//            vc.view.backgroundColor = colors[i]
             let urlString = channels[i].thumbnail!
             Task {
                 do {
