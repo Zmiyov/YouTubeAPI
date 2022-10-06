@@ -17,8 +17,9 @@ class MyPageViewController: UIPageViewController {
     ]
     let networkManager = NetworkController()
     
-    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
-    var channels = [ChannelModel]()
+//    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
+    let query = "surfing"
+    var channels = [SearchModel]()
     
     var pages: [UIViewController] = [UIViewController]()
     
@@ -64,10 +65,9 @@ class MyPageViewController: UIPageViewController {
         
         Task {
             do {
-                for i in 0..<channelNames.count {
-                    let channel = try await networkManager.getChannels(channelName: channelNames[i])
-                    channels.append(channel)
-                }
+                let searchResponse = try await networkManager.getSearchResponse(query: self.query)
+                guard let channels = searchResponse.items else { return }
+                self.channels = channels
                 completion(true)
             } catch {
                 print(error)
@@ -78,9 +78,18 @@ class MyPageViewController: UIPageViewController {
     func showChannels(completion: @escaping (_ success: Bool) -> Void) {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
-            vc.channelNameLabel.text = channels[i].title
-            vc.amoontOfSubscribersLabel.text = channels[i].viewCount
+            vc.channelNameLabel.text = channels[i].channelTitle
+            vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount
             vc.view.backgroundColor = colors[i]
+            let urlString = channels[i].thumbnail!
+            Task {
+                do {
+                    vc.backgroungImage.image = try await networkManager.fetchImage(url: urlString )
+                } catch {
+                    print(error)
+                }
+            }
+
             pages.append(vc)
         }
         completion(true)

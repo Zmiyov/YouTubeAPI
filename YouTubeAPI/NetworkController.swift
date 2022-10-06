@@ -10,11 +10,12 @@ import UIKit
 
 class NetworkController {
     
-    enum VideoItemError: Error, LocalizedError {
+    enum YouTubeItemError: Error, LocalizedError {
         case playlistItemNotFound
         case videoItemNotFound
         case channelItemNotFound
         case imageNotFound
+        case searchError
     }
     
     func getPlaylistVideos(playlistId: String) async throws -> ResponsePlaylististItem {
@@ -26,7 +27,7 @@ class NetworkController {
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw VideoItemError.playlistItemNotFound
+            throw YouTubeItemError.playlistItemNotFound
         }
         
         let decoder = JSONDecoder()
@@ -43,7 +44,7 @@ class NetworkController {
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw VideoItemError.videoItemNotFound
+            throw YouTubeItemError.videoItemNotFound
         }
         
         let decoder = JSONDecoder()
@@ -51,16 +52,16 @@ class NetworkController {
         return videoResponse.items![0].viewCount
     }
     
-    func getChannels(channelName: String) async throws -> ChannelModel {
+    func getChannels(channelId: String) async throws -> ChannelModel {
         
-        let apiChannelUrl = "https://youtube.googleapis.com/youtube/v3/channels?part=snippet&part=statistics&forUsername=\(channelName)&key=\(Constants.apiKey)"
+        let apiChannelUrl = "https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&part=statistics&id=\(channelId)&key=\(Constants.apiKey)"
         
         let urlComponents = URLComponents(string: apiChannelUrl)!
         
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw VideoItemError.channelItemNotFound
+            throw YouTubeItemError.channelItemNotFound
         }
         
         let decoder = JSONDecoder()
@@ -69,17 +70,36 @@ class NetworkController {
         return channelResponse.items![0] 
     }
     
+    func getSearchResponse(query: String) async throws -> ResponseSearchItem {
+        
+        let apiChannelUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=4&q=\(query)&key=\(Constants.apiKey)"
+        
+        let urlComponents = URLComponents(string: apiChannelUrl)!
+        
+        let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw YouTubeItemError.searchError
+        }
+        
+        let decoder = JSONDecoder()
+        let searchResponse = try decoder.decode(ResponseSearchItem.self, from: data)
+        
+        return searchResponse
+        
+    }
+    
     func fetchImage(url: String) async throws -> UIImage {
         
         let urlComponents = URLComponents(string: url)!
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw VideoItemError.imageNotFound
+            throw YouTubeItemError.imageNotFound
         }
         
         guard let image = UIImage(data: data) else {
-            throw VideoItemError.imageNotFound
+            throw YouTubeItemError.imageNotFound
         }
         
         return image

@@ -11,8 +11,9 @@ struct PlaylistVideoModel: Decodable, Hashable {
     
     var videoId: String?
     var title: String?
+    var channelTitle: String?
     var thumbnail: String?
-    var countViews: String?
+    var viewCount: String?
     
     enum CodingKeys: String, CodingKey {
         
@@ -23,6 +24,7 @@ struct PlaylistVideoModel: Decodable, Hashable {
         
         case videoId
         case title
+        case channelTitle
         case thumbnail = "url"
     }
     
@@ -31,6 +33,7 @@ struct PlaylistVideoModel: Decodable, Hashable {
         
         let snippetContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .snippet)
         self.title = try snippetContainer.decode(String.self, forKey: .title)
+        self.channelTitle = try snippetContainer.decode(String.self, forKey: .channelTitle)
         
         let thumbnailContainer = try snippetContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .thumbnails)
         let highContainer = try thumbnailContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .high)

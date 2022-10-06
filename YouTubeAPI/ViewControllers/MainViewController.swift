@@ -95,7 +95,7 @@ class MainViewController: UIViewController {
                     guard let id = playlistVideos1[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
-                    playlistVideos1[i].countViews = fetchedCount
+                    playlistVideos1[i].viewCount = fetchedCount
 //                    print(fetchedCount)
                     
                 } catch {
@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
                     guard let id = playlistVideos2[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
-                    playlistVideos2[i].countViews = fetchedCount
+                    playlistVideos2[i].viewCount = fetchedCount
 //                    print("2", fetchedCount)
                     
                 } catch {
@@ -139,7 +139,7 @@ class MainViewController: UIViewController {
             switch section {
             case .uiPageVC:
                 //MARK: Promoted Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.8))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
@@ -159,7 +159,7 @@ class MainViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalHeight(0.19))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.4))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
@@ -175,7 +175,7 @@ class MainViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalHeight(0.26))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.55))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
