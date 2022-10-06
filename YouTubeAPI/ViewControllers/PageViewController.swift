@@ -15,6 +15,10 @@ class MyPageViewController: UIPageViewController {
         .blue,
         .cyan
     ]
+    let networkManager = NetworkController()
+    
+    let channelNames: [String] = ["voalearningenglish", "iOSAcademy", "iCode_Happy_Coding", "iOSUkraine"]
+    var channels = [ChannelModel]()
     
     var pages: [UIViewController] = [UIViewController]()
     
@@ -36,12 +40,9 @@ class MyPageViewController: UIPageViewController {
         delegate = nil
         
         // instantiate "pages"
-        for i in 0..<colors.count {
-            let vc = ExampleViewController()
-            vc.channelNameLabel.text = "Page: \(i)"
-            vc.amoontOfSubscribersLabel.text = "1 000 000" + " " + "Subscribers"
-            vc.view.backgroundColor = colors[i]
-            pages.append(vc)
+
+        getChannels { success in
+            self.showChannels()
         }
         
         setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
@@ -61,6 +62,30 @@ class MyPageViewController: UIPageViewController {
         }
     }
     
+    func getChannels(completion: @escaping (_ success: Bool) -> Void) {
+        
+        Task {
+            do {
+                for i in 0..<channelNames.count {
+                    let channel = try await networkManager.getChannels(channelName: channelNames[i])
+                    channels.append(channel)
+                    completion(true)
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func showChannels() {
+        for i in 0..<channels.count {
+            let vc = ExampleViewController()
+            vc.channelNameLabel.text = "Page: \(i)"
+            vc.amoontOfSubscribersLabel.text = "1 000 000" + " " + "Subscribers"
+            vc.view.backgroundColor = colors[i]
+            pages.append(vc)
+        }
+    }
 }
 
 // typical Page View Controller Data Source

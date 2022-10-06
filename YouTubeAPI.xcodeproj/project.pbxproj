@@ -123,16 +123,15 @@
 			path = "API video models";
 			sourceTree = "<group>";
 		};
-		A52C75C828EDC9E200E25651 /* View */ = {
+		A52C75C828EDC9E200E25651 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				A586DECA28EB95280006983B /* MainViewController.swift */,
-				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
-				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
+				A5DE815528EF08CA0053CDC1 /* ChannelChildVCs */,
 				A586DEDA28EB9F060006983B /* Cells */,
 				A586DEE128EBA6390006983B /* Supplementary Views */,
 			);
-			path = View;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		A586DEBA28EB95270006983B = {
@@ -160,7 +159,7 @@
 				A586DEC828EB95280006983B /* SceneDelegate.swift */,
 				A52C75C928EDD9BD00E25651 /* NetworkController.swift */,
 				A586DEE428EBA7060006983B /* Models */,
-				A52C75C828EDC9E200E25651 /* View */,
+				A52C75C828EDC9E200E25651 /* ViewControllers */,
 				A52C75AF28ED776A00E25651 /* Constants */,
 				A5E813B128EBB02900A676C7 /* UIColor+.swift */,
 				A586DECC28EB95280006983B /* Main.storyboard */,
@@ -210,6 +209,15 @@
 				A5DE815328EF00BB0053CDC1 /* ResponseChannelItem.swift */,
 			);
 			path = "API channel model";
+			sourceTree = "<group>";
+		};
+		A5DE815528EF08CA0053CDC1 /* ChannelChildVCs */ = {
+			isa = PBXGroup;
+			children = (
+				A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */,
+				A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */,
+			);
+			name = ChannelChildVCs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
