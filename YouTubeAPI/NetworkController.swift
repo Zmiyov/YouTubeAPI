@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkController {
     
     enum VideoItemError: Error, LocalizedError {
         case playlistItemNotFound
         case videoItemNotFound
+        case channelItemNotFound
+        case imageNotFound
     }
     
     func getPlaylistVideos(playlistId: String) async throws -> ResponsePlaylististItem {
@@ -57,12 +60,28 @@ class NetworkController {
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw VideoItemError.videoItemNotFound
+            throw VideoItemError.channelItemNotFound
         }
         
         let decoder = JSONDecoder()
         let channelResponse = try decoder.decode(ResponseChannelItem.self, from: data)
         
         return channelResponse.items![0] 
+    }
+    
+    func fetchImage(url: String) async throws -> UIImage {
+        
+        let urlComponents = URLComponents(string: url)!
+        let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw VideoItemError.imageNotFound
+        }
+        
+        guard let image = UIImage(data: data) else {
+            throw VideoItemError.imageNotFound
+        }
+        
+        return image
     }
 }

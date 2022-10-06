@@ -27,7 +27,6 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
 
-        
         return imageView
     }()
     
@@ -69,6 +68,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
         
@@ -90,7 +90,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
     }
     

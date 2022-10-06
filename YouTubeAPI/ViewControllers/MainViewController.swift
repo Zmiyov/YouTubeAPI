@@ -64,7 +64,7 @@ class MainViewController: UIViewController {
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos1 = playlistVideos
-                print(self.playlistVideos1)
+//                print(self.playlistVideos1)
                 completion(true)
             } catch {
                 print(error)
@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos2 = playlistVideos
-                print(self.playlistVideos2)
+//                print(self.playlistVideos2)
                 completion(true)
             } catch {
                 print(error)
@@ -88,7 +88,7 @@ class MainViewController: UIViewController {
     }
     
     func getViewCount1() {
-        print("Count")
+//        print("Count")
         for i in 0..<playlistVideos1.count {
             Task {
                 do {
@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
                     playlistVideos1[i].countViews = fetchedCount
-                    print(fetchedCount)
+//                    print(fetchedCount)
                     
                 } catch {
                     print(error)
@@ -106,7 +106,7 @@ class MainViewController: UIViewController {
     }
     
     func getViewCount2() {
-        print("Count")
+//        print("Count")
         for i in 0..<playlistVideos2.count {
             Task {
                 do {
@@ -114,7 +114,7 @@ class MainViewController: UIViewController {
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
                     playlistVideos2[i].countViews = fetchedCount
-                    print("2", fetchedCount)
+//                    print("2", fetchedCount)
                     
                 } catch {
                     print(error)
@@ -155,12 +155,12 @@ class MainViewController: UIViewController {
                 
             case .landscape:
                 //MARK: Lanscape Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(1))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.3))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalHeight(0.19))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging
@@ -171,12 +171,12 @@ class MainViewController: UIViewController {
                 return section
             case .square:
                 //MARK: Square Section Layout
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(1))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.55))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalHeight(0.26))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging

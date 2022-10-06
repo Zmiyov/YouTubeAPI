@@ -17,7 +17,7 @@ class MyPageViewController: UIPageViewController {
     ]
     let networkManager = NetworkController()
     
-    let channelNames: [String] = ["voalearningenglish", "iOSAcademy", "iCode_Happy_Coding", "iOSUkraine"]
+    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
     var channels = [ChannelModel]()
     
     var pages: [UIViewController] = [UIViewController]()
@@ -38,16 +38,15 @@ class MyPageViewController: UIPageViewController {
         
         dataSource = self
         delegate = nil
-        
-        // instantiate "pages"
 
-        getChannels { success in
-            self.showChannels()
+        getChannels { [self] success in
+//            print("Channel", channels)
+            DispatchQueue.main.async { [self] in
+                showChannels { [self] success in
+                    self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+                }
+            }
         }
-        
-        setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
-        tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
-
     }
     
     @objc func changeSlide() {
@@ -58,7 +57,6 @@ class MyPageViewController: UIPageViewController {
         else {
             index = 0
             setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
-
         }
     }
     
@@ -69,26 +67,27 @@ class MyPageViewController: UIPageViewController {
                 for i in 0..<channelNames.count {
                     let channel = try await networkManager.getChannels(channelName: channelNames[i])
                     channels.append(channel)
-                    completion(true)
                 }
+                completion(true)
             } catch {
                 print(error)
             }
         }
     }
     
-    func showChannels() {
+    func showChannels(completion: @escaping (_ success: Bool) -> Void) {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
-            vc.channelNameLabel.text = "Page: \(i)"
-            vc.amoontOfSubscribersLabel.text = "1 000 000" + " " + "Subscribers"
+            vc.channelNameLabel.text = channels[i].title
+            vc.amoontOfSubscribersLabel.text = channels[i].viewCount
             vc.view.backgroundColor = colors[i]
             pages.append(vc)
         }
+        completion(true)
     }
 }
 
-// typical Page View Controller Data Source
+//MARK: -  Page View Controller Data Source
 extension MyPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
@@ -116,10 +115,9 @@ extension MyPageViewController: UIPageViewControllerDataSource {
     }
 }
 
-// typical Page View Controller Delegate
+//MARK: - Page View Controller Delegate
+
 extension MyPageViewController: UIPageViewControllerDelegate {
-    
-    // if you do NOT want the built-in PageControl (the "dots"), comment-out these funcs
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return pages.count

@@ -25,7 +25,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
-        
+
         return imageView
     }()
     
@@ -56,7 +56,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         
         return stackView
     }()
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,9 +66,10 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+            imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.66)
         ])
-        
         
         labelStackView.addArrangedSubview(titleLabel)
         labelStackView.addArrangedSubview(subtitleLabel)
@@ -88,7 +89,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
     }
     
