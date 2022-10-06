@@ -8,6 +8,7 @@
 import Foundation
 
 enum Item: Hashable {
+    case playlist(PlaylistVideoModel)
     case app(App)
     case category(StoreCategory)
     

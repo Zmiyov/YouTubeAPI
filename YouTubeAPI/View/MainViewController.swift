@@ -28,7 +28,8 @@ class MainViewController: UIViewController {
     
     var sections = [Section]()
     let networkController = NetworkController()
-    var playlistVideos = [PlaylistVideoModel]()
+    var playlistVideos1 = [PlaylistVideoModel]()
+    var playlistVideos2 = [PlaylistVideoModel]()
     
     
     override func viewDidLoad() {
@@ -43,21 +44,27 @@ class MainViewController: UIViewController {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
                 
 
-        fetchPlaylist { success in
-            self.getViewCount()
+        fetchPlaylist1(playlistId: Constants.iosAcadememyPlaylistId) { success in
+            self.getViewCount1()
+        }
+        
+        fetchPlaylist2(playlistId: Constants.infoCarPlaylistId) { success in
+            self.getViewCount2()
         }
 
         configureDataSource()
     }
     
-    func fetchPlaylist(completion: @escaping (_ success: Bool) -> Void) {
+    //MARK: - Fetching Data
+    
+    func fetchPlaylist1(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
         
         Task {
             do {
-                let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: Constants.apiListUrl)
+                let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
-                self.playlistVideos = playlistVideos
-                print(self.playlistVideos)
+                playlistVideos1 = playlistVideos
+                print(self.playlistVideos1)
                 completion(true)
             } catch {
                 print(error)
@@ -65,27 +72,58 @@ class MainViewController: UIViewController {
         }
     }
     
-    func getViewCount() {
-        print("Work0")
-        for i in 0..<playlistVideos.count {
+    func fetchPlaylist2(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
+        
+        Task {
+            do {
+                let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
+                guard let playlistVideos = fetchedPlaylist.items else { return }
+                playlistVideos2 = playlistVideos
+                print(self.playlistVideos2)
+                completion(true)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func getViewCount1() {
+        print("Count")
+        for i in 0..<playlistVideos1.count {
             Task {
                 do {
-                    guard let id = playlistVideos[i].videoId else { return }
+                    guard let id = playlistVideos1[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
-                    
                    
-                    playlistVideos[i].countViews = fetchedCount
+                    playlistVideos1[i].countViews = fetchedCount
                     print(fetchedCount)
-                    print("Work")
-                    print(self.playlistVideos)
+                    
                 } catch {
                     print(error)
-                    print("Error")
                 }
             }
         }
     }
     
+    func getViewCount2() {
+        print("Count")
+        for i in 0..<playlistVideos2.count {
+            Task {
+                do {
+                    guard let id = playlistVideos2[i].videoId else { return }
+                    let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
+                   
+                    playlistVideos2[i].countViews = fetchedCount
+                    print("2", fetchedCount)
+                    
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Collection View Data Source
     
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -116,7 +154,7 @@ class MainViewController: UIViewController {
                 return section
                 
             case .landscape:
-                //MARK: Standart Section Layout
+                //MARK: Lanscape Section Layout
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
