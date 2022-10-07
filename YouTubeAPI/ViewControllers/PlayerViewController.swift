@@ -9,6 +9,8 @@ import UIKit
 
 class PlayerViewController: UIViewController {
 
+    @IBOutlet var handleArea: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

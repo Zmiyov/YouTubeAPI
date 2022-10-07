@@ -288,8 +288,8 @@ class MainViewController: UIViewController {
         
         let panGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handlePlayerPan(recognizer:)))
         
-        playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
-        playerViewController.view.addGestureRecognizer(panGestureRecognizer)
+        playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
+        playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
     }
     
@@ -310,6 +310,10 @@ class MainViewController: UIViewController {
         default:
             break
         }
+        
+    }
+    
+    func animateTransitionIfNeeded(state: PlayerState, duration: TimeInterval) {
         
     }
     
