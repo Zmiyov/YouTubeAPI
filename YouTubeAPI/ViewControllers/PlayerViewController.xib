@@ -51,25 +51,39 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOT-2c-1vO" userLabel="Timeline Area">
                     <rect key="frame" x="0.0" y="287.33333333333331" width="390" height="53.666666666666686"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hvy-gC-xOd">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hvy-gC-xOd">
                             <rect key="frame" x="0.0" y="0.0" width="390" height="53.666666666666664"/>
                             <subviews>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1SJ-2s-BPU">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="26.666666666666668"/>
-                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="trackTintColor" systemColor="systemGray4Color"/>
-                                </progressView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loc-O0-rSy">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="33.333333333333336"/>
+                                    <subviews>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1SJ-2s-BPU">
+                                            <rect key="frame" x="20" y="14.666666666666686" width="350" height="4"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="350" id="eIn-9r-iEB"/>
+                                                <constraint firstAttribute="height" constant="4" id="sta-FQ-CN9"/>
+                                            </constraints>
+                                            <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="trackTintColor" systemColor="systemGray4Color"/>
+                                        </progressView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="1SJ-2s-BPU" firstAttribute="centerX" secondItem="loc-O0-rSy" secondAttribute="centerX" id="gc7-tx-az1"/>
+                                        <constraint firstItem="1SJ-2s-BPU" firstAttribute="centerY" secondItem="loc-O0-rSy" secondAttribute="centerY" id="jE4-xg-xHS"/>
+                                    </constraints>
+                                </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kc6-IL-IGS">
-                                    <rect key="frame" x="0.0" y="26.666666666666686" width="390" height="27"/>
+                                    <rect key="frame" x="0.0" y="33.333333333333371" width="390" height="20.333333333333329"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIB-H6-ET3">
-                                            <rect key="frame" x="0.0" y="0.0" width="195" height="27"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="195" height="20.333333333333332"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" systemColor="systemGray6Color"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.45" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5HC-9P-tP9">
-                                            <rect key="frame" x="195" y="0.0" width="195" height="27"/>
+                                            <rect key="frame" x="195" y="0.0" width="195" height="20.333333333333332"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" systemColor="systemGray6Color"/>
                                             <nil key="highlightedColor"/>
@@ -161,11 +175,25 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sound_Min" translatesAutoresizingMaskIntoConstraints="NO" id="YZ5-Ru-Q8W">
                                     <rect key="frame" x="0.0" y="0.0" width="130" height="69.666666666666671"/>
                                 </imageView>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="boa-iH-ddx">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ND-fq-egU">
                                     <rect key="frame" x="130" y="0.0" width="130" height="69.666666666666671"/>
-                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="trackTintColor" systemColor="systemGray4Color"/>
-                                </progressView>
+                                    <subviews>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="boa-iH-ddx">
+                                            <rect key="frame" x="25" y="33.000000000000057" width="80" height="4"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="Ale-Ec-2b5"/>
+                                                <constraint firstAttribute="height" constant="4" id="X8j-AX-9Za"/>
+                                            </constraints>
+                                            <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="trackTintColor" systemColor="systemGray4Color"/>
+                                        </progressView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="boa-iH-ddx" firstAttribute="centerX" secondItem="7ND-fq-egU" secondAttribute="centerX" id="BeO-N4-TKq"/>
+                                        <constraint firstItem="boa-iH-ddx" firstAttribute="centerY" secondItem="7ND-fq-egU" secondAttribute="centerY" id="Skc-Eb-XR2"/>
+                                    </constraints>
+                                </view>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sound_Max" translatesAutoresizingMaskIntoConstraints="NO" id="Mll-fO-1Ux">
                                     <rect key="frame" x="260" y="0.0" width="130" height="69.666666666666671"/>
                                 </imageView>
