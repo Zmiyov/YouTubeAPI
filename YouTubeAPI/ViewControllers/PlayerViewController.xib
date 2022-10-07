@@ -61,20 +61,17 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loc-O0-rSy">
                                     <rect key="frame" x="0.0" y="0.0" width="358.66666666666669" height="18.666666666666668"/>
                                     <subviews>
-                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1SJ-2s-BPU">
-                                            <rect key="frame" x="0.0" y="8.3333333333333712" width="358.66666666666669" height="3"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="2" id="sta-FQ-CN9"/>
-                                            </constraints>
-                                            <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="trackTintColor" systemColor="systemGray5Color"/>
-                                        </progressView>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc">
+                                            <rect key="frame" x="-2" y="-5.6666666666666288" width="362.66666666666669" height="31"/>
+                                            <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
+                                        </slider>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="1SJ-2s-BPU" firstAttribute="width" secondItem="loc-O0-rSy" secondAttribute="width" id="g3a-OQ-oHN"/>
-                                        <constraint firstItem="1SJ-2s-BPU" firstAttribute="centerX" secondItem="loc-O0-rSy" secondAttribute="centerX" id="gc7-tx-az1"/>
-                                        <constraint firstItem="1SJ-2s-BPU" firstAttribute="centerY" secondItem="loc-O0-rSy" secondAttribute="centerY" id="jE4-xg-xHS"/>
+                                        <constraint firstItem="hVv-vY-Qcc" firstAttribute="centerX" secondItem="loc-O0-rSy" secondAttribute="centerX" id="R4l-Ij-eVZ"/>
+                                        <constraint firstItem="hVv-vY-Qcc" firstAttribute="width" secondItem="loc-O0-rSy" secondAttribute="width" id="ozh-ta-ShK"/>
+                                        <constraint firstItem="hVv-vY-Qcc" firstAttribute="centerY" secondItem="loc-O0-rSy" secondAttribute="centerY" id="p2C-Z9-pf3"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kc6-IL-IGS">
