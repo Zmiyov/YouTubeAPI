@@ -282,9 +282,10 @@ class MainViewController: UIViewController {
         self.addChild(playerViewController)
         self.view.addSubview(playerViewController.view)
         
-        playerViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - playerViewHandleAreaHeight, width: self.view.bounds.width, height: self.view.frame.height - self.view.safeAreaInsets.top)
+        playerViewController.view.frame = CGRect(x: 5, y: self.view.frame.height - playerViewHandleAreaHeight, width: self.view.bounds.width - 10, height: self.view.frame.height - self.view.safeAreaInsets.top)
         
         playerViewController.view.clipsToBounds = true
+        self.playerViewController.view.layer.cornerRadius = 12
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleCardTap(recognzier:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
@@ -347,7 +348,7 @@ class MainViewController: UIViewController {
                 case .expanded:
                     self.playerViewController.view.layer.cornerRadius = 12
                 case .collapsed:
-                    self.playerViewController.view.layer.cornerRadius = 0
+                    self.playerViewController.view.layer.cornerRadius = 12
                 }
             }
             

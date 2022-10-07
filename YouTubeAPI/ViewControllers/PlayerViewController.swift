@@ -14,6 +14,16 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        configureGradientLayer()
+    }
+    
+    func configureGradientLayer() {
+        view.backgroundColor = .clear
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor]
+        gradient.locations = [0, 1]
+        gradient.frame = view.bounds
+        view.layer.addSublayer(gradient)
     }
 
 }
