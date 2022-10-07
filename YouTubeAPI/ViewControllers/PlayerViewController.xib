@@ -61,13 +61,13 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loc-O0-rSy">
                                     <rect key="frame" x="0.0" y="0.0" width="358.66666666666669" height="18.666666666666668"/>
                                     <subviews>
-                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1SJ-2s-BPU">
-                                            <rect key="frame" x="0.0" y="7.3333333333333712" width="358.66666666666669" height="4"/>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1SJ-2s-BPU">
+                                            <rect key="frame" x="0.0" y="8.3333333333333712" width="358.66666666666669" height="3"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="4" id="sta-FQ-CN9"/>
+                                                <constraint firstAttribute="height" constant="2" id="sta-FQ-CN9"/>
                                             </constraints>
                                             <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="trackTintColor" systemColor="systemGray4Color"/>
+                                            <color key="trackTintColor" systemColor="systemGray5Color"/>
                                         </progressView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -180,17 +180,18 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ND-fq-egU">
                                     <rect key="frame" x="25" y="0.0" width="301" height="69.666666666666671"/>
                                     <subviews>
-                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="boa-iH-ddx">
-                                            <rect key="frame" x="10" y="33.000000000000057" width="281" height="4"/>
-                                            <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="trackTintColor" systemColor="systemGray4Color"/>
-                                        </progressView>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wGM-Ql-PTu">
+                                            <rect key="frame" x="8" y="20.000000000000057" width="285" height="31"/>
+                                            <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
+                                            <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </slider>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="boa-iH-ddx" firstAttribute="centerX" secondItem="7ND-fq-egU" secondAttribute="centerX" id="BeO-N4-TKq"/>
-                                        <constraint firstItem="boa-iH-ddx" firstAttribute="width" secondItem="7ND-fq-egU" secondAttribute="width" constant="-20" id="RXW-LU-ioi"/>
-                                        <constraint firstItem="boa-iH-ddx" firstAttribute="centerY" secondItem="7ND-fq-egU" secondAttribute="centerY" id="Skc-Eb-XR2"/>
+                                        <constraint firstItem="wGM-Ql-PTu" firstAttribute="width" secondItem="7ND-fq-egU" secondAttribute="width" constant="-20" id="Mr3-wt-cso"/>
+                                        <constraint firstItem="wGM-Ql-PTu" firstAttribute="centerY" secondItem="7ND-fq-egU" secondAttribute="centerY" id="cou-a5-gQj"/>
+                                        <constraint firstItem="wGM-Ql-PTu" firstAttribute="centerX" secondItem="7ND-fq-egU" secondAttribute="centerX" id="dAz-Rs-ZJE"/>
                                     </constraints>
                                 </view>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sound_Max" translatesAutoresizingMaskIntoConstraints="NO" id="Mll-fO-1Ux">
@@ -244,8 +245,8 @@
         <image name="Prev" width="32" height="30"/>
         <image name="Sound_Max" width="25" height="25"/>
         <image name="Sound_Min" width="25" height="25"/>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
