@@ -24,7 +24,7 @@ class PlayerViewController: UIViewController {
     func configureGradientLayer() {
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor]
+        gradient.colors = [UIColor.systemPink.cgColor, UIColor.systemPurple.cgColor]
 //        gradient.locations = [0, 1]
         gradient.frame = view.bounds
         view.layer.insertSublayer(gradient, at: 0)

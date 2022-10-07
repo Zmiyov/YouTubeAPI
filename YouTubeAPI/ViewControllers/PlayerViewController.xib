@@ -33,16 +33,36 @@
                         <constraint firstAttribute="width" secondItem="4eo-eW-Ret" secondAttribute="height" multiplier="365:219" id="4eS-LT-jVh"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOT-2c-1vO" userLabel="Timeline Area">
+                    <rect key="frame" x="0.0" y="287.33333333333331" width="390" height="53.666666666666686"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="SOT-2c-1vO" secondAttribute="height" multiplier="365:50" id="eKn-Bo-uAq"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMa-Gq-MBS" userLabel="Info Area">
+                    <rect key="frame" x="0.0" y="341" width="390" height="85.333333333333314"/>
+                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="fMa-Gq-MBS" secondAttribute="height" multiplier="365:80" id="FIv-yo-ee5"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="gA1-PC-amJ"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="SOT-2c-1vO" firstAttribute="trailing" secondItem="gA1-PC-amJ" secondAttribute="trailing" id="4fm-pA-U0n"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="8Wf-WN-a5S"/>
+                <constraint firstItem="fMa-Gq-MBS" firstAttribute="top" secondItem="SOT-2c-1vO" secondAttribute="bottom" id="Aht-gi-SQ7"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="trailing" secondItem="4eo-eW-Ret" secondAttribute="trailing" id="By7-H5-v55"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="leading" secondItem="4eo-eW-Ret" secondAttribute="leading" id="D9i-xf-EhU"/>
+                <constraint firstItem="gA1-PC-amJ" firstAttribute="trailing" secondItem="fMa-Gq-MBS" secondAttribute="trailing" id="PvE-h5-ebI"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XNT-Wl-USU"/>
+                <constraint firstItem="SOT-2c-1vO" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="fnj-RE-eF2"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="g01-tR-gL2"/>
+                <constraint firstItem="fMa-Gq-MBS" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="meD-Ax-jWR"/>
                 <constraint firstItem="4eo-eW-Ret" firstAttribute="top" secondItem="3D2-fq-YPm" secondAttribute="bottom" id="rnc-kJ-U6I"/>
+                <constraint firstItem="SOT-2c-1vO" firstAttribute="top" secondItem="4eo-eW-Ret" secondAttribute="bottom" id="vBQ-Ig-Zxe"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -56,6 +76,9 @@
         </systemColor>
         <systemColor name="systemCyanColor">
             <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
