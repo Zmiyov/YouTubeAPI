@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="handleArea" destination="3D2-fq-YPm" id="kY0-N7-9aj"/>
                 <outlet property="openCloseButton" destination="d6w-Jq-aZR" id="AGP-us-6SE"/>
+                <outlet property="timeLineSlider" destination="hVv-vY-Qcc" id="IcZ-7O-p09"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -61,7 +62,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loc-O0-rSy">
                                     <rect key="frame" x="0.0" y="0.0" width="358.66666666666669" height="18.666666666666668"/>
                                     <subviews>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc">
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc" userLabel="Timeline Slider">
                                             <rect key="frame" x="-2" y="-5.6666666666666288" width="362.66666666666669" height="31"/>
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
@@ -174,7 +175,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ND-fq-egU">
                                     <rect key="frame" x="0.0" y="0.0" width="351" height="69.666666666666671"/>
                                     <subviews>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="Sound_Min" maximumValueImage="Sound_Max" translatesAutoresizingMaskIntoConstraints="NO" id="wGM-Ql-PTu">
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="Sound_Min" maximumValueImage="Sound_Max" translatesAutoresizingMaskIntoConstraints="NO" id="wGM-Ql-PTu" userLabel="Volume Slider">
                                             <rect key="frame" x="8" y="20.000000000000057" width="335" height="31"/>
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>

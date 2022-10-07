@@ -13,6 +13,7 @@ class PlayerViewController: UIViewController {
     
     @IBOutlet var openCloseButton: UIButton!
     
+    @IBOutlet var timeLineSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,17 +22,15 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        let timelineSliderThumbImage = UIImage(named: "Line.png")
+        timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
         configureGradientLayer()
     }
     
     
     @IBAction func openCloseButtonTapped(_ sender: UIButton) {
-//        if let image = UIImage(named:"Unchecked") {
-//            sender.setImage(UIImage(named:"Checked.png"), for: .normal)
-//        }
-//        if let image = UIImage(named:"Checked") {
-//            sender.setImage(UIImage(named:"Unchecked.png"), for: .normal)
-//        }
+
     }
     
     func configureGradientLayer() {
