@@ -21,6 +21,11 @@ class MainViewController: UIViewController {
         case square(String)
 
     }
+    
+    enum PlayerState {
+        case expanded
+        case collapsed
+    }
 
     @IBOutlet var collectionView: UICollectionView!
     
@@ -31,6 +36,20 @@ class MainViewController: UIViewController {
     var playlistVideos1 = [PlaylistVideoModel]()
     var playlistVideos2 = [PlaylistVideoModel]()
     
+    
+    var playerViewController: PlayerViewController!
+    var visualEffectView: UIVisualEffectView!
+    
+    let playerViewHeight: CGFloat = 600
+    let playerViewHandleAreaHeight: CGFloat = 65
+    
+    var playerVisible = false
+    var playerNextState: PlayerState {
+        return playerVisible ? .collapsed : .expanded
+    }
+    
+    var runningAnimations = [UIViewPropertyAnimator]()
+    var animationProgressWhenInterrupted: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +72,7 @@ class MainViewController: UIViewController {
         }
 
         configureDataSource()
+        setupPlayer()
     }
     
     //MARK: - Fetching Data
@@ -249,6 +269,70 @@ class MainViewController: UIViewController {
         snapshot.appendItems(Item.squarePlaylist, toSection: squareSection)
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
+    }
+    
+    func setupPlayer() {
+        visualEffectView = UIVisualEffectView()
+        visualEffectView.frame = self.view.frame
+        self.view.addSubview(visualEffectView)
+        
+        playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
+        self.addChild(playerViewController)
+        self.view.addSubview(playerViewController.view)
+        
+        playerViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - playerViewHandleAreaHeight, width: self.view.bounds.width, height: playerViewHeight)
+        
+        playerViewController.view.clipsToBounds = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handlePlayerTap(recognizer:)))
+        
+        let panGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handlePlayerPan(recognizer:)))
+        
+        playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
+        playerViewController.view.addGestureRecognizer(panGestureRecognizer)
+        
+    }
+    
+    @objc
+    func handlePlayerTap(recognizer: UITapGestureRecognizer) {
+        
+    }
+    
+    @objc
+    func handlePlayerPan(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            startInteractiveTransition(state: playerNextState, duration: 0.9)
+        case .changed:
+            updateInteractiveTransition(fractionCompleted: 0)
+        case .ended:
+            continueInteractiveTransition()
+        default:
+            break
+        }
+        
+    }
+    
+    func startInteractiveTransition(state: PlayerState, duration: TimeInterval) {
+        if runningAnimations.isEmpty {
+            
+        }
+        for animation in runningAnimations {
+            animation.pauseAnimation()
+            animationProgressWhenInterrupted = animation.fractionComplete
+        }
+    }
+    
+    func updateInteractiveTransition(fractionCompleted: CGFloat) {
+        for animation in runningAnimations {
+            animation.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+        }
+    }
+    
+    func continueInteractiveTransition() {
+        for animation in runningAnimations {
+            animation.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
     }
 }
 

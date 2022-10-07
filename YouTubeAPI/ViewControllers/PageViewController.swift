@@ -19,7 +19,7 @@ class MyPageViewController: UIPageViewController {
     let networkManager = NetworkController()
     
 //    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
-    let query = "surfing"
+    let query = "surf"
     var channels = [SearchModel]()
     let myGroup = DispatchGroup()
     
@@ -46,13 +46,8 @@ class MyPageViewController: UIPageViewController {
             
             getUploadsAndSubscriberCount()
             
-//            getUploadsAndSubscriberCount { [self] success in
-//                showChannels { [self] success in
-//                    self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
-//                }
-//            }
         }
-        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+//        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
     }
     
     @objc func changeSlide() {
@@ -83,6 +78,7 @@ class MyPageViewController: UIPageViewController {
     func getUploadsAndSubscriberCount() {
         for i in 0..<channels.count {
             myGroup.enter()
+            
             Task {
                 do {
                     guard let id = channels[i].channelId else { return }
@@ -90,19 +86,19 @@ class MyPageViewController: UIPageViewController {
                    
                     channels[i].uploads = fetchedCount.uploads
                     channels[i].subscriberCount = fetchedCount.subscriberCount
-                    print(fetchedCount.uploads)
-                    print(fetchedCount.subscriberCount)
+//                    print(fetchedCount.uploads)
+//                    print(fetchedCount.subscriberCount)
                     myGroup.leave()
                 } catch {
                     print(error)
                 }
             }
+            
         }
         myGroup.notify(queue: .main) {
             print("Finished all requests.")
             self.showChannels()
         }
-//        completion(true)
     }
     
     func showChannels() {
@@ -112,6 +108,7 @@ class MyPageViewController: UIPageViewController {
             vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount
 //            vc.view.backgroundColor = colors[i]
             let urlString = channels[i].thumbnail!
+            
             Task {
                 do {
                     vc.backgroungImage.image = try await networkManager.fetchImage(url: urlString )
@@ -122,7 +119,6 @@ class MyPageViewController: UIPageViewController {
 
             pages.append(vc)
         }
-//        completion(true)
     }
 }
 

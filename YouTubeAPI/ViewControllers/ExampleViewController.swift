@@ -22,8 +22,7 @@ class ExampleViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .white
-        label.textAlignment = .center
-        label.layer.cornerRadius = 8
+        label.textAlignment = .left
         
         return label
     }()
@@ -31,9 +30,8 @@ class ExampleViewController: UIViewController {
     let amoontOfSubscribersLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .cyan
-        label.textAlignment = .center
-        label.layer.cornerRadius = 8
+        label.backgroundColor = .white
+        label.textAlignment = .left
         
         return label
     }()
@@ -44,6 +42,8 @@ class ExampleViewController: UIViewController {
         view.layer.cornerRadius = 8
         
         view.addSubview(backgroungImage)
+        backgroungImage.layer.cornerRadius = 8
+        backgroungImage.clipsToBounds = true
         NSLayoutConstraint.activate([
             backgroungImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroungImage.topAnchor.constraint(equalTo: view.topAnchor),
