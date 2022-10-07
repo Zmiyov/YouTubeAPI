@@ -98,7 +98,8 @@ class MyPageViewController: UIPageViewController {
                    
                     channels[i].uploads = fetchedCount.uploads
                     channels[i].subscriberCount = fetchedCount.subscriberCount
-                    
+                    print(fetchedCount.uploads)
+                    print(fetchedCount.subscriberCount)
                 } catch {
                     print(error)
                 }

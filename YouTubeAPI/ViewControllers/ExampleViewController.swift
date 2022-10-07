@@ -48,9 +48,9 @@ class ExampleViewController: UIViewController {
             backgroungImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroungImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroungImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroungImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            backgroungImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroungImage.widthAnchor.constraint(equalTo: view.widthAnchor),
-            backgroungImage.heightAnchor.constraint(equalTo: backgroungImage.widthAnchor, multiplier: 0.66)
+            backgroungImage.heightAnchor.constraint(equalTo: backgroungImage.widthAnchor, multiplier: 0.5)
             ])
         
         view.addSubview(channelNameLabel)
