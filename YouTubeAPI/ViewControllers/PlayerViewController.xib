@@ -30,7 +30,7 @@
                                 <constraint firstAttribute="width" secondItem="d6w-Jq-aZR" secondAttribute="height" multiplier="31:17" id="ZEw-qU-ldF"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Button" image="Close_Open" backgroundImage="Close_Open">
+                            <state key="normal" title="Button" image="Close_Open_mirror">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
@@ -238,7 +238,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Close_Open" width="31" height="17"/>
+        <image name="Close_Open_mirror" width="31" height="17"/>
         <image name="Next" width="31" height="30"/>
         <image name="Pause" width="31" height="30"/>
         <image name="Prev" width="32" height="30"/>

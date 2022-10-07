@@ -287,18 +287,18 @@ class MainViewController: UIViewController {
         playerViewController.view.clipsToBounds = true
         self.playerViewController.view.layer.cornerRadius = 12
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleButtonTap(recognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleAreaTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
         
         playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
         playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
-//        playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
+        playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
         
     }
 
     @objc
-    func handleButtonTap(recognizer: UIPanGestureRecognizer) {
+    func handleAreaTap(recognizer: UIPanGestureRecognizer) {
 
         switch recognizer.state {
         case .ended:
@@ -306,6 +306,11 @@ class MainViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    @objc func handleButtonTap() {
+        
+        animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
     }
     
     func deleteVisualEffect(state: PlayerState) {
@@ -316,10 +321,20 @@ class MainViewController: UIViewController {
             visualEffectView.frame = self.view.frame
             self.view.insertSubview(visualEffectView, at: 1)
         case .collapsed:
-            print("delete")
             if let viewWithTag = self.view.viewWithTag(100) {
                 viewWithTag.removeFromSuperview()
             }
+        }
+    }
+    
+    func changeButtonImage(state: PlayerState) {
+        switch state {
+        case .expanded:
+            let image = UIImage(named: "Close_Open.png")
+            playerViewController.openCloseButton.setImage(image, for: .normal)
+        case .collapsed:
+            let image = UIImage(named: "Close_Open_mirror.png")
+            playerViewController.openCloseButton.setImage(image, for: .normal)
         }
     }
     
@@ -343,6 +358,7 @@ class MainViewController: UIViewController {
     func animateTransitionIfNeeded (state: PlayerState, duration: TimeInterval) {
         
         deleteVisualEffect(state: state)
+        changeButtonImage(state: state)
         
         if runningAnimations.isEmpty {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {

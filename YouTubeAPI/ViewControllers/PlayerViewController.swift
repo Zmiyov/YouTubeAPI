@@ -25,8 +25,13 @@ class PlayerViewController: UIViewController {
     }
     
     
-    @IBAction func openCloseButtonTapped(_ sender: Any) {
-        
+    @IBAction func openCloseButtonTapped(_ sender: UIButton) {
+//        if let image = UIImage(named:"Unchecked") {
+//            sender.setImage(UIImage(named:"Checked.png"), for: .normal)
+//        }
+//        if let image = UIImage(named:"Checked") {
+//            sender.setImage(UIImage(named:"Unchecked.png"), for: .normal)
+//        }
     }
     
     func configureGradientLayer() {
