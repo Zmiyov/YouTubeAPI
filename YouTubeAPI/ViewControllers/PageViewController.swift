@@ -21,6 +21,7 @@ class MyPageViewController: UIPageViewController {
 //    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
     let query = "surfing"
     var channels = [SearchModel]()
+    let myGroup = DispatchGroup()
     
     var pages: [UIViewController] = [UIViewController]()
     
@@ -40,28 +41,18 @@ class MyPageViewController: UIPageViewController {
         
         dataSource = self
         delegate = nil
-
-//        getChannels { [self] success in
-////            print("Channel", channels)
-//            DispatchQueue.main.async { [self] in
+        
+        getChannels { [self] success in
+            
+            getUploadsAndSubscriberCount()
+            
+//            getUploadsAndSubscriberCount { [self] success in
 //                showChannels { [self] success in
 //                    self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
 //                }
 //            }
-//        }
-        
-        getChannels { [self] success in
-            
-            getUploadsAndSubscriberCount { [self] success in
-                
-                    showChannels { [self] success in
-                        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
-                    }
-                
-            }
-
-  
         }
+        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
     }
     
     @objc func changeSlide() {
@@ -89,8 +80,9 @@ class MyPageViewController: UIPageViewController {
         }
     }
     
-    func getUploadsAndSubscriberCount(completion: @escaping (_ success: Bool) -> Void) {
+    func getUploadsAndSubscriberCount() {
         for i in 0..<channels.count {
+            myGroup.enter()
             Task {
                 do {
                     guard let id = channels[i].channelId else { return }
@@ -100,15 +92,20 @@ class MyPageViewController: UIPageViewController {
                     channels[i].subscriberCount = fetchedCount.subscriberCount
                     print(fetchedCount.uploads)
                     print(fetchedCount.subscriberCount)
+                    myGroup.leave()
                 } catch {
                     print(error)
                 }
             }
         }
-        completion(true)
+        myGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            self.showChannels()
+        }
+//        completion(true)
     }
     
-    func showChannels(completion: @escaping (_ success: Bool) -> Void) {
+    func showChannels() {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
             vc.channelNameLabel.text = channels[i].channelTitle
@@ -125,7 +122,7 @@ class MyPageViewController: UIPageViewController {
 
             pages.append(vc)
         }
-        completion(true)
+//        completion(true)
     }
 }
 
