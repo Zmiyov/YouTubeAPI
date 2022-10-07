@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerViewController" customModule="YouTubeAPI" customModuleProvider="target">
             <connections>
                 <outlet property="handleArea" destination="3D2-fq-YPm" id="kY0-N7-9aj"/>
+                <outlet property="openCloseButton" destination="d6w-Jq-aZR" id="AGP-us-6SE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,6 +33,9 @@
                             <state key="normal" title="Button" image="Close_Open" backgroundImage="Close_Open">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <connections>
+                                <action selector="openCloseButtonTapped:" destination="-1" eventType="touchUpInside" id="sNn-Ui-uU8"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -40,8 +40,8 @@ class MainViewController: UIViewController {
     var playerViewController: PlayerViewController!
     var visualEffectView: UIVisualEffectView!
     
-    let playerViewHeight: CGFloat = 600
-    let playerViewHandleAreaHeight: CGFloat = 65
+//    let playerViewHeight: CGFloat = 600
+    let playerViewHandleAreaHeight: CGFloat = 50
     
     var playerVisible = false
     var playerNextState: PlayerState {
@@ -53,7 +53,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupPlayer()
         // MARK: Collection View Setup
         collectionView.collectionViewLayout = createLayout()
         
@@ -72,7 +72,7 @@ class MainViewController: UIViewController {
         }
 
         configureDataSource()
-        setupPlayer()
+        
     }
     
     //MARK: - Fetching Data
@@ -274,9 +274,9 @@ class MainViewController: UIViewController {
     //MARK: - Setup player VC
     
     func setupPlayer() {
-        visualEffectView = UIVisualEffectView()
-        visualEffectView.frame = self.view.frame
-        self.view.addSubview(visualEffectView)
+//        visualEffectView = UIVisualEffectView()
+//        visualEffectView.frame = self.view.frame
+//        self.view.addSubview(visualEffectView)
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
         self.addChild(playerViewController)
@@ -287,21 +287,39 @@ class MainViewController: UIViewController {
         playerViewController.view.clipsToBounds = true
         self.playerViewController.view.layer.cornerRadius = 12
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleCardTap(recognzier:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleButtonTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
         
         playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
         playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
+//        playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
+        
     }
 
     @objc
-    func handleCardTap(recognzier:UITapGestureRecognizer) {
-        switch recognzier.state {
+    func handleButtonTap(recognizer: UIPanGestureRecognizer) {
+
+        switch recognizer.state {
         case .ended:
             animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
         default:
             break
+        }
+    }
+    
+    func deleteVisualEffect(state: PlayerState) {
+        switch state {
+        case .expanded:
+            visualEffectView = UIVisualEffectView()
+            visualEffectView.tag = 100
+            visualEffectView.frame = self.view.frame
+            self.view.insertSubview(visualEffectView, at: 1)
+        case .collapsed:
+            print("delete")
+            if let viewWithTag = self.view.viewWithTag(100) {
+                viewWithTag.removeFromSuperview()
+            }
         }
     }
     
@@ -322,7 +340,10 @@ class MainViewController: UIViewController {
         }
     }
     
-    func animateTransitionIfNeeded (state:PlayerState, duration:TimeInterval) {
+    func animateTransitionIfNeeded (state: PlayerState, duration: TimeInterval) {
+        
+        deleteVisualEffect(state: state)
+        
         if runningAnimations.isEmpty {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 
@@ -338,22 +359,8 @@ class MainViewController: UIViewController {
                 self.playerVisible = !self.playerVisible
                 self.runningAnimations.removeAll()
             }
-            
             frameAnimator.startAnimation()
             runningAnimations.append(frameAnimator)
-            
-            
-            let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
-                switch state {
-                case .expanded:
-                    self.playerViewController.view.layer.cornerRadius = 12
-                case .collapsed:
-                    self.playerViewController.view.layer.cornerRadius = 12
-                }
-            }
-            
-            cornerRadiusAnimator.startAnimation()
-            runningAnimations.append(cornerRadiusAnimator)
             
             let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
@@ -363,10 +370,8 @@ class MainViewController: UIViewController {
                     self.visualEffectView.effect = nil
                 }
             }
-            
             blurAnimator.startAnimation()
             runningAnimations.append(blurAnimator)
-            
         }
     }
     

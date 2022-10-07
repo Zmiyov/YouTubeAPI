@@ -9,12 +9,12 @@ import UIKit
 
 class MyPageViewController: UIPageViewController {
     
-    let colors: [UIColor] = [
-        .red,
-        .green,
-        .blue,
-        .cyan
-    ]
+//    let colors: [UIColor] = [
+//        .red,
+//        .green,
+//        .blue,
+//        .cyan
+//    ]
     
     let networkManager = NetworkController()
     
@@ -43,9 +43,7 @@ class MyPageViewController: UIPageViewController {
         delegate = nil
         
         getChannels { [self] success in
-            
             getUploadsAndSubscriberCount()
-            
         }
 //        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
     }
@@ -123,6 +121,7 @@ class MyPageViewController: UIPageViewController {
 }
 
 //MARK: -  Page View Controller Data Source
+
 extension MyPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
