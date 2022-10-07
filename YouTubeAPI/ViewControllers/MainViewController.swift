@@ -284,37 +284,82 @@ class MainViewController: UIViewController {
         
         playerViewController.view.clipsToBounds = true
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handlePlayerTap(recognizer:)))
-        
-        let panGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handlePlayerPan(recognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleCardTap(recognzier:)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
         
         playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
         playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
     }
-    
+
     @objc
-    func handlePlayerTap(recognizer: UITapGestureRecognizer) {
-        
+    func handleCardTap(recognzier:UITapGestureRecognizer) {
+        switch recognzier.state {
+        case .ended:
+            animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
+        default:
+            break
+        }
     }
     
     @objc
-    func handlePlayerPan(recognizer: UIPanGestureRecognizer) {
+    func handleCardPan (recognizer:UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
             startInteractiveTransition(state: playerNextState, duration: 0.9)
         case .changed:
-            updateInteractiveTransition(fractionCompleted: 0)
+            let translation = recognizer.translation(in: self.playerViewController.handleArea)
+            var fractionComplete = translation.y / playerViewHeight
+            fractionComplete = playerVisible ? fractionComplete : -fractionComplete
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             continueInteractiveTransition()
         default:
             break
         }
-        
     }
     
     func animateTransitionIfNeeded(state: PlayerState, duration: TimeInterval) {
-        
+        if runningAnimations.isEmpty {
+            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                switch state {
+                case .expanded:
+                    self.playerViewController.view.frame.origin.y = self.view.frame.height - self.playerViewHeight
+                case .collapsed:
+                    self.playerViewController.view.frame.origin.y = self.view.frame.height - self.playerViewHandleAreaHeight
+                }
+            }
+            
+            frameAnimator.addCompletion { _ in
+                self.playerVisible = !self.playerVisible
+                self.runningAnimations.removeAll()
+            }
+            
+            frameAnimator.startAnimation()
+            runningAnimations.append(frameAnimator)
+            
+            let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
+                switch state {
+                case .expanded:
+                    self.playerViewController.view.layer.cornerRadius = 12
+                case.collapsed:
+                    self.playerViewController.view.layer.cornerRadius = 12
+                }
+            }
+            cornerRadiusAnimator.startAnimation()
+            runningAnimations.append(cornerRadiusAnimator)
+            
+            let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                switch state {
+                case .expanded:
+                    self.visualEffectView.effect = UIBlurEffect(style: .dark)
+                case .collapsed:
+                    self.visualEffectView.effect = nil
+                }
+            }
+            blurAnimator.startAnimation()
+            runningAnimations.append(blurAnimator)
+        }
     }
     
     func startInteractiveTransition(state: PlayerState, duration: TimeInterval) {
