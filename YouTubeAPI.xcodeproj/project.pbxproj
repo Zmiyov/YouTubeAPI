@@ -134,12 +134,28 @@
 		A52C75C828EDC9E200E25651 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A56E744A28F0410D00724774 /* MainViewController */,
 				A5DE815528EF08CA0053CDC1 /* ChannelChildVCs */,
+				A56E744B28F0412400724774 /* PlayerViewController */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A56E744A28F0410D00724774 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
 				A586DECA28EB95280006983B /* MainViewController.swift */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
+		A56E744B28F0412400724774 /* PlayerViewController */ = {
+			isa = PBXGroup;
+			children = (
 				A59F1F4128F0176A00BC4686 /* PlayerViewController.swift */,
 				A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */,
 			);
-			path = ViewControllers;
+			name = PlayerViewController;
 			sourceTree = "<group>";
 		};
 		A586DEBA28EB95270006983B = {

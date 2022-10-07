@@ -271,6 +271,8 @@ class MainViewController: UIViewController {
         dataSource.apply(snapshot)
     }
     
+    //MARK: - Setup player VC
+    
     func setupPlayer() {
         visualEffectView = UIVisualEffectView()
         visualEffectView.frame = self.view.frame
@@ -309,7 +311,7 @@ class MainViewController: UIViewController {
             startInteractiveTransition(state: playerNextState, duration: 0.9)
         case .changed:
             let translation = recognizer.translation(in: self.playerViewController.handleArea)
-            var fractionComplete = translation.y / self.view.frame.height - self.view.safeAreaInsets.top
+            var fractionComplete = translation.y / (self.view.frame.height - self.view.safeAreaInsets.top)
             fractionComplete = playerVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
@@ -319,9 +321,10 @@ class MainViewController: UIViewController {
         }
     }
     
-    func animateTransitionIfNeeded(state: PlayerState, duration: TimeInterval) {
+    func animateTransitionIfNeeded (state:PlayerState, duration:TimeInterval) {
         if runningAnimations.isEmpty {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                
                 switch state {
                 case .expanded:
                     self.playerViewController.view.frame.origin.y = self.view.safeAreaInsets.top
@@ -338,14 +341,16 @@ class MainViewController: UIViewController {
             frameAnimator.startAnimation()
             runningAnimations.append(frameAnimator)
             
+            
             let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
                 switch state {
                 case .expanded:
                     self.playerViewController.view.layer.cornerRadius = 12
-                case.collapsed:
-                    self.playerViewController.view.layer.cornerRadius = 12
+                case .collapsed:
+                    self.playerViewController.view.layer.cornerRadius = 0
                 }
             }
+            
             cornerRadiusAnimator.startAnimation()
             runningAnimations.append(cornerRadiusAnimator)
             
@@ -357,31 +362,34 @@ class MainViewController: UIViewController {
                     self.visualEffectView.effect = nil
                 }
             }
+            
             blurAnimator.startAnimation()
             runningAnimations.append(blurAnimator)
+            
         }
     }
     
     func startInteractiveTransition(state: PlayerState, duration: TimeInterval) {
         if runningAnimations.isEmpty {
-            
+            animateTransitionIfNeeded(state: state, duration: duration)
         }
         for animation in runningAnimations {
             animation.pauseAnimation()
             animationProgressWhenInterrupted = animation.fractionComplete
         }
     }
-    
+
     func updateInteractiveTransition(fractionCompleted: CGFloat) {
         for animation in runningAnimations {
             animation.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
         }
     }
-    
+
     func continueInteractiveTransition() {
         for animation in runningAnimations {
             animation.continueAnimation(withTimingParameters: nil, durationFactor: 0)
         }
     }
+    
 }
 
