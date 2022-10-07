@@ -118,9 +118,36 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="huo-Dd-kNB" userLabel="Playback Area">
                     <rect key="frame" x="0.0" y="425" width="390" height="85.333333333333314"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="5Tf-Ib-8Qf">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="85.333333333333329"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JV-hm-6yw">
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="85.333333333333329"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="Prev"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmc-4W-mgA">
+                                    <rect key="frame" x="130" y="0.0" width="130" height="85.333333333333329"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="Play"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="de5-SX-PeZ">
+                                    <rect key="frame" x="260" y="0.0" width="130" height="85.333333333333329"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="Next"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="5Tf-Ib-8Qf" firstAttribute="leading" secondItem="huo-Dd-kNB" secondAttribute="leading" id="9OC-x3-uQ4"/>
+                        <constraint firstAttribute="bottom" secondItem="5Tf-Ib-8Qf" secondAttribute="bottom" id="U3Y-qn-slZ"/>
+                        <constraint firstAttribute="trailing" secondItem="5Tf-Ib-8Qf" secondAttribute="trailing" id="WXZ-H3-0B3"/>
                         <constraint firstAttribute="width" secondItem="huo-Dd-kNB" secondAttribute="height" multiplier="365:80" id="goy-4l-SOB"/>
+                        <constraint firstItem="5Tf-Ib-8Qf" firstAttribute="top" secondItem="huo-Dd-kNB" secondAttribute="top" id="tnJ-hC-owf"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SjW-Zl-2dc" userLabel="Volume Area">
@@ -161,6 +188,9 @@
     </objects>
     <resources>
         <image name="Close_Open" width="31" height="17"/>
+        <image name="Next" width="31" height="30"/>
+        <image name="Play" width="31" height="30"/>
+        <image name="Prev" width="32" height="30"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
