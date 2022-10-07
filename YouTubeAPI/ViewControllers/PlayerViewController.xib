@@ -47,20 +47,40 @@
                         <constraint firstAttribute="width" secondItem="fMa-Gq-MBS" secondAttribute="height" multiplier="365:80" id="FIv-yo-ee5"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="huo-Dd-kNB" userLabel="Playback Area">
+                    <rect key="frame" x="0.0" y="425" width="390" height="85.333333333333314"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="huo-Dd-kNB" secondAttribute="height" multiplier="365:80" id="goy-4l-SOB"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SjW-Zl-2dc" userLabel="Volume Area">
+                    <rect key="frame" x="0.0" y="510.33333333333331" width="390" height="69.666666666666686"/>
+                    <color key="backgroundColor" systemColor="systemCyanColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="SjW-Zl-2dc" secondAttribute="height" multiplier="365:65" id="Kyc-V9-Sml"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="gA1-PC-amJ"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="SOT-2c-1vO" firstAttribute="trailing" secondItem="gA1-PC-amJ" secondAttribute="trailing" id="4fm-pA-U0n"/>
+                <constraint firstItem="SjW-Zl-2dc" firstAttribute="trailing" secondItem="gA1-PC-amJ" secondAttribute="trailing" id="6jw-5a-XDM"/>
+                <constraint firstItem="huo-Dd-kNB" firstAttribute="top" secondItem="fMa-Gq-MBS" secondAttribute="bottom" constant="-1.3333333333333144" id="7KI-4j-7WT"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="8Wf-WN-a5S"/>
                 <constraint firstItem="fMa-Gq-MBS" firstAttribute="top" secondItem="SOT-2c-1vO" secondAttribute="bottom" id="Aht-gi-SQ7"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="trailing" secondItem="4eo-eW-Ret" secondAttribute="trailing" id="By7-H5-v55"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="leading" secondItem="4eo-eW-Ret" secondAttribute="leading" id="D9i-xf-EhU"/>
+                <constraint firstItem="SjW-Zl-2dc" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="E9f-O2-Win"/>
                 <constraint firstItem="gA1-PC-amJ" firstAttribute="trailing" secondItem="fMa-Gq-MBS" secondAttribute="trailing" id="PvE-h5-ebI"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XNT-Wl-USU"/>
                 <constraint firstItem="SOT-2c-1vO" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="fnj-RE-eF2"/>
                 <constraint firstItem="3D2-fq-YPm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="g01-tR-gL2"/>
+                <constraint firstItem="huo-Dd-kNB" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="jMc-1X-PC3"/>
                 <constraint firstItem="fMa-Gq-MBS" firstAttribute="leading" secondItem="gA1-PC-amJ" secondAttribute="leading" id="meD-Ax-jWR"/>
+                <constraint firstItem="huo-Dd-kNB" firstAttribute="trailing" secondItem="gA1-PC-amJ" secondAttribute="trailing" id="oXp-3J-Yvx"/>
+                <constraint firstItem="SjW-Zl-2dc" firstAttribute="top" secondItem="huo-Dd-kNB" secondAttribute="bottom" id="rZs-Yz-2u4"/>
                 <constraint firstItem="4eo-eW-Ret" firstAttribute="top" secondItem="3D2-fq-YPm" secondAttribute="bottom" id="rnc-kJ-U6I"/>
                 <constraint firstItem="SOT-2c-1vO" firstAttribute="top" secondItem="4eo-eW-Ret" secondAttribute="bottom" id="vBQ-Ig-Zxe"/>
             </constraints>
