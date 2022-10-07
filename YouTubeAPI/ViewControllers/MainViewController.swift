@@ -280,7 +280,7 @@ class MainViewController: UIViewController {
         self.addChild(playerViewController)
         self.view.addSubview(playerViewController.view)
         
-        playerViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - playerViewHandleAreaHeight, width: self.view.bounds.width, height: playerViewHeight)
+        playerViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - playerViewHandleAreaHeight, width: self.view.bounds.width, height: self.view.frame.height - self.view.safeAreaInsets.top)
         
         playerViewController.view.clipsToBounds = true
         
@@ -309,7 +309,7 @@ class MainViewController: UIViewController {
             startInteractiveTransition(state: playerNextState, duration: 0.9)
         case .changed:
             let translation = recognizer.translation(in: self.playerViewController.handleArea)
-            var fractionComplete = translation.y / playerViewHeight
+            var fractionComplete = translation.y / self.view.frame.height - self.view.safeAreaInsets.top
             fractionComplete = playerVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
@@ -324,7 +324,7 @@ class MainViewController: UIViewController {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.playerViewController.view.frame.origin.y = self.view.frame.height - self.playerViewHeight
+                    self.playerViewController.view.frame.origin.y = self.view.safeAreaInsets.top
                 case .collapsed:
                     self.playerViewController.view.frame.origin.y = self.view.frame.height - self.playerViewHandleAreaHeight
                 }
