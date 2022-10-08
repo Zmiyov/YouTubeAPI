@@ -23,7 +23,7 @@ class SectionHeaderView: UICollectionReusableView {
     let label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .label
+        label.textColor = .white
         
         return label
     }()

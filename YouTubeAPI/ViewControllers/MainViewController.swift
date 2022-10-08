@@ -53,7 +53,12 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPlayer()
+
+        let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
+//        self.view.layer.backgroundColor = darkGrey
+        collectionView.backgroundColor = darkGrey
+        
+       
         // MARK: Collection View Setup
         collectionView.collectionViewLayout = createLayout()
         
@@ -72,7 +77,7 @@ class MainViewController: UIViewController {
         }
 
         configureDataSource()
-        
+        setupPlayer()
     }
     
     //MARK: - Fetching Data
@@ -274,9 +279,6 @@ class MainViewController: UIViewController {
     //MARK: - Setup player VC
     
     func setupPlayer() {
-//        visualEffectView = UIVisualEffectView()
-//        visualEffectView.frame = self.view.frame
-//        self.view.addSubview(visualEffectView)
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
         self.addChild(playerViewController)
@@ -287,30 +289,31 @@ class MainViewController: UIViewController {
         playerViewController.view.clipsToBounds = true
         self.playerViewController.view.layer.cornerRadius = 12
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleAreaTap(recognizer:)))
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleAreaTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
         
-        playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
+//        playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
         playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
         playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
         
     }
 
-    @objc
-    func handleAreaTap(recognizer: UIPanGestureRecognizer) {
-
-        switch recognizer.state {
-        case .ended:
-            animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
-        default:
-            break
-        }
-    }
+//    @objc
+//    func handleAreaTap(recognizer: UIPanGestureRecognizer) {
+//
+//        switch recognizer.state {
+//        case .ended:
+//            animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
+//        default:
+//            break
+//        }
+//    }
     
     @objc func handleButtonTap() {
         
         animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
+        
     }
     
     func deleteVisualEffect(state: PlayerState) {
@@ -320,6 +323,7 @@ class MainViewController: UIViewController {
             visualEffectView.tag = 100
             visualEffectView.frame = self.view.frame
             self.view.insertSubview(visualEffectView, at: 1)
+
         case .collapsed:
             if let viewWithTag = self.view.viewWithTag(100) {
                 viewWithTag.removeFromSuperview()
@@ -368,6 +372,7 @@ class MainViewController: UIViewController {
                     self.playerViewController.view.frame.origin.y = self.view.safeAreaInsets.top
                 case .collapsed:
                     self.playerViewController.view.frame.origin.y = self.view.frame.height - self.playerViewHandleAreaHeight
+                    
                 }
             }
             
@@ -381,7 +386,7 @@ class MainViewController: UIViewController {
             let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.visualEffectView.effect = UIBlurEffect(style: .dark)
+                    self.visualEffectView.effect = UIBlurEffect(style: .light)
                 case .collapsed:
                     self.visualEffectView.effect = nil
                 }

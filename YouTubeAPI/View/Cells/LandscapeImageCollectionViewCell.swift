@@ -31,8 +31,8 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .white
         label.numberOfLines = 2
         label.setContentHuggingPriority(.required, for: .vertical)
         
@@ -42,7 +42,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .secondaryLabel
+        label.textColor = .white
         label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
