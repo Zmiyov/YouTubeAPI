@@ -22,7 +22,8 @@ class PlayerViewController: UIViewController {
     @IBOutlet var videoNameLabel: UILabel!
     @IBOutlet var amountOfViewsLabel: UILabel!
     
-
+    
+    let hostingView = YouTubePlayerHostingView(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +36,7 @@ class PlayerViewController: UIViewController {
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
         
-        
-            
         addVideoPlayerView()
-        
-
     }
     
     
@@ -47,19 +44,24 @@ class PlayerViewController: UIViewController {
 
     }
     
+    @IBAction func previousVideoButton(_ sender: UIButton) {
+        hostingView.player.previousVideo()
+    }
+    
+    @IBAction func playPauseButton(_ sender: UIButton) {
+        hostingView.player.pause()
+        print("playPause")
+    }
+    
+    @IBAction func nextVideoButton(_ sender: UIButton) {
+        hostingView.player.nextVideo()
+    }
+    
+    
     func addVideoPlayerView() {
-//        let youTubePlayer = YouTubePlayer(stringLiteral: "https://www.youtube.com/watch?v=w87fOAG8fjk")
-        let configuration = YouTubePlayer.Configuration(
-            autoPlay: true,
-            showControls: false,
-            loopEnabled: true
-        )
-//        let youTubePlayer = YouTubePlayer(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: configuration)
-        let hostingView = YouTubePlayerHostingView(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: configuration)
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }
-    
     
     func configureGradientLayer() {
         view.backgroundColor = .clear

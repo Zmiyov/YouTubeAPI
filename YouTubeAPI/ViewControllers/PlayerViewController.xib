@@ -148,16 +148,25 @@
                                     <rect key="frame" x="0.0" y="0.0" width="65" height="44"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="Prev"/>
+                                    <connections>
+                                        <action selector="previousVideoButton:" destination="-1" eventType="touchUpInside" id="Ckn-Rx-rlM"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmc-4W-mgA">
                                     <rect key="frame" x="64.999999999999986" y="0.0" width="65.000000000000014" height="44"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="Pause"/>
+                                    <connections>
+                                        <action selector="playPauseButton:" destination="-1" eventType="touchUpInside" id="Xxj-oB-6Dw"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="de5-SX-PeZ">
                                     <rect key="frame" x="130" y="0.0" width="65" height="44"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="Next"/>
+                                    <connections>
+                                        <action selector="nextVideoButton:" destination="-1" eventType="touchUpInside" id="Xvg-YQ-aFk"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
