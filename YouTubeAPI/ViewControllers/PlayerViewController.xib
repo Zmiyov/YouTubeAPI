@@ -10,9 +10,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerViewController" customModule="YouTubeAPI" customModuleProvider="target">
             <connections>
+                <outlet property="amountOfViewsLabel" destination="Zle-Wo-dYk" id="nlc-dw-tWu"/>
+                <outlet property="fullTimeLabel" destination="5HC-9P-tP9" id="dUu-MH-0ob"/>
                 <outlet property="handleArea" destination="3D2-fq-YPm" id="kY0-N7-9aj"/>
                 <outlet property="openCloseButton" destination="d6w-Jq-aZR" id="AGP-us-6SE"/>
+                <outlet property="recentTameLabel" destination="tIB-H6-ET3" id="bDv-Fo-CAV"/>
                 <outlet property="timeLineSlider" destination="hVv-vY-Qcc" id="IcZ-7O-p09"/>
+                <outlet property="videoNameLabel" destination="8AQ-z1-EJS" id="ctP-qo-eP0"/>
+                <outlet property="videoView" destination="4eo-eW-Ret" id="tq0-rx-hsx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
