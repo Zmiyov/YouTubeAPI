@@ -9,6 +9,13 @@ import UIKit
 import YouTubePlayerKit
 
 class PlayerViewController: UIViewController {
+    
+    enum PlayingState {
+        case play
+        case pause
+    }
+    
+    var playingState = false
 
     @IBOutlet var handleArea: UIView!
     @IBOutlet var openCloseButton: UIButton!
@@ -49,8 +56,14 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
-        hostingView.player.pause()
-        print("playPause")
+        
+        if playingState == false {
+            hostingView.player.play()
+            playingState = true
+        } else {
+            hostingView.player.pause()
+            playingState = false
+        }
     }
     
     @IBAction func nextVideoButton(_ sender: UIButton) {
