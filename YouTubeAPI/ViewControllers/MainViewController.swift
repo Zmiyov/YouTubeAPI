@@ -88,7 +88,7 @@ class MainViewController: UIViewController {
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos1 = playlistVideos
-                print(self.playlistVideos1)
+//                print(self.playlistVideos1)
                 completion(true)
             } catch {
                 print(error)

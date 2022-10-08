@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftyJSON
 
 class NetworkController {
     
@@ -29,6 +30,8 @@ class NetworkController {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw YouTubeItemError.playlistItemNotFound
         }
+        let json = try JSON(data: data)
+//        print(json)
         
         let decoder = JSONDecoder()
         let playlistResponse = try decoder.decode(ResponsePlaylististItem.self, from: data)
@@ -37,7 +40,6 @@ class NetworkController {
     
     func getViewCountVideos(videoId: String) async throws -> String {
         
-//        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=\(videoId)&key=\(Constants.apiKey)"
         let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=snippet&id=\(videoId)&key=\(Constants.apiKey)"
         
         let urlComponents = URLComponents(string: apiVideoUrl)!
@@ -47,6 +49,9 @@ class NetworkController {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw YouTubeItemError.videoItemNotFound
         }
+        
+        let json = try JSON(data: data)
+//        print(json)
         
         let decoder = JSONDecoder()
         let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
@@ -65,6 +70,9 @@ class NetworkController {
             throw YouTubeItemError.channelItemNotFound
         }
         
+        let json = try JSON(data: data)
+//        print(json)
+        
         let decoder = JSONDecoder()
         let channelResponse = try decoder.decode(ResponseChannelItem.self, from: data)
         
@@ -82,6 +90,9 @@ class NetworkController {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw YouTubeItemError.searchError
         }
+        
+        let json = try JSON(data: data)
+//        print(json)
         
         let decoder = JSONDecoder()
         let searchResponse = try decoder.decode(ResponseSearchItem.self, from: data)
