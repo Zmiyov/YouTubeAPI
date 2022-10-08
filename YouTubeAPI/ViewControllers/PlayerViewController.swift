@@ -9,13 +9,6 @@ import UIKit
 import YouTubePlayerKit
 
 class PlayerViewController: UIViewController {
-    
-    enum PlayingState {
-        case play
-        case pause
-    }
-    
-    var playingState = false
 
     @IBOutlet var handleArea: UIView!
     @IBOutlet var openCloseButton: UIButton!
@@ -28,6 +21,15 @@ class PlayerViewController: UIViewController {
     
     @IBOutlet var videoNameLabel: UILabel!
     @IBOutlet var amountOfViewsLabel: UILabel!
+    
+    enum PlayingState {
+        case play
+        case pause
+    }
+    
+    
+    
+    var playingState = false
     
     
     let hostingView = YouTubePlayerHostingView(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
@@ -46,6 +48,7 @@ class PlayerViewController: UIViewController {
         addVideoPlayerView()
     }
     
+    //MARK: - Actions
     
     @IBAction func openCloseButtonTapped(_ sender: UIButton) {
 
@@ -69,7 +72,8 @@ class PlayerViewController: UIViewController {
     @IBAction func nextVideoButton(_ sender: UIButton) {
         hostingView.player.nextVideo()
     }
-    
+  
+    //MARK: - Configure UI
     
     func addVideoPlayerView() {
         hostingView.frame = videoView.bounds

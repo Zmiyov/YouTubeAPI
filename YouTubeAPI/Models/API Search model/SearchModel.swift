@@ -13,7 +13,7 @@ struct SearchModel: Decodable, Hashable {
     var channelTitle: String?
     var channelId: String?
     
-    var uploads: String?
+    var allVideoUploadsPlaylistId: String?
     var subscriberCount: String?
     
     

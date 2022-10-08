@@ -55,7 +55,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
-//        self.view.layer.backgroundColor = darkGrey
         collectionView.backgroundColor = darkGrey
         
        
@@ -89,7 +88,7 @@ class MainViewController: UIViewController {
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos1 = playlistVideos
-//                print(self.playlistVideos1)
+                print(self.playlistVideos1)
                 completion(true)
             } catch {
                 print(error)

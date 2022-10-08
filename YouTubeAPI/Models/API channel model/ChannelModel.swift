@@ -9,7 +9,7 @@ import Foundation
 
 struct ChannelModel: Decodable, Hashable {
    
-    var uploads: String?
+    var allVideoUploadsPlaylistId: String?
     var subscriberCount: String?
     
     enum CodingKeys: String, CodingKey {
@@ -18,7 +18,7 @@ struct ChannelModel: Decodable, Hashable {
         case relatedPlaylists
         case statistics
         
-        case uploads
+        case allVideoUploadsPlaylistId = "uploads"
         case subscriberCount
     }
     
@@ -27,7 +27,7 @@ struct ChannelModel: Decodable, Hashable {
         
         let contentDetailsContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .contentDetails)
         let relatedPlaylistsContainer = try contentDetailsContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .relatedPlaylists)
-        self.uploads = try relatedPlaylistsContainer.decode(String.self, forKey: .uploads)
+        self.allVideoUploadsPlaylistId = try relatedPlaylistsContainer.decode(String.self, forKey: .allVideoUploadsPlaylistId)
         
         let statisticsContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .statistics)
         self.subscriberCount = try statisticsContainer.decode(String.self, forKey: .subscriberCount)

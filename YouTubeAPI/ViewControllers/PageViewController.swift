@@ -45,7 +45,7 @@ class MyPageViewController: UIPageViewController {
         getChannels { [self] success in
             getUploadsAndSubscriberCount()
         }
-//        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
+        self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
     }
     
     @objc func changeSlide() {
@@ -82,7 +82,7 @@ class MyPageViewController: UIPageViewController {
                     guard let id = channels[i].channelId else { return }
                     let fetchedCount = try await networkManager.getChannels(channelId: id)
                    
-                    channels[i].uploads = fetchedCount.uploads
+                    channels[i].allVideoUploadsPlaylistId = fetchedCount.allVideoUploadsPlaylistId
                     channels[i].subscriberCount = fetchedCount.subscriberCount
 //                    print(fetchedCount.uploads)
 //                    print(fetchedCount.subscriberCount)

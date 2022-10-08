@@ -37,7 +37,8 @@ class NetworkController {
     
     func getViewCountVideos(videoId: String) async throws -> String {
         
-        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=\(videoId)&key=\(Constants.apiKey)"
+//        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=\(videoId)&key=\(Constants.apiKey)"
+        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=snippet&id=\(videoId)&key=\(Constants.apiKey)"
         
         let urlComponents = URLComponents(string: apiVideoUrl)!
         
@@ -49,7 +50,7 @@ class NetworkController {
         
         let decoder = JSONDecoder()
         let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
-        return videoResponse.items![0].viewCount
+        return videoResponse.items![0].viewCount!
     }
     
     func getChannels(channelId: String) async throws -> ChannelModel {
@@ -72,9 +73,9 @@ class NetworkController {
     
     func getSearchResponse(query: String) async throws -> ResponseSearchItem {
         
-        let apiChannelUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=4&q=\(query)&key=\(Constants.apiKey)"
+        let apiSearchUrl = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=4&q=\(query)&key=\(Constants.apiKey)"
         
-        let urlComponents = URLComponents(string: apiChannelUrl)!
+        let urlComponents = URLComponents(string: apiSearchUrl)!
         
         let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
         
