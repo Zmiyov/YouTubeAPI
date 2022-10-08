@@ -35,8 +35,9 @@ class MainViewController: UIViewController {
     
     var sections = [Section]()
     let networkController = NetworkController()
-    var playlistVideos1 = [PlaylistVideoModel]()
-    var playlistVideos2 = [PlaylistVideoModel]()
+//    var playlistVideos1 = [PlaylistVideoModel]()
+    var playlistVideos1 = [PlaylistItemsVideoModel]()
+    var playlistVideos2 = [PlaylistItemsVideoModel]()
     
     
     var playerViewController: PlayerViewController!
@@ -243,7 +244,7 @@ class MainViewController: UIViewController {
             case .square:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
 
-                cell.configureCell(self.playlistVideos2[indexPath.row])
+                cell.configureCell(self.playlistVideos2[indexPath.row], networkManager: self.networkController)
                 
                 return cell
             }
@@ -276,8 +277,8 @@ class MainViewController: UIViewController {
         snapshot.appendSections([.uiPageVC])
         snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
         
-        let landscapeSection = Section.landscape("Playlist name 1")
-        let squareSection = Section.square("Playlist name 2")
+        let landscapeSection = Section.landscape(playlistVideos1[0].channelTitle!)
+        let squareSection = Section.square(playlistVideos2[0].channelTitle!)
         
         snapshot.appendSections([landscapeSection, squareSection])
         snapshot.appendItems(Item.landscapePlaylist, toSection: landscapeSection)

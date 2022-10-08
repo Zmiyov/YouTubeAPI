@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlaylistVideoModel: Decodable, Hashable {
+struct PlaylistItemsVideoModel: Decodable, Hashable {
     
     var videoId: String?
     var title: String?

@@ -9,7 +9,7 @@ import Foundation
 
 enum Item: Hashable {
     case channel(ChannelModel)
-    case playlist(PlaylistVideoModel)
+    case playlist(PlaylistItemsVideoModel)
     case app(App)
     case category(StoreCategory)
     
@@ -45,6 +45,8 @@ enum Item: Hashable {
         .app(App(promotedHeadline: nil, title: "Game Title1", subtitle: "Game Description", price: nil)),
         .app(App(promotedHeadline: nil, title: "Game Title1", subtitle: "Game Description", price: 6.99)),
         .app(App(promotedHeadline: nil, title: "Game Title1", subtitle: "Game Description", price: nil)),
+        .app(App(promotedHeadline: nil, title: "Game Title1", subtitle: "Game Description", price: nil)),
+        .app(App(promotedHeadline: nil, title: "Game Title1", subtitle: "Game Description", price: nil)),
     ]
     
     static let squarePlaylist: [Item] = [
@@ -53,6 +55,9 @@ enum Item: Hashable {
         .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 3.99)),
         .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
         .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 4.99)),
+        .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
+        .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
+        .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
         .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
         .app(App(promotedHeadline: nil, title: "Game Title2", subtitle: "Game Description", price: 0.99)),
     ]

@@ -99,10 +99,11 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ playlist: PlaylistVideoModel, networkManager: NetworkController) {
+    func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
         titleLabel.text = playlist.title
         subtitleLabel.text = "5555"
         imageView.backgroundColor = .blue
+        
         let urlString = playlist.thumbnail!
         
         Task {

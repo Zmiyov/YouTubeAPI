@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A52C75B128ED779600E25651 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B028ED779600E25651 /* Constants.swift */; };
-		A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */; };
+		A52C75BD28EDB2E400E25651 /* PlaylistItemsVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BC28EDB2E400E25651 /* PlaylistItemsVideoModel.swift */; };
 		A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */; };
 		A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C428EDC09C00E25651 /* VideoModel.swift */; };
 		A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */; };
@@ -45,7 +45,7 @@
 		8471FB9A45A5432094AC9E8C /* Pods-YouTubeAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.release.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.release.xcconfig"; sourceTree = "<group>"; };
 		86AC03B5ED8673E3860B448D /* Pods-YouTubeAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.debug.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.debug.xcconfig"; sourceTree = "<group>"; };
 		A52C75B028ED779600E25651 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVideoModel.swift; sourceTree = "<group>"; };
+		A52C75BC28EDB2E400E25651 /* PlaylistItemsVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemsVideoModel.swift; sourceTree = "<group>"; };
 		A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylististItem.swift; sourceTree = "<group>"; };
 		A52C75C428EDC09C00E25651 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseVideoItem.swift; sourceTree = "<group>"; };
@@ -117,13 +117,13 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		A52C75C028EDB40400E25651 /* API playlist models */ = {
+		A52C75C028EDB40400E25651 /* API playlist items model */ = {
 			isa = PBXGroup;
 			children = (
-				A52C75BC28EDB2E400E25651 /* PlaylistVideoModel.swift */,
+				A52C75BC28EDB2E400E25651 /* PlaylistItemsVideoModel.swift */,
 				A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */,
 			);
-			path = "API playlist models";
+			path = "API playlist items model";
 			sourceTree = "<group>";
 		};
 		A52C75C128EDBF4700E25651 /* API video models */ = {
@@ -223,7 +223,7 @@
 				A592EF7128EF7B7200D6F23E /* API Search model */,
 				A5DE815028EF00750053CDC1 /* API channel model */,
 				A52C75C128EDBF4700E25651 /* API video models */,
-				A52C75C028EDB40400E25651 /* API playlist models */,
+				A52C75C028EDB40400E25651 /* API playlist items model */,
 				A586DEE528EBA7330006983B /* Item.swift */,
 				A5E813AF28EBAFD900A676C7 /* App.swift */,
 				A56BE09328EBB7B000D298EC /* StoreCategory.swift */,
@@ -384,7 +384,7 @@
 				A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */,
 				A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */,
 				A52C75B128ED779600E25651 /* Constants.swift in Sources */,
-				A52C75BD28EDB2E400E25651 /* PlaylistVideoModel.swift in Sources */,
+				A52C75BD28EDB2E400E25651 /* PlaylistItemsVideoModel.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A592EF7328EF7B9200D6F23E /* SearchModel.swift in Sources */,

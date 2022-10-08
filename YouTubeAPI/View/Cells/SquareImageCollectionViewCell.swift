@@ -26,6 +26,8 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
 
         return imageView
     }()
@@ -98,9 +100,19 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ playlist: PlaylistVideoModel) {
+    func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
         titleLabel.text = playlist.title
         subtitleLabel.text = playlist.viewCount
         imageView.backgroundColor = .yellow
+        
+        let urlString = playlist.thumbnail!
+        
+        Task {
+            do {
+                imageView.image = try await networkManager.fetchImage(url: urlString )
+            } catch {
+                print(error)
+            }
+        }
     }
 }
