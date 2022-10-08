@@ -98,9 +98,9 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ app: App) {
-        titleLabel.text = app.title
-        subtitleLabel.text = app.subtitle
-        imageView.backgroundColor = app.color
+    func configureCell(_ playlist: PlaylistVideoModel) {
+        titleLabel.text = playlist.title
+        subtitleLabel.text = playlist.viewCount
+        imageView.backgroundColor = .yellow
     }
 }

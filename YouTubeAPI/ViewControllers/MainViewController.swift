@@ -31,6 +31,8 @@ class MainViewController: UIViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
+    let playlist1DispatchGroup = DispatchGroup()
+    
     var sections = [Section]()
     let networkController = NetworkController()
     var playlistVideos1 = [PlaylistVideoModel]()
@@ -40,7 +42,6 @@ class MainViewController: UIViewController {
     var playerViewController: PlayerViewController!
     var visualEffectView: UIVisualEffectView!
     
-//    let playerViewHeight: CGFloat = 600
     let playerViewHandleAreaHeight: CGFloat = 50
     
     var playerVisible = false
@@ -69,13 +70,14 @@ class MainViewController: UIViewController {
 
         fetchPlaylist1(playlistId: Constants.iosAcadememyPlaylistId) { success in
             self.getViewCount1()
+//            self.configureDataSource()
         }
         
         fetchPlaylist2(playlistId: Constants.infoCarPlaylistId) { success in
             self.getViewCount2()
         }
 
-        configureDataSource()
+        
         setupPlayer()
     }
     
@@ -114,6 +116,8 @@ class MainViewController: UIViewController {
     func getViewCount1() {
 //        print("Count")
         for i in 0..<playlistVideos1.count {
+            playlist1DispatchGroup.enter()
+            
             Task {
                 do {
                     guard let id = playlistVideos1[i].videoId else { return }
@@ -121,11 +125,17 @@ class MainViewController: UIViewController {
                    
                     playlistVideos1[i].viewCount = fetchedCount
 //                    print(fetchedCount)
-                    
+                    playlist1DispatchGroup.leave()
                 } catch {
                     print(error)
                 }
             }
+        }
+        playlist1DispatchGroup.notify(queue: .main) {
+            
+            print(self.playlistVideos1)
+            self.configureDataSource()
+            print("Finished playlist 1 requests.")
         }
     }
     
@@ -226,13 +236,14 @@ class MainViewController: UIViewController {
             case .landscape:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier, for: indexPath) as! LandscapeImageCollectionViewCell
 
-                cell.configureCell(item.app!)
-                
+                cell.configureCell(self.playlistVideos1[indexPath.row], networkManager: self.networkController)
+                print("Configure")
+                print(self.playlistVideos1[indexPath.row])
                 return cell
             case .square:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
 
-                cell.configureCell(item.app!)
+                cell.configureCell(self.playlistVideos2[indexPath.row])
                 
                 return cell
             }
@@ -288,31 +299,14 @@ class MainViewController: UIViewController {
         playerViewController.view.clipsToBounds = true
         self.playerViewController.view.layer.cornerRadius = 12
         
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.handleAreaTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MainViewController.handleCardPan(recognizer:)))
-        
-//        playerViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
         playerViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
         
         playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
-        
     }
-
-//    @objc
-//    func handleAreaTap(recognizer: UIPanGestureRecognizer) {
-//
-//        switch recognizer.state {
-//        case .ended:
-//            animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
-//        default:
-//            break
-//        }
-//    }
     
     @objc func handleButtonTap() {
-        
         animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
-        
     }
     
     func deleteVisualEffect(state: PlayerState) {

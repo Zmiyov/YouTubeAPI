@@ -25,7 +25,9 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
-
+        imageView.backgroundColor = .green
+        imageView.contentMode = .scaleAspectFill
+        
         return imageView
     }()
     
@@ -97,9 +99,18 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ app: App) {
-        titleLabel.text = app.title
-        subtitleLabel.text = app.subtitle
-        imageView.backgroundColor = app.color
+    func configureCell(_ playlist: PlaylistVideoModel, networkManager: NetworkController) {
+        titleLabel.text = playlist.title
+        subtitleLabel.text = "5555"
+        imageView.backgroundColor = .blue
+        let urlString = playlist.thumbnail!
+        
+        Task {
+            do {
+                imageView.image = try await networkManager.fetchImage(url: urlString )
+            } catch {
+                print(error)
+            }
+        }
     }
 }

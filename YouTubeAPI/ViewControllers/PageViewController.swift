@@ -18,7 +18,6 @@ class MyPageViewController: UIPageViewController {
     
     let networkManager = NetworkController()
     
-//    let channelNames: [String] = ["CodeWithChris", "voalearningenglish", "ptuxermann", "Apple"]
     let query = "surf"
     var channels = [SearchModel]()
     let myGroup = DispatchGroup()
