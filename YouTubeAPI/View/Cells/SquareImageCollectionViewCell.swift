@@ -19,6 +19,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 8
+//        stackView.frame = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
         
         return stackView
     }()
@@ -26,6 +27,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
+        imageView.backgroundColor = .green
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
@@ -36,7 +38,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
@@ -92,7 +94,8 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.widthAnchor.constraint(equalTo: stackView.heightAnchor, multiplier: 0.5)
         ])
     }
     

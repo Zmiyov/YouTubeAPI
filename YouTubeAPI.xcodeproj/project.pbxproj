@@ -31,6 +31,8 @@
 		A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A592EF7428EF7BB500D6F23E /* ResponseSearchItem.swift */; };
 		A59F1F4328F0176A00BC4686 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59F1F4128F0176A00BC4686 /* PlayerViewController.swift */; };
 		A59F1F4428F0176A00BC4686 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */; };
+		A5C78B6128F22937009601B3 /* PlaylistsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6028F22937009601B3 /* PlaylistsModel.swift */; };
+		A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */; };
 		A5DE815228EF00A20053CDC1 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE815128EF00A20053CDC1 /* ChannelModel.swift */; };
 		A5DE815428EF00BB0053CDC1 /* ResponseChannelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE815328EF00BB0053CDC1 /* ResponseChannelItem.swift */; };
 		A5E6EEC628EC9AEC008DF5FA /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */; };
@@ -68,6 +70,8 @@
 		A592EF7428EF7BB500D6F23E /* ResponseSearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSearchItem.swift; sourceTree = "<group>"; };
 		A59F1F4128F0176A00BC4686 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
+		A5C78B6028F22937009601B3 /* PlaylistsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsModel.swift; sourceTree = "<group>"; };
+		A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylistists.swift; sourceTree = "<group>"; };
 		A5DE815128EF00A20053CDC1 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		A5DE815328EF00BB0053CDC1 /* ResponseChannelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseChannelItem.swift; sourceTree = "<group>"; };
 		A5E6EEC528EC9AEC008DF5FA /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 		A586DEE428EBA7060006983B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A5C78B5F28F228A6009601B3 /* API Playlists */,
 				A592EF7128EF7B7200D6F23E /* API Search model */,
 				A5DE815028EF00750053CDC1 /* API channel model */,
 				A52C75C128EDBF4700E25651 /* API video models */,
@@ -248,6 +253,15 @@
 				A586DEE128EBA6390006983B /* Supplementary Views */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A5C78B5F28F228A6009601B3 /* API Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				A5C78B6028F22937009601B3 /* PlaylistsModel.swift */,
+				A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */,
+			);
+			path = "API Playlists";
 			sourceTree = "<group>";
 		};
 		A5DE815028EF00750053CDC1 /* API channel model */ = {
@@ -378,6 +392,7 @@
 				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
 				A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */,
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
+				A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */,
 				A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */,
 				A52C75CA28EDD9BD00E25651 /* NetworkController.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
@@ -389,6 +404,7 @@
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A592EF7328EF7B9200D6F23E /* SearchModel.swift in Sources */,
 				A59F1F4328F0176A00BC4686 /* PlayerViewController.swift in Sources */,
+				A5C78B6128F22937009601B3 /* PlaylistsModel.swift in Sources */,
 				A52C75CC28EDE41500E25651 /* FullPlaylistVideoModel.swift in Sources */,
 				A5DE815228EF00A20053CDC1 /* ChannelModel.swift in Sources */,
 				A586DEE328EBA6950006983B /* SectionHeaderView.swift in Sources */,

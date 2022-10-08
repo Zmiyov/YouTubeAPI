@@ -19,6 +19,27 @@ class NetworkController {
         case searchError
     }
     
+    func getPlaylistTitle(playlistId: String) async throws -> String  {
+        
+        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=\(playlistId)&maxResults=10&key=\(Constants.apiKey)"
+        
+        let urlComponents = URLComponents(string: apiVideoUrl)!
+        
+        let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw YouTubeItemError.videoItemNotFound
+        }
+        
+        let json = try JSON(data: data)
+//        print(json)
+        
+        let decoder = JSONDecoder()
+        let playlistResponse = try decoder.decode(ResponsePlaylistists.self, from: data)
+        return playlistResponse.items![0].title!
+        
+    }
+    
     func getPlaylistVideos(playlistId: String) async throws -> ResponsePlaylististItem {
         
         let apiListUrl = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=\(playlistId)&key=\(Constants.apiKey)"
@@ -100,6 +121,8 @@ class NetworkController {
         return searchResponse
         
     }
+    
+    
     
     func fetchImage(url: String) async throws -> UIImage {
         

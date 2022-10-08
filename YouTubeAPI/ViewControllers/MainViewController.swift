@@ -35,10 +35,12 @@ class MainViewController: UIViewController {
     
     var sections = [Section]()
     let networkController = NetworkController()
-//    var playlistVideos1 = [PlaylistVideoModel]()
+
     var playlistVideos1 = [PlaylistItemsVideoModel]()
     var playlistVideos2 = [PlaylistItemsVideoModel]()
     
+    var playlist1Title: String?
+    var playlist2Title: String?
     
     var playerViewController: PlayerViewController!
     var visualEffectView: UIVisualEffectView!
@@ -276,6 +278,18 @@ class MainViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.uiPageVC])
         snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
+        
+        Task {
+            do {
+                
+                self.playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
+                self.playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
+               
+                
+            } catch {
+                print(error)
+            }
+        }
         
         let landscapeSection = Section.landscape(playlistVideos1[0].channelTitle!)
         let squareSection = Section.square(playlistVideos2[0].channelTitle!)

@@ -12,7 +12,7 @@ struct App: Hashable {
     let promotedHeadline: String?
     
     let title: String
-    let subtitle: String
+    let viewCount: String
     let price: Double?
     var formattedPrice: String {
         if let price = price {

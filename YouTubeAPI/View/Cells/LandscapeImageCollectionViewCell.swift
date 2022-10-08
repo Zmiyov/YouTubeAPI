@@ -35,7 +35,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
@@ -44,7 +44,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .white
+        label.textColor = .systemGray4
         label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
@@ -101,7 +101,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
     func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
         titleLabel.text = playlist.title
-        subtitleLabel.text = "5555"
+        subtitleLabel.text = playlist.viewCount
         imageView.backgroundColor = .blue
         
         let urlString = playlist.thumbnail!
