@@ -61,6 +61,7 @@ class PlayerViewController: UIViewController {
 //            }
         }
         addVideoPlayerView()
+        configureMetadata()
     }
     
     //MARK: - Actions
@@ -113,6 +114,18 @@ class PlayerViewController: UIViewController {
         gradient.locations = [0, 1]
         gradient.frame = view.bounds
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func configureMetadata() {
+        hostingView.player.getPlaybackMetadata { result in
+            switch result {
+                
+            case .success(let playbackMetadata):
+                self.videoNameLabel.text = playbackMetadata.title
+            case .failure(let youTubePlayerAPIError):
+                print("Error", youTubePlayerAPIError)
+            }
+        }
     }
 
 }
