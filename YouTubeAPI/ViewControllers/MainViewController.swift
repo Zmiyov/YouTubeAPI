@@ -91,6 +91,7 @@ class MainViewController: UIViewController {
         
         Task {
             do {
+//                let playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos1 = playlistVideos
@@ -106,6 +107,7 @@ class MainViewController: UIViewController {
         
         Task {
             do {
+//                let playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 playlistVideos2 = playlistVideos
@@ -136,8 +138,7 @@ class MainViewController: UIViewController {
             }
         }
         playlist1DispatchGroup.notify(queue: .main) {
-            
-            print(self.playlistVideos1)
+//            print(self.playlistVideos1)
             self.configureDataSource()
             print("Finished playlist 1 requests.")
         }
@@ -162,8 +163,7 @@ class MainViewController: UIViewController {
             }
         }
         playlist2DispatchGroup.notify(queue: .main) {
-            
-            print(self.playlistVideos2)
+//            print(self.playlistVideos2)
             self.configureDataSource()
             print("Finished playlist 2 requests.")
         }
@@ -249,8 +249,7 @@ class MainViewController: UIViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier, for: indexPath) as! LandscapeImageCollectionViewCell
 
                 cell.configureCell(self.playlistVideos1[indexPath.row], networkManager: self.networkController)
-                print("Configure")
-                print(self.playlistVideos1[indexPath.row])
+
                 return cell
             case .square:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
