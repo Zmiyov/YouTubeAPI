@@ -159,7 +159,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmc-4W-mgA">
                                     <rect key="frame" x="64.999999999999986" y="0.0" width="65.000000000000014" height="44"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="Pause"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="Play"/>
                                     <connections>
                                         <action selector="playPauseButton:" destination="-1" eventType="touchUpInside" id="Xxj-oB-6Dw"/>
                                     </connections>
@@ -254,7 +254,7 @@
     <resources>
         <image name="Close_Open_mirror" width="31" height="17"/>
         <image name="Next" width="31" height="30"/>
-        <image name="Pause" width="31" height="30"/>
+        <image name="Play" width="31" height="30"/>
         <image name="Prev" width="32" height="30"/>
         <image name="Sound_Max" width="25" height="25"/>
         <image name="Sound_Min" width="25" height="25"/>
