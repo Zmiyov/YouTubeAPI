@@ -122,9 +122,15 @@ class PlayerViewController: UIViewController {
         hostingView.player.getDuration { result in
             switch result {
             case .success(let success):
-                let duration = Int(success)
-                self.fullTimeLabel.text = String(duration / 60) + ":" + String(duration % 60)
-                print(duration)
+                let date = Date()
+                let cal = Calendar(identifier: .gregorian)
+                let start = cal.startOfDay(for: date)
+                let newDate = start.addingTimeInterval(success)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "mm:ss"
+                let resultString = formatter.string(from: newDate)
+                
+                self.fullTimeLabel.text = resultString
             case .failure(let failure):
                 print(failure)
             }
@@ -135,8 +141,15 @@ class PlayerViewController: UIViewController {
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
             case .success(let success):
-                let elapsedTime = Int(success)
-                self.recentTimeLabel.text = String(elapsedTime / 60) + ":" + String(elapsedTime % 60)
+                let date = Date()
+                let cal = Calendar(identifier: .gregorian)
+                let start = cal.startOfDay(for: date)
+                let newDate = start.addingTimeInterval(success)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "mm:ss"
+                let resultString = formatter.string(from: newDate)
+                
+                self.recentTimeLabel.text = resultString
             case .failure(let failure):
                 print(failure)
             }
