@@ -51,7 +51,15 @@ class PlayerViewController: UIViewController {
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
         
-        
+        hostingView.player.getPlaybackState { result in
+//            switch result {
+//
+//            case .success(let state):
+//
+//            case .failure(error):
+//
+//            }
+        }
         addVideoPlayerView()
     }
     
@@ -70,9 +78,11 @@ class PlayerViewController: UIViewController {
         if playingState == false {
             hostingView.player.play()
             playingState = true
+            playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         } else {
             hostingView.player.pause()
             playingState = false
+            playPauseButton.setImage(UIImage(named: "Play"), for: .normal)
         }
     }
     
