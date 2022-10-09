@@ -90,6 +90,13 @@ class PlayerViewController: UIViewController {
         hostingView.player.nextVideo()
     }
   
+    @IBAction func volumeSlider(_ sender: UISlider) {
+        let volume = Int(sender.value * 100)
+        print(volume)
+        hostingView.player.set(volume: volume)
+    }
+    
+    
     //MARK: - Configure UI
     
     func addVideoPlayerView() {

@@ -198,6 +198,9 @@
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
                                             <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="volumeSlider:" destination="-1" eventType="valueChanged" id="Egl-0T-38m"/>
+                                            </connections>
                                         </slider>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
