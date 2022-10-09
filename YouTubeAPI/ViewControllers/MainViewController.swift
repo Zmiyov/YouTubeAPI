@@ -91,10 +91,11 @@ class MainViewController: UIViewController {
         
         Task {
             do {
-//                let playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
+                let playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
-                playlistVideos1 = playlistVideos
+                self.playlistVideos1 = playlistVideos
+                self.playlist1Title = playlist1Title
 //                print(self.playlistVideos1)
                 completion(true)
             } catch {
@@ -107,10 +108,11 @@ class MainViewController: UIViewController {
         
         Task {
             do {
-//                let playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
+                let playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
                 let fetchedPlaylist = try await networkController.getPlaylistVideos(playlistId: playlistId)
                 guard let playlistVideos = fetchedPlaylist.items else { return }
-                playlistVideos2 = playlistVideos
+                self.playlistVideos2 = playlistVideos
+                self.playlist2Title = playlist2Title
 //                print(self.playlistVideos2)
                 completion(true)
             } catch {
@@ -283,24 +285,15 @@ class MainViewController: UIViewController {
         }
         
         //MARK: Snapshot definition
+        
+        guard let playlist1Title = playlist1Title, let playlist2Title = playlist2Title else { return }
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.uiPageVC])
         snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
         
-//        Task {
-//            do {
-//                
-//                self.playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
-//                self.playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
-//               
-//                
-//            } catch {
-//                print(error)
-//            }
-//        }
-        
-        let landscapeSection = Section.landscape(playlistVideos1[0].channelTitle!)
-        let squareSection = Section.square(playlistVideos2[0].channelTitle!)
+        let landscapeSection = Section.landscape(playlist1Title)
+        let squareSection = Section.square(playlist2Title)
         
         snapshot.appendSections([landscapeSection, squareSection])
         snapshot.appendItems(Item.landscapePlaylist, toSection: landscapeSection)

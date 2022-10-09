@@ -31,19 +31,18 @@ class NetworkController {
             throw YouTubeItemError.videoItemNotFound
         }
         
-        let json = try JSON(data: data)
+//        let json = try JSON(data: data)
 //        print(json)
         
         let decoder = JSONDecoder()
         let playlistResponse = try decoder.decode(ResponsePlaylistists.self, from: data)
-        return playlistResponse.items![0].title!
+        return playlistResponse.items![0].playlistTitle!
         
     }
     
     func getPlaylistVideos(playlistId: String) async throws -> ResponsePlaylististItem {
         
         let apiListUrl = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=\(playlistId)&key=\(Constants.apiKey)"
-        print(apiListUrl)
         
         let urlComponents = URLComponents(string: apiListUrl)!
         
@@ -52,7 +51,7 @@ class NetworkController {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw YouTubeItemError.playlistItemNotFound
         }
-        let json = try JSON(data: data)
+//        let json = try JSON(data: data)
 //        print(json)
         
         let decoder = JSONDecoder()
@@ -72,7 +71,7 @@ class NetworkController {
             throw YouTubeItemError.videoItemNotFound
         }
         
-        let json = try JSON(data: data)
+//        let json = try JSON(data: data)
 //        print(json)
         
         let decoder = JSONDecoder()
@@ -92,7 +91,7 @@ class NetworkController {
             throw YouTubeItemError.channelItemNotFound
         }
         
-        let json = try JSON(data: data)
+//        let json = try JSON(data: data)
 //        print(json)
         
         let decoder = JSONDecoder()
@@ -113,7 +112,7 @@ class NetworkController {
             throw YouTubeItemError.searchError
         }
         
-        let json = try JSON(data: data)
+//        let json = try JSON(data: data)
 //        print(json)
         
         let decoder = JSONDecoder()
