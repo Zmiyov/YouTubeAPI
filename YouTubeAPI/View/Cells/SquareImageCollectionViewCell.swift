@@ -106,6 +106,16 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
     
     func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
         titleLabel.text = playlist.title
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        
+        formatter.locale = Locale.current
+        
+        let formattedString = formatter.string(for: playlist.viewCount)
+        print(formattedString)
+        print(playlist.viewCount)
+        
         subtitleLabel.text = playlist.viewCount
         imageView.backgroundColor = .yellow
         

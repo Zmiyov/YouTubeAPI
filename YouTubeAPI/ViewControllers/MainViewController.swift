@@ -145,8 +145,16 @@ class MainViewController: UIViewController {
                 do {
                     guard let id = playlistVideos1[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
+                    
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = NumberFormatter.Style.decimal
+                    
+                    formatter.locale = Locale(identifier: "fr_FR")
+                    
+                    guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
+                    print(String(describing: formattedString))
                    
-                    playlistVideos1[i].viewCount = fetchedCount + " views"
+                    playlistVideos1[i].viewCount = formattedString + " views"
                     playlist1DispatchGroup.leave()
                 } catch {
                     print(error)
@@ -167,8 +175,16 @@ class MainViewController: UIViewController {
                 do {
                     guard let id = playlistVideos2[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
+                    
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = NumberFormatter.Style.decimal
+                    
+                    formatter.locale = Locale(identifier: "fr_FR")
+                    
+                    guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
+                    print(String(describing: formattedString))
                    
-                    playlistVideos2[i].viewCount = fetchedCount + " views"
+                    playlistVideos2[i].viewCount = formattedString + " views"
                     playlist2DispatchGroup.leave()
                 } catch {
                     print(error)

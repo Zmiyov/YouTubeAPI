@@ -36,6 +36,8 @@ class MyPageViewController: UIPageViewController {
         super.init(coder: coder)
     }
     
+    //MARK: - View DidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,14 +88,12 @@ class MyPageViewController: UIPageViewController {
                    
                     channels[i].allVideoUploadsPlaylistId = fetchedCount.allVideoUploadsPlaylistId
                     channels[i].subscriberCount = fetchedCount.subscriberCount
-//                    print(fetchedCount.uploads)
-//                    print(fetchedCount.subscriberCount)
+
                     myGroup.leave()
                 } catch {
                     print(error)
                 }
             }
-            
         }
         myGroup.notify(queue: .main) {
             print("Finished all requests.")
@@ -106,7 +106,18 @@ class MyPageViewController: UIPageViewController {
             let vc = ExampleViewController()
             vc.playlistId = channels[currentControllerIndex].channelId
             vc.channelNameLabel.text = channels[i].channelTitle
-            vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount! + " subscribers"
+            
+            guard let subscriberCount = channels[i].subscriberCount else { return }
+            
+            let formatter = NumberFormatter()
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            
+            formatter.locale = Locale(identifier: "fr_FR")
+            
+            guard let formattedString = formatter.string(for: Int(subscriberCount)) else { return }
+            print(String(describing: formattedString))
+            
+            vc.amoontOfSubscribersLabel.text = formattedString + " subscribers"
             
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapChannel))
             vc.view.addGestureRecognizer(tapGestureRecognizer)
