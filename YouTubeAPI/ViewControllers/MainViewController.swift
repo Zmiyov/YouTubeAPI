@@ -82,7 +82,7 @@ class MainViewController: UIViewController {
         }
 
         
-        setupPlayer()
+        setupPlayer(playlistId: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb")
     }
     
     //MARK: - Fetching Data
@@ -304,9 +304,10 @@ class MainViewController: UIViewController {
     
     //MARK: - Setup player VC
     
-    func setupPlayer() {
+    func setupPlayer(playlistId: String) {
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
+        playerViewController.hostingView.player.source = .playlist(id: playlistId)
         self.addChild(playerViewController)
         self.view.addSubview(playerViewController.view)
         

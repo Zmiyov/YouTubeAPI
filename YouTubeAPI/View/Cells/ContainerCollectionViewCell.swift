@@ -10,6 +10,7 @@ import UIKit
 class ContainerCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "ContainerCollectionViewCell"
+    var playlistId: String?
     
     let myContainerView: UIView = {
         let v = UIView()
@@ -33,6 +34,7 @@ class ContainerCollectionViewCell: UICollectionViewCell {
             ])
         
         thePageVC = MyPageViewController()
+        thePageVC.delegatePlaylistId = self
         
         thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -48,5 +50,11 @@ class ContainerCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+extension ContainerCollectionViewCell: MyPageViewControllerDelegate {
+    func myPageViewControllerDelegate(_ controller: MyPageViewController, didSelect playlistId: String) {
+        self.playlistId = playlistId
+        print(playlistId)
     }
 }

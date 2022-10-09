@@ -22,17 +22,17 @@ class PlayerViewController: UIViewController {
     @IBOutlet var videoNameLabel: UILabel!
     @IBOutlet var amountOfViewsLabel: UILabel!
     
-    enum PlayingState {
+    enum PlayingMode {
         case play
         case pause
     }
-    
-    
-    
     var playingState = false
     
+    var playlistID: String? 
     
     let hostingView = YouTubePlayerHostingView(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +76,9 @@ class PlayerViewController: UIViewController {
     //MARK: - Configure UI
     
     func addVideoPlayerView() {
+        
+        
+        
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }
@@ -92,3 +95,5 @@ class PlayerViewController: UIViewController {
     }
 
 }
+
+

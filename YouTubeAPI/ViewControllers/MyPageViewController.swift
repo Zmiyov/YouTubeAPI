@@ -7,22 +7,23 @@
 
 import UIKit
 
+protocol MyPageViewControllerDelegate {
+    func myPageViewControllerDelegate(_ controller: MyPageViewController, didSelect playlistId: String)
+}
+
 class MyPageViewController: UIPageViewController {
     
-//    let colors: [UIColor] = [
-//        .red,
-//        .green,
-//        .blue,
-//        .cyan
-//    ]
+    
+    var pages: [UIViewController] = [UIViewController]()
+    var currentControllerIndex = 0
+    
+    var delegatePlaylistId: MyPageViewControllerDelegate?
     
     let networkManager = NetworkController()
     
     let query = "surfing"
     var channels = [SearchModel]()
     let myGroup = DispatchGroup()
-    
-    var pages: [UIViewController] = [UIViewController]()
     
     var tTime: Timer!
     var index = 0
@@ -57,6 +58,8 @@ class MyPageViewController: UIPageViewController {
             setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
         }
     }
+    
+    //MARK: - Fetching Data
     
     func getChannels(completion: @escaping (_ success: Bool) -> Void) {
         
@@ -113,7 +116,7 @@ class MyPageViewController: UIPageViewController {
                     print(error)
                 }
             }
-
+            
             pages.append(vc)
         }
     }
@@ -165,6 +168,15 @@ extension MyPageViewController: UIPageViewControllerDelegate {
             return 0
         }
         
+        self.currentControllerIndex = firstVCIndex
+        
+        guard let currentPlaylistID = channels[firstVCIndex].channelId else  { return firstVCIndex }
+        
+        self.delegatePlaylistId?.myPageViewControllerDelegate(self, didSelect: currentPlaylistID)
+        
         return firstVCIndex
     }
+    
 }
+
+
