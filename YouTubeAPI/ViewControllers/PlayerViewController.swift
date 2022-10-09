@@ -122,12 +122,12 @@ class PlayerViewController: UIViewController {
                 
             case .success(let playbackMetadata):
                 self.videoNameLabel.text = playbackMetadata.title
+                
             case .failure(let youTubePlayerAPIError):
                 print("Error", youTubePlayerAPIError)
             }
         }
     }
-
 }
 
 

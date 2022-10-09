@@ -24,16 +24,17 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 15
+        imageView.layer.cornerRadius = 8
         imageView.backgroundColor = .green
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.textColor = .white
         label.numberOfLines = 1
         label.setContentHuggingPriority(.required, for: .vertical)
@@ -43,9 +44,10 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
     
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .systemGray4
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.setContentHuggingPriority(.required, for: .vertical)
+        let labelColor = UIColor(red: 124.0/255.0, green: 123.0/255.0, blue: 129.0/255.0, alpha: 1.0)
+        label.textColor = labelColor
         
         return label
     }()
@@ -70,7 +72,7 @@ class LandscapeImageCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.66)
+            imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.44)
         ])
         
         labelStackView.addArrangedSubview(titleLabel)

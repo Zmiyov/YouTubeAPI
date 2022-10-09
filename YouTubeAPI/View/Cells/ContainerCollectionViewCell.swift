@@ -13,10 +13,13 @@ class ContainerCollectionViewCell: UICollectionViewCell {
     var playlistId: String?
     
     let myContainerView: UIView = {
-        let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .clear
-        return v
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        
+        return view
     }()
 
     var thePageVC: MyPageViewController!
@@ -30,7 +33,7 @@ class ContainerCollectionViewCell: UICollectionViewCell {
             myContainerView.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
             myContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             myContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            myContainerView.heightAnchor.constraint(equalToConstant: 200.0),
+            myContainerView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.65)
             ])
         
         thePageVC = MyPageViewController()
@@ -39,12 +42,14 @@ class ContainerCollectionViewCell: UICollectionViewCell {
         thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
         
         myContainerView.addSubview(thePageVC.view)
-        
+        thePageVC.view.layer.cornerRadius = 8
+        thePageVC.view.clipsToBounds = true
         NSLayoutConstraint.activate([
             thePageVC.view.topAnchor.constraint(equalTo: myContainerView.topAnchor, constant: 0.0),
-            thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor, constant: 0.0),
+//            thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor, constant: 0.0),
             thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor, constant: 0.0),
             thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor, constant: 0.0),
+            thePageVC.view.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.65)
             ])
     }
     

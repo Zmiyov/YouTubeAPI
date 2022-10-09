@@ -76,7 +76,6 @@ class MainViewController: UIViewController {
 
         fetchPlaylist1(playlistId: Constants.iosAcadememyPlaylistId) { success in
             self.getViewCount1()
-//            self.configureDataSource()
         }
         
         fetchPlaylist2(playlistId: Constants.infoCarPlaylistId) { success in
@@ -114,7 +113,6 @@ class MainViewController: UIViewController {
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 self.playlistVideos1 = playlistVideos
                 self.playlist1Title = playlist1Title
-//                print(self.playlistVideos1)
                 completion(true)
             } catch {
                 print(error)
@@ -131,7 +129,6 @@ class MainViewController: UIViewController {
                 guard let playlistVideos = fetchedPlaylist.items else { return }
                 self.playlistVideos2 = playlistVideos
                 self.playlist2Title = playlist2Title
-//                print(self.playlistVideos2)
                 completion(true)
             } catch {
                 print(error)
@@ -140,7 +137,7 @@ class MainViewController: UIViewController {
     }
     
     func getViewCount1() {
-//        print("Count")
+
         for i in 0..<playlistVideos1.count {
             playlist1DispatchGroup.enter()
             
@@ -150,7 +147,6 @@ class MainViewController: UIViewController {
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
                     playlistVideos1[i].viewCount = fetchedCount + " views"
-//                    print(fetchedCount)
                     playlist1DispatchGroup.leave()
                 } catch {
                     print(error)
@@ -158,14 +154,12 @@ class MainViewController: UIViewController {
             }
         }
         playlist1DispatchGroup.notify(queue: .main) {
-//            print(self.playlistVideos1)
             self.configureDataSource()
             print("Finished playlist 1 requests.")
         }
     }
     
     func getViewCount2() {
-//        print("Count")
         for i in 0..<playlistVideos2.count {
             playlist2DispatchGroup.enter()
             
@@ -175,7 +169,6 @@ class MainViewController: UIViewController {
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
                     playlistVideos2[i].viewCount = fetchedCount + " views"
-//                    print("2", fetchedCount)
                     playlist2DispatchGroup.leave()
                 } catch {
                     print(error)
@@ -183,7 +176,6 @@ class MainViewController: UIViewController {
             }
         }
         playlist2DispatchGroup.notify(queue: .main) {
-//            print(self.playlistVideos2)
             self.configureDataSource()
             print("Finished playlist 2 requests.")
         }
@@ -209,13 +201,13 @@ class MainViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.5))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.55))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 30, trailing: 0)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 40, trailing: 0)
                 
                 return section
                 
@@ -223,9 +215,9 @@ class MainViewController: UIViewController {
                 //MARK: Lanscape Section Layout
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.4))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .fractionalWidth(0.28))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
@@ -239,9 +231,9 @@ class MainViewController: UIViewController {
                 //MARK: Square Section Layout
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.46), heightDimension: .fractionalWidth(0.55))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.42), heightDimension: .fractionalWidth(0.48))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
@@ -267,15 +259,11 @@ class MainViewController: UIViewController {
                 return cell
             case .landscape:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LandscapeImageCollectionViewCell.reuseIdentifier, for: indexPath) as! LandscapeImageCollectionViewCell
-
                 cell.configureCell(self.playlistVideos1[indexPath.row], networkManager: self.networkController)
-
                 return cell
             case .square:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier, for: indexPath) as! SquareImageCollectionViewCell
-
                 cell.configureCell(self.playlistVideos2[indexPath.row], networkManager: self.networkController)
-                
                 return cell
             }
         })
@@ -323,9 +311,7 @@ class MainViewController: UIViewController {
     //MARK: - Setup player VC
     
     func setupPlayer(playlistId: String, visibilityState: Bool) {
-//        var playerNextState: PlayerState {
-//            return playerVisible ? .collapsed : .expanded
-//        }
+
         self.playerVisible = visibilityState
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
