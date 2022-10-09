@@ -18,7 +18,7 @@ class MyPageViewController: UIPageViewController {
     
     let networkManager = NetworkController()
     
-    let query = "surf"
+    let query = "surfing"
     var channels = [SearchModel]()
     let myGroup = DispatchGroup()
     
@@ -102,7 +102,7 @@ class MyPageViewController: UIPageViewController {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
             vc.channelNameLabel.text = channels[i].channelTitle
-            vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount
+            vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount! + " subscribers"
 //            vc.view.backgroundColor = colors[i]
             let urlString = channels[i].thumbnail!
             

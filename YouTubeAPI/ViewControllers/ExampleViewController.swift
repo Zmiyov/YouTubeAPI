@@ -21,8 +21,9 @@ class ExampleViewController: UIViewController {
     let channelNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .white
+        label.backgroundColor = .clear
         label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
         return label
     }()
@@ -30,8 +31,10 @@ class ExampleViewController: UIViewController {
     let amoontOfSubscribersLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .white
+        label.backgroundColor = .clear
         label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .systemGray2
         
         return label
     }()
@@ -48,7 +51,6 @@ class ExampleViewController: UIViewController {
             backgroungImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroungImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroungImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            backgroungImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroungImage.widthAnchor.constraint(equalTo: view.widthAnchor),
             backgroungImage.heightAnchor.constraint(equalTo: backgroungImage.widthAnchor, multiplier: 0.5)
             ])
@@ -57,7 +59,7 @@ class ExampleViewController: UIViewController {
         view.addSubview(amoontOfSubscribersLabel)
         NSLayoutConstraint.activate([
             channelNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            channelNameLabel.bottomAnchor.constraint(equalTo: amoontOfSubscribersLabel.topAnchor, constant: -10),
+            channelNameLabel.bottomAnchor.constraint(equalTo: amoontOfSubscribersLabel.topAnchor, constant: 0),
             channelNameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             amoontOfSubscribersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             amoontOfSubscribersLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),

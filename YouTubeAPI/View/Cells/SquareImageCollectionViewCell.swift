@@ -95,7 +95,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.widthAnchor.constraint(equalTo: stackView.heightAnchor, multiplier: 0.5)
+//            stackView.widthAnchor.constraint(equalTo: stackView.heightAnchor, multiplier: 0.5)
         ])
     }
     

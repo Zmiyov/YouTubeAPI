@@ -32,6 +32,7 @@ class MainViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
     let playlist1DispatchGroup = DispatchGroup()
+    let playlist2DispatchGroup = DispatchGroup()
     
     var sections = [Section]()
     let networkController = NetworkController()
@@ -126,7 +127,7 @@ class MainViewController: UIViewController {
                     guard let id = playlistVideos1[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
-                    playlistVideos1[i].viewCount = fetchedCount
+                    playlistVideos1[i].viewCount = fetchedCount + " views"
 //                    print(fetchedCount)
                     playlist1DispatchGroup.leave()
                 } catch {
@@ -145,18 +146,26 @@ class MainViewController: UIViewController {
     func getViewCount2() {
 //        print("Count")
         for i in 0..<playlistVideos2.count {
+            playlist2DispatchGroup.enter()
+            
             Task {
                 do {
                     guard let id = playlistVideos2[i].videoId else { return }
                     let fetchedCount = try await networkController.getViewCountVideos(videoId: id)
                    
-                    playlistVideos2[i].viewCount = fetchedCount
+                    playlistVideos2[i].viewCount = fetchedCount + " views"
 //                    print("2", fetchedCount)
-                    
+                    playlist2DispatchGroup.leave()
                 } catch {
                     print(error)
                 }
             }
+        }
+        playlist2DispatchGroup.notify(queue: .main) {
+            
+            print(self.playlistVideos2)
+            self.configureDataSource()
+            print("Finished playlist 2 requests.")
         }
     }
     
@@ -279,17 +288,17 @@ class MainViewController: UIViewController {
         snapshot.appendSections([.uiPageVC])
         snapshot.appendItems(Item.promotedApps, toSection: .uiPageVC)
         
-        Task {
-            do {
-                
-                self.playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
-                self.playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
-               
-                
-            } catch {
-                print(error)
-            }
-        }
+//        Task {
+//            do {
+//                
+//                self.playlist1Title = try await networkController.getPlaylistTitle(playlistId: Constants.iosAcadememyPlaylistId)
+//                self.playlist2Title = try await networkController.getPlaylistTitle(playlistId: Constants.infoCarPlaylistId)
+//               
+//                
+//            } catch {
+//                print(error)
+//            }
+//        }
         
         let landscapeSection = Section.landscape(playlistVideos1[0].channelTitle!)
         let squareSection = Section.square(playlistVideos2[0].channelTitle!)

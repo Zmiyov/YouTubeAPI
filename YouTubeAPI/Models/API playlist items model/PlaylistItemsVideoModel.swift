@@ -13,6 +13,7 @@ struct PlaylistItemsVideoModel: Decodable, Hashable {
     var title: String?
     var channelTitle: String?
     var thumbnail: String?
+    
     var viewCount: String?
     
     enum CodingKeys: String, CodingKey {

@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--YouTube API-->
+        <!--Surfing-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="YouTubeAPI" customModuleProvider="target" sceneMemberID="viewController">
@@ -37,7 +37,7 @@
                             <constraint firstItem="Eqy-Yw-atc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="g3l-4F-Lh3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="YouTube API" id="6f8-eh-Qho"/>
+                    <navigationItem key="navigationItem" title="Surfing" id="6f8-eh-Qho"/>
                     <connections>
                         <outlet property="collectionView" destination="Eqy-Yw-atc" id="uUl-DR-ONi"/>
                     </connections>

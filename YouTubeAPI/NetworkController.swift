@@ -43,6 +43,7 @@ class NetworkController {
     func getPlaylistVideos(playlistId: String) async throws -> ResponsePlaylististItem {
         
         let apiListUrl = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=\(playlistId)&key=\(Constants.apiKey)"
+        print(apiListUrl)
         
         let urlComponents = URLComponents(string: apiListUrl)!
         
