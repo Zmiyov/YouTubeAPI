@@ -62,6 +62,8 @@ class PlayerViewController: UIViewController {
         }
         addVideoPlayerView()
         configureMetadata()
+        setDuration()
+        getElapsedTime()
     }
     
     //MARK: - Actions
@@ -100,11 +102,6 @@ class PlayerViewController: UIViewController {
     
     //MARK: - Configure UI
     
-    func addVideoPlayerView() {
-        hostingView.frame = videoView.bounds
-        videoView.addSubview(hostingView)
-    }
-    
     func configureGradientLayer() {
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
@@ -114,6 +111,36 @@ class PlayerViewController: UIViewController {
         gradient.locations = [0, 1]
         gradient.frame = view.bounds
         view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func addVideoPlayerView() {
+        hostingView.frame = videoView.bounds
+        videoView.addSubview(hostingView)
+    }
+    
+    func setDuration() {
+        hostingView.player.getDuration { result in
+            switch result {
+            case .success(let success):
+                let duration = Int(success)
+                self.fullTimeLabel.text = String(duration / 60) + ":" + String(duration % 60)
+                print(duration)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func getElapsedTime() {
+        hostingView.player.getCurrentTime(completion: { result in
+            switch result {
+            case .success(let success):
+                let elapsedTime = Int(success)
+                self.recentTimeLabel.text = String(elapsedTime / 60) + ":" + String(elapsedTime % 60)
+            case .failure(let failure):
+                print(failure)
+            }
+        })
     }
     
     func configureMetadata() {
