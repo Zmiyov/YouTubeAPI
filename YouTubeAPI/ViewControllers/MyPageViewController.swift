@@ -104,9 +104,13 @@ class MyPageViewController: UIPageViewController {
     func showChannels() {
         for i in 0..<channels.count {
             let vc = ExampleViewController()
+            vc.playlistId = channels[currentControllerIndex].channelId
             vc.channelNameLabel.text = channels[i].channelTitle
             vc.amoontOfSubscribersLabel.text = channels[i].subscriberCount! + " subscribers"
-//            vc.view.backgroundColor = colors[i]
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapChannel))
+            vc.view.addGestureRecognizer(tapGestureRecognizer)
+            
             let urlString = channels[i].thumbnail!
             
             Task {
@@ -119,6 +123,13 @@ class MyPageViewController: UIPageViewController {
             
             pages.append(vc)
         }
+    }
+    
+    @objc func tapChannel() {
+//        print("\(channels[currentControllerIndex].channelId)")
+        var info = [String: String]()
+        info["id"] = channels[currentControllerIndex].channelId
+        NotificationCenter.default.post(name: .playlistID, object: nil, userInfo: info)
     }
 }
 
@@ -179,4 +190,6 @@ extension MyPageViewController: UIPageViewControllerDelegate {
     
 }
 
-
+extension Notification.Name {
+    static let playlistID = Notification.Name("playlistID")
+}

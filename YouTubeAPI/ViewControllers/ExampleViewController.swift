@@ -9,6 +9,8 @@ import UIKit
 
 class ExampleViewController: UIViewController {
     
+    var playlistId: String?
+    
     var backgroungImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .brown
@@ -65,5 +67,14 @@ class ExampleViewController: UIViewController {
             amoontOfSubscribersLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
             amoontOfSubscribersLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4)
         ])
+        
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: backgroungImage, action: #selector(tapChannel))
+//        backgroungImage.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+//    @objc func tapChannel() {
+//        print("Tap channel")
+//    }
+    
+    
 }

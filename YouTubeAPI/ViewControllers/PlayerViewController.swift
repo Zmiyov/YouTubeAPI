@@ -16,11 +16,17 @@ class PlayerViewController: UIViewController {
     @IBOutlet var videoView: UIView!
     
     @IBOutlet var timeLineSlider: UISlider!
-    @IBOutlet var recentTameLabel: UILabel!
+    @IBOutlet var recentTimeLabel: UILabel!
     @IBOutlet var fullTimeLabel: UILabel!
     
     @IBOutlet var videoNameLabel: UILabel!
     @IBOutlet var amountOfViewsLabel: UILabel!
+    
+    @IBOutlet var previousButton: UIButton!
+    @IBOutlet var playPauseButton: UIButton!
+    @IBOutlet var nextButton: UIButton!
+    
+    @IBOutlet var volumeSlider: UISlider!
     
     enum PlayingMode {
         case play
@@ -44,6 +50,7 @@ class PlayerViewController: UIViewController {
         configureGradientLayer()
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
+        
         
         addVideoPlayerView()
     }
@@ -76,9 +83,6 @@ class PlayerViewController: UIViewController {
     //MARK: - Configure UI
     
     func addVideoPlayerView() {
-        
-        
-        
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }

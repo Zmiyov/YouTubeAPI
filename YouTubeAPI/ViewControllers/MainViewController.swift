@@ -7,6 +7,7 @@
 
 
 import UIKit
+import YouTubePlayerKit
 
 class MainViewController: UIViewController {
     
@@ -49,9 +50,9 @@ class MainViewController: UIViewController {
     let playerViewHandleAreaHeight: CGFloat = 50
     
     var playerVisible = false
-    var playerNextState: PlayerState {
-        return playerVisible ? .collapsed : .expanded
-    }
+//    var playerNextState: PlayerState {
+//        return playerVisible ? .collapsed : .expanded
+//    }
     
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted: CGFloat = 0
@@ -61,9 +62,10 @@ class MainViewController: UIViewController {
 
         let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
         collectionView.backgroundColor = darkGrey
-        
+        collectionView.delegate = self
        
         // MARK: Collection View Setup
+        
         collectionView.collectionViewLayout = createLayout()
         
         collectionView.register(ContainerCollectionViewCell.self, forCellWithReuseIdentifier: ContainerCollectionViewCell.reuseIdentifier)
@@ -81,9 +83,25 @@ class MainViewController: UIViewController {
             self.getViewCount2()
         }
 
+        NotificationCenter.default.addObserver(self, selector: #selector(obserber(notification: )), name: .playlistID, object: nil)
         
-        setupPlayer(playlistId: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb")
+        setupPlayer(playlistId: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb", visibilityState: playerVisible)
     }
+    
+    @objc func obserber(notification: Notification) {
+        print("Observer")
+        
+        if let dict = notification.userInfo as NSDictionary? {
+            if let playlistId = dict["id"] as? String {
+                self.playerViewController.hostingView.player.source = .playlist(id: playlistId)
+                
+                handleButtonTap()
+                print("noti " + playlistId)
+            }
+        }
+        
+    }
+    
     
     //MARK: - Fetching Data
     
@@ -304,7 +322,11 @@ class MainViewController: UIViewController {
     
     //MARK: - Setup player VC
     
-    func setupPlayer(playlistId: String) {
+    func setupPlayer(playlistId: String, visibilityState: Bool) {
+//        var playerNextState: PlayerState {
+//            return playerVisible ? .collapsed : .expanded
+//        }
+        self.playerVisible = visibilityState
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
         playerViewController.hostingView.player.source = .playlist(id: playlistId)
@@ -323,7 +345,12 @@ class MainViewController: UIViewController {
     }
     
     @objc func handleButtonTap() {
-        animateTransitionIfNeeded(state: playerNextState, duration: 0.9)
+        if playerVisible {
+            animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
+        } else {
+            animateTransitionIfNeeded(state: .expanded, duration: 0.9)
+        }
+        
     }
     
     func deleteVisualEffect(state: PlayerState) {
@@ -356,7 +383,12 @@ class MainViewController: UIViewController {
     func handleCardPan (recognizer:UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
-            startInteractiveTransition(state: playerNextState, duration: 0.9)
+            if playerVisible {
+                startInteractiveTransition(state: .collapsed, duration: 0.9)
+            } else {
+                animateTransitionIfNeeded(state: .expanded, duration: 0.9)
+            }
+            
         case .changed:
             let translation = recognizer.translation(in: self.playerViewController.handleArea)
             var fractionComplete = translation.y / (self.view.frame.height - self.view.safeAreaInsets.top)
@@ -427,6 +459,14 @@ class MainViewController: UIViewController {
             animation.continueAnimation(withTimingParameters: nil, durationFactor: 0)
         }
     }
-    
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        print("Tap didselect")
+        
+    }
 }
 
