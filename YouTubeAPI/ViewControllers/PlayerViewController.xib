@@ -71,7 +71,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loc-O0-rSy">
                                     <rect key="frame" x="0.0" y="0.0" width="358.66666666666669" height="18.666666666666668"/>
                                     <subviews>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc" userLabel="Timeline Slider">
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc" userLabel="Timeline Slider">
                                             <rect key="frame" x="-2" y="-5.6666666666666288" width="362.66666666666669" height="31"/>
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>

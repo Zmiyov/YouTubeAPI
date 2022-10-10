@@ -43,6 +43,11 @@ class PlayerViewController: UIViewController {
     
     var hostingView: YouTubePlayerHostingView!
     
+    var fullTime: Int?
+    var elapsedTime: Int?
+    var timelineTimer: Timer?
+    var timelineValue: Timer?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +55,7 @@ class PlayerViewController: UIViewController {
         setDuration()
         getElapsedTime()
         getViewCount()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,6 +75,7 @@ class PlayerViewController: UIViewController {
         
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
+       
     }
     
     //MARK: - Actions
@@ -93,10 +100,14 @@ class PlayerViewController: UIViewController {
             hostingView.player.play()
             playingState = true
             playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
+            self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(setTimelineSlider), userInfo: nil, repeats: true)
+            self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(setTimelineSlider), userInfo: nil, repeats: true)
         } else {
             hostingView.player.pause()
             playingState = false
             playPauseButton.setImage(UIImage(named: "Play"), for: .normal)
+            self.timelineTimer?.invalidate()
+            self.timelineValue?.invalidate()
         }
     }
     
@@ -147,6 +158,19 @@ class PlayerViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
+    @objc func setTimelineSlider() {
+        guard let fullTime = self.fullTime else { return }
+        let secondsInOnePercent = Float(fullTime) / 100
+        guard let elapsedTime = self.elapsedTime else { return }
+        print(fullTime)
+        print(secondsInOnePercent)
+        print(elapsedTime)
+        
+        
+        let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
+        print("Timeline", timeLineValue)
+        timeLineSlider.value = Float(timeLineValue)
+    }
     
     func addVideoPlayerView(playlistID: String) {
         
@@ -171,13 +195,15 @@ class PlayerViewController: UIViewController {
                 let resultString = formatter.string(from: newDate)
                 
                 self.fullTimeLabel.text = resultString
+                self.fullTime = Int(success)
+                
             case .failure(let failure):
                 print(failure)
             }
         }
     }
     
-    func getElapsedTime() {
+    @objc func getElapsedTime() {
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
             case .success(let success):
@@ -190,6 +216,9 @@ class PlayerViewController: UIViewController {
                 let resultString = formatter.string(from: newDate)
                 
                 self.recentTimeLabel.text = resultString
+                print(success )
+                self.elapsedTime = Int(success)
+                
             case .failure(let failure):
                 print(failure)
             }
@@ -203,8 +232,8 @@ class PlayerViewController: UIViewController {
             switch result {
                 
             case .success(let playbackMetadata):
-                
                 completion(playbackMetadata.title)
+                
             case .failure(let youTubePlayerAPIError):
                 print("Error", youTubePlayerAPIError)
             }

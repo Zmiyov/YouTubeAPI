@@ -103,7 +103,6 @@ class MainViewController: UIViewController {
                 handleButtonTap()
             }
         }
-        
     }
     
     
@@ -244,6 +243,7 @@ class MainViewController: UIViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 30, trailing: 0)
                 
                 return section
+                
             case .square:
                 //MARK: Square Section Layout
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -256,7 +256,7 @@ class MainViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging
                 section.boundarySupplementaryItems = [headerItem]
-                
+        
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 15, bottom: 20, trailing: 0)
                 
                 return section
@@ -288,6 +288,7 @@ class MainViewController: UIViewController {
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath -> UICollectionReusableView? in
             switch kind {
             case SupplementaryViewKind.header:
+                
                 let section = self.sections[indexPath.section]
                 let sectionName: String
                 switch section {
@@ -332,7 +333,6 @@ class MainViewController: UIViewController {
         self.playerVisible = visibilityState
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
-//        playerViewController.hostingView.player.source = .playlist(id: playlistId)
         self.addChild(playerViewController)
         self.view.addSubview(playerViewController.view)
         
