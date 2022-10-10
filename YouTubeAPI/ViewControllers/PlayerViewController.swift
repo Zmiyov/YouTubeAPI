@@ -74,7 +74,11 @@ class PlayerViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func openCloseButtonTapped(_ sender: UIButton) {
-
+        if playingState == true {
+            hostingView.player.pause()
+            playingState = false
+            playPauseButton.setImage(UIImage(named: "Play"), for: .normal)
+        }
     }
     
     @IBAction func previousVideoButton(_ sender: UIButton) {
