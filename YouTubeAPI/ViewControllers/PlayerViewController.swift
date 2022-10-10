@@ -55,8 +55,8 @@ class PlayerViewController: UIViewController {
         
         addVideoPlayerView(playlistID: self.playlistID)
         
-        configureMetadata { success in
-            self.videoNameLabel.text = success
+        configureMetadata { name in
+            self.videoNameLabel.text = name
         }
         
         setDuration()
@@ -80,10 +80,9 @@ class PlayerViewController: UIViewController {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
             
-            configureMetadata { success in
-                self.videoNameLabel.text = success
-            }
-            
+        }
+        configureMetadata { name in
+            self.videoNameLabel.text = name
         }
     }
     
@@ -219,7 +218,7 @@ class PlayerViewController: UIViewController {
         })
     }
     
-    func configureMetadata(completion: @escaping (_ success: String) -> Void) {
+    func configureMetadata(completion: @escaping (_ name: String) -> Void) {
 
         
         hostingView.player.getPlaybackMetadata { result in
@@ -227,7 +226,7 @@ class PlayerViewController: UIViewController {
                 
             case .success(let playbackMetadata):
                 
-                self.videoNameLabel.text = playbackMetadata.title
+//                self.videoNameLabel.text = playbackMetadata.title
                 
 //                self.setVideoName(playbackMetadata.title)
                 
@@ -238,10 +237,10 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    @MainActor
-    private func setVideoName(_ name: String) {
-        self.videoNameLabel.text = name
-    }
+//    @MainActor
+//    private func setVideoName(_ name: String) {
+//        self.videoNameLabel.text = name
+//    }
 }
 
 
