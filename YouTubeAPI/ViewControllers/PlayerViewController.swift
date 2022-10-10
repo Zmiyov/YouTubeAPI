@@ -54,9 +54,11 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         
         addVideoPlayerView(playlistID: self.playlistID)
+        
         configureMetadata { success in
             self.videoNameLabel.text = success
         }
+        
         setDuration()
         getElapsedTime()
         getViewCount()
@@ -74,14 +76,13 @@ class PlayerViewController: UIViewController {
 
         print("Did layout")
         if let playlistFromChannel = playlistFromChannel {
-            print("Playlist id in layout is", playlistFromChannel)
-//            addVideoPlayerView(playlistID: playlistFromChannel)
-//            hostingView.player.source = .playlist(id: "PLHFlHpPjgk71PWkMe6CjZiQjJaUneFS28")
+
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
-//            configureMetadata { success in
-//                self.videoNameLabel.text = success
-//            }
+            
+            configureMetadata { success in
+                self.videoNameLabel.text = success
+            }
             
         }
     }
@@ -96,9 +97,9 @@ class PlayerViewController: UIViewController {
         hostingView.player.previousVideo()
         playingState = true
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
-        configureMetadata { success in
-            self.videoNameLabel.text = success
-        }
+//        configureMetadata { success in
+//            self.videoNameLabel.text = success
+//        }
         
     }
     
@@ -118,9 +119,9 @@ class PlayerViewController: UIViewController {
     
     @IBAction func nextVideoButton(_ sender: UIButton) {
         
-        configureMetadata { success in
-            self.videoNameLabel.text = success
-        }
+//        configureMetadata { success in
+//            self.videoNameLabel.text = success
+//        }
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         
         hostingView.player.nextVideo()
@@ -225,13 +226,21 @@ class PlayerViewController: UIViewController {
             switch result {
                 
             case .success(let playbackMetadata):
+                
                 self.videoNameLabel.text = playbackMetadata.title
-
+                
+//                self.setVideoName(playbackMetadata.title)
+                
                 completion(playbackMetadata.title)
             case .failure(let youTubePlayerAPIError):
                 print("Error", youTubePlayerAPIError)
             }
         }
+    }
+    
+    @MainActor
+    private func setVideoName(_ name: String) {
+        self.videoNameLabel.text = name
     }
 }
 
