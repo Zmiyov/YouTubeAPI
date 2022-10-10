@@ -100,13 +100,13 @@ class MyPageViewController: UIPageViewController {
             }
         }
         myGroup.notify(queue: .main) {
-            print("Finished all channel requests.")
             
             self.showChannels()
         }
     }
     
     func showChannels() {
+        
         for i in 0..<channels.count {
             let vc = ExampleViewController()
             vc.playlistId = channels[currentControllerIndex].channelId
@@ -135,6 +135,7 @@ class MyPageViewController: UIPageViewController {
             
             pages.append(vc)
         }
+        
     }
     
     @objc func tapChannel() {

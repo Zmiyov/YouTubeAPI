@@ -33,6 +33,7 @@
 		A59F1F4428F0176A00BC4686 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */; };
 		A5C78B6128F22937009601B3 /* PlaylistsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6028F22937009601B3 /* PlaylistsModel.swift */; };
 		A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */; };
+		A5C78B6528F453D3009601B3 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */; };
 		A5DE815228EF00A20053CDC1 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE815128EF00A20053CDC1 /* ChannelModel.swift */; };
 		A5DE815428EF00BB0053CDC1 /* ResponseChannelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE815328EF00BB0053CDC1 /* ResponseChannelItem.swift */; };
 		A5E6EEC628EC9AEC008DF5FA /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC528EC9AEC008DF5FA /* MyPageViewController.swift */; };
@@ -72,6 +73,7 @@
 		A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
 		A5C78B6028F22937009601B3 /* PlaylistsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsModel.swift; sourceTree = "<group>"; };
 		A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylistists.swift; sourceTree = "<group>"; };
+		A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		A5DE815128EF00A20053CDC1 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		A5DE815328EF00BB0053CDC1 /* ResponseChannelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseChannelItem.swift; sourceTree = "<group>"; };
 		A5E6EEC528EC9AEC008DF5FA /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				A56E744A28F0410D00724774 /* MainViewController */,
 				A5DE815528EF08CA0053CDC1 /* ChannelChildVCs */,
 				A56E744B28F0412400724774 /* PlayerViewController */,
+				A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */,
 				A52C75B128ED779600E25651 /* Constants.swift in Sources */,
 				A52C75BD28EDB2E400E25651 /* PlaylistItemsVideoModel.swift in Sources */,
+				A5C78B6528F453D3009601B3 /* SpinnerViewController.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A592EF7328EF7B9200D6F23E /* SearchModel.swift in Sources */,

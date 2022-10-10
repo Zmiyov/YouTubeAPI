@@ -147,6 +147,7 @@ class PlayerViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
+    
     func addVideoPlayerView(playlistID: String) {
         
         let player = YouTubePlayerHostingView(source: .playlist(id: playlistID), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))

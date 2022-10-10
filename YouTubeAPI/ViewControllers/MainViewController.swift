@@ -56,6 +56,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createSpinnerView()
 
         let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
         collectionView.backgroundColor = darkGrey
@@ -468,6 +470,29 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 
         print("Tap didselect")
         
+    }
+}
+
+//MARK: - Activity Indicator
+
+extension MainViewController {
+    
+    func createSpinnerView() {
+        let child = SpinnerViewController()
+
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+
+        // wait two seconds to simulate some work happening
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+            // then remove the spinner view controller
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
     }
 }
 
