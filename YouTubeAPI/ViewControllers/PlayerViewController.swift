@@ -56,6 +56,8 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         addVideoPlayerView(playlistID: self.playlistID)
         
+        print("did channel")
+        
 //        Task {
 //            setDuration()
 //            getElapsedTime()
@@ -63,17 +65,24 @@ class PlayerViewController: UIViewController {
 //        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getPlaylistVideosIds()
+        
+        print("will channel")
+    }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        print("layout channel")
         configureGradientLayer()
-        Task {
-            do {
-                setDuration()
-                getElapsedTime()
-                getViewCount()
-            }
-        
-        }
+        getPlayingVideoIndex()
+//                setDuration()
+//                getElapsedTime()
+//                getPlayingVideoIndex()
+//                getViewCount()
+
         
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
@@ -111,11 +120,9 @@ class PlayerViewController: UIViewController {
             playingState = true
             playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
             
-            DispatchQueue.asyncMainIfNeeded {
-                
-                self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
-                self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
-            }
+            self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
+            self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
+            
 
         } else {
             hostingView.player.pause()
@@ -130,6 +137,11 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.nextVideo()
         playingState = true
+        
+        self.setDuration()
+        self.getElapsedTime()
+        self.getPlayingVideoIndex()
+        self.getViewCount()
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -163,10 +175,10 @@ class PlayerViewController: UIViewController {
     }
     
     func getPlaylistVideosIds() {
+        
         hostingView.player.getPlaylist { result in
             switch result {
             case .success(let success):
-                let playlistIdsArray = success
                 self.playlistVideosIds = success
             case .failure(let failure):
                 print(failure)
@@ -195,7 +207,7 @@ class PlayerViewController: UIViewController {
                 let duration = success.duration
                 print(duration)
                 let currentTime = success.currentTime
-                print(currentTime)
+                print("current", currentTime)
                 let videoUrl = success.videoUrl
                 print(videoUrl)
             case .failure(let failure):
@@ -245,6 +257,7 @@ class PlayerViewController: UIViewController {
         hostingView.player.getDuration { result in
             switch result {
             case .success(let success):
+                print("DuraTion", success)
                 let date = Date()
                 let cal = Calendar(identifier: .gregorian)
                 let start = cal.startOfDay(for: date)
@@ -271,6 +284,7 @@ class PlayerViewController: UIViewController {
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
             case .success(let success):
+                print("Elapsed", success)
                 let date = Date()
                 let cal = Calendar(identifier: .gregorian)
                 let start = cal.startOfDay(for: date)
