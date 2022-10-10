@@ -58,11 +58,8 @@ class PlayerViewController: UIViewController {
         
         print("did channel")
         
-//        Task {
-//            setDuration()
-//            getElapsedTime()
-//            getViewCount()
-//        }
+        let timelineSliderThumbImage = UIImage(named: "Line.png")
+        timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,29 +69,32 @@ class PlayerViewController: UIViewController {
         print("will channel")
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        getPlayingVideoIndex()
+        
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         print("layout channel")
         configureGradientLayer()
-        getPlayingVideoIndex()
-//                setDuration()
-//                getElapsedTime()
-//                getPlayingVideoIndex()
-//                getViewCount()
+        getViewCount()
+        setDuration()
+        getElapsedTime()
+//        getPlayingVideoIndex()
+//        getViewCount()
 
         
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
         }
-        configureMetadata { name in
-            self.setVideoName(name)
+        Task {
+            configureMetadata { name in
+                self.setVideoName(name)
+            }
         }
-        
-        let timelineSliderThumbImage = UIImage(named: "Line.png")
-        timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
-       
     }
     
     //MARK: - Actions
@@ -108,9 +108,14 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func previousVideoButton(_ sender: UIButton) {
+        playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
         playingState = true
-        playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
+        
+        self.setDuration()
+        self.getElapsedTime()
+        self.getPlayingVideoIndex()
+        self.getViewCount()
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
