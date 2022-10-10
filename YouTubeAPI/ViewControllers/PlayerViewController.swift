@@ -42,6 +42,9 @@ class PlayerViewController: UIViewController {
     var playlistFromChannel: String?
     
     var hostingView: YouTubePlayerHostingView!
+    var playlistVideosIds = [String]()
+    var playingVideoIndex: Int?
+
     
     var fullTime: Int?
     var elapsedTime: Int?
@@ -52,18 +55,25 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addVideoPlayerView(playlistID: self.playlistID)
-        setDuration()
-        getElapsedTime()
-        getViewCount()
         
+//        Task {
+//            setDuration()
+//            getElapsedTime()
+//            getViewCount()
+//        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureGradientLayer()
-        setDuration()
-        getElapsedTime()
-        getViewCount()
+        Task {
+            do {
+                setDuration()
+                getElapsedTime()
+                getViewCount()
+            }
+        
+        }
         
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
@@ -100,8 +110,13 @@ class PlayerViewController: UIViewController {
             hostingView.player.play()
             playingState = true
             playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
-            self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(setTimelineSlider), userInfo: nil, repeats: true)
-            self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(setTimelineSlider), userInfo: nil, repeats: true)
+            
+            DispatchQueue.asyncMainIfNeeded {
+                
+                self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
+                self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
+            }
+
         } else {
             hostingView.player.pause()
             playingState = false
@@ -129,7 +144,9 @@ class PlayerViewController: UIViewController {
         
         Task {
             do {
-                let fetchedCount = try await networkController.getViewCountVideos(videoId: "175GAmhgzSk")
+                guard let index = playingVideoIndex else { return }
+                let videoId = playlistVideosIds[index]
+                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
                 
                 let formatter = NumberFormatter()
                 formatter.numberStyle = NumberFormatter.Style.decimal
@@ -138,14 +155,61 @@ class PlayerViewController: UIViewController {
                 
                 guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
                 
-                self.amountOfViewsLabel.text = formattedString + " views"
+                self.setViewCount(formattedString)
             } catch {
                 print(error)
             }
         }
     }
+    
+    func getPlaylistVideosIds() {
+        hostingView.player.getPlaylist { result in
+            switch result {
+            case .success(let success):
+                let playlistIdsArray = success
+                self.playlistVideosIds = success
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func getPlayingVideoIndex() {
+        hostingView.player.getPlaylistIndex { result in
+            switch result {
+            case .success(let success):
+                self.playingVideoIndex = success
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func getData() {
+        
+        hostingView.player.getInformation { result in
+            switch result {
+            case .success(let success):
+                let volume = success.volume
+                print(volume)
+                let duration = success.duration
+                print(duration)
+                let currentTime = success.currentTime
+                print(currentTime)
+                let videoUrl = success.videoUrl
+                print(videoUrl)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 
     //MARK: - Configure UI
+    
+    @MainActor
+    private func setViewCount(_ formattedString: String) {
+        self.amountOfViewsLabel.text = formattedString + " views"
+    }
     
     func configureGradientLayer() {
         view.backgroundColor = .clear
@@ -158,29 +222,24 @@ class PlayerViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
+    @MainActor
     @objc func setTimelineSlider() {
         guard let fullTime = self.fullTime else { return }
         let secondsInOnePercent = Float(fullTime) / 100
         guard let elapsedTime = self.elapsedTime else { return }
-        print(fullTime)
-        print(secondsInOnePercent)
-        print(elapsedTime)
-        
         
         let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
-        print("Timeline", timeLineValue)
         timeLineSlider.value = Float(timeLineValue)
     }
     
+    @MainActor
     func addVideoPlayerView(playlistID: String) {
-        
         let player = YouTubePlayerHostingView(source: .playlist(id: playlistID), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
         self.hostingView = player
-        
-        
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }
+    
     
     func setDuration() {
         hostingView.player.getDuration { result in
@@ -194,13 +253,18 @@ class PlayerViewController: UIViewController {
                 formatter.dateFormat = "mm:ss"
                 let resultString = formatter.string(from: newDate)
                 
-                self.fullTimeLabel.text = resultString
+                self.setFullTime(resultString)
                 self.fullTime = Int(success)
                 
             case .failure(let failure):
                 print(failure)
             }
         }
+    }
+    
+    @MainActor
+    private func setFullTime(_ duration: String) {
+        self.fullTimeLabel.text = duration
     }
     
     @objc func getElapsedTime() {
@@ -215,7 +279,7 @@ class PlayerViewController: UIViewController {
                 formatter.dateFormat = "mm:ss"
                 let resultString = formatter.string(from: newDate)
                 
-                self.recentTimeLabel.text = resultString
+                self.setRecentTime(resultString)
                 print(success )
                 self.elapsedTime = Int(success)
                 
@@ -225,17 +289,23 @@ class PlayerViewController: UIViewController {
         })
     }
     
+    @MainActor
+    private func setRecentTime(_ time: String) {
+        self.recentTimeLabel.text = time
+    }
+    
     func configureMetadata(completion: @escaping (_ name: String) -> Void) {
 
-        
-        hostingView.player.getPlaybackMetadata { result in
-            switch result {
-                
-            case .success(let playbackMetadata):
-                completion(playbackMetadata.title)
-                
-            case .failure(let youTubePlayerAPIError):
-                print("Error", youTubePlayerAPIError)
+        Task {
+            hostingView.player.getPlaybackMetadata { result in
+                switch result {
+                    
+                case .success(let playbackMetadata):
+                    completion(playbackMetadata.title)
+                    
+                case .failure(let youTubePlayerAPIError):
+                    print("Error", youTubePlayerAPIError)
+                }
             }
         }
     }
@@ -243,6 +313,18 @@ class PlayerViewController: UIViewController {
     @MainActor
     private func setVideoName(_ name: String) {
         self.videoNameLabel.text = name
+    }
+}
+
+extension DispatchQueue {
+    static public func asyncMainIfNeeded(work: @escaping () -> Void) {
+        if Thread.isMainThread {
+            work()
+            return
+        }
+        DispatchQueue.main.async {
+            work()
+        }
     }
 }
 
