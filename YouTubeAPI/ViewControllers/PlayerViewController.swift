@@ -41,21 +41,17 @@ class PlayerViewController: UIViewController {
     
     var playlistFromChannel: String?
     
-    
-//    var hostingView = YouTubePlayerHostingView(source: .playlist(id: ""), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
+//    var videoName: String = "" {
+//        didSet {
+//            videoNameLabel.text = title
+//        }
+//    }
     
     var hostingView: YouTubePlayerHostingView!
     
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-//        hostingView.frame = videoView.bounds
-//        videoView.addSubview(hostingView)
-        
         
         addVideoPlayerView(playlistID: self.playlistID)
         configureMetadata { success in
@@ -65,16 +61,6 @@ class PlayerViewController: UIViewController {
         getElapsedTime()
         getViewCount()
         print("Playlist Id did")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("Will Appear")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("Did Appear")
     }
     
     override func viewDidLayoutSubviews() {
@@ -93,9 +79,10 @@ class PlayerViewController: UIViewController {
 //            hostingView.player.source = .playlist(id: "PLHFlHpPjgk71PWkMe6CjZiQjJaUneFS28")
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
-            configureMetadata { success in
-                self.videoNameLabel.text = success
-            }
+//            configureMetadata { success in
+//                self.videoNameLabel.text = success
+//            }
+            
         }
     }
     
@@ -136,12 +123,9 @@ class PlayerViewController: UIViewController {
         }
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         
-        
         hostingView.player.nextVideo()
         playingState = true
-        
     
-        view.layoutIfNeeded()
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -242,8 +226,7 @@ class PlayerViewController: UIViewController {
                 
             case .success(let playbackMetadata):
                 self.videoNameLabel.text = playbackMetadata.title
-//                playbackMetadata = playbackMetadata.title
-//                print("Title", playbackMetadata.title)
+
                 completion(playbackMetadata.title)
             case .failure(let youTubePlayerAPIError):
                 print("Error", youTubePlayerAPIError)

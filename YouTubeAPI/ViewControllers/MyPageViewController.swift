@@ -50,6 +50,10 @@ class MyPageViewController: UIPageViewController {
         self.tTime = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(changeSlide), userInfo: nil, repeats: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        tTime.invalidate()
+    }
+    
     @objc func changeSlide() {
         index += 1
         if index < self.pages.count {
