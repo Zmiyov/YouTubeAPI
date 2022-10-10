@@ -60,6 +60,6 @@ class ContainerCollectionViewCell: UICollectionViewCell {
 extension ContainerCollectionViewCell: MyPageViewControllerDelegate {
     func myPageViewControllerDelegate(_ controller: MyPageViewController, didSelect playlistId: String) {
         self.playlistId = playlistId
-        print(playlistId)
+//        print(playlistId)
     }
 }

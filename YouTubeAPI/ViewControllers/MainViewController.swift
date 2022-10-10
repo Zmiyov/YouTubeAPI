@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(obserber(notification: )), name: .playlistID, object: nil)
         
-        setupPlayer(playlistId: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb", visibilityState: playerVisible)
+        setupPlayer(playlistId: "", visibilityState: playerVisible)
     }
     
     @objc func obserber(notification: Notification) {
@@ -92,7 +92,10 @@ class MainViewController: UIViewController {
         
         if let dict = notification.userInfo as NSDictionary? {
             if let playlistId = dict["id"] as? String {
-                self.playerViewController.hostingView.player.source = .playlist(id: playlistId)
+                
+                self.playerViewController.playingState = true
+                self.playerViewController.playlistFromChannel = playlistId
+                self.playerViewController.playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
                 
                 handleButtonTap()
                 print("noti " + playlistId)
@@ -152,7 +155,7 @@ class MainViewController: UIViewController {
                     formatter.locale = Locale(identifier: "fr_FR")
                     
                     guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
-                    print(String(describing: formattedString))
+//                    print(String(describing: formattedString))
                    
                     playlistVideos1[i].viewCount = formattedString + " views"
                     playlist1DispatchGroup.leave()
@@ -182,7 +185,7 @@ class MainViewController: UIViewController {
                     formatter.locale = Locale(identifier: "fr_FR")
                     
                     guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
-                    print(String(describing: formattedString))
+//                    print(String(describing: formattedString))
                    
                     playlistVideos2[i].viewCount = formattedString + " views"
                     playlist2DispatchGroup.leave()
@@ -331,7 +334,7 @@ class MainViewController: UIViewController {
         self.playerVisible = visibilityState
         
         playerViewController = PlayerViewController(nibName: "PlayerViewController", bundle: nil)
-        playerViewController.hostingView.player.source = .playlist(id: playlistId)
+//        playerViewController.hostingView.player.source = .playlist(id: playlistId)
         self.addChild(playerViewController)
         self.view.addSubview(playerViewController.view)
         

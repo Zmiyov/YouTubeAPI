@@ -16,7 +16,7 @@ struct App: Hashable {
     let price: Double?
     var formattedPrice: String {
         if let price = price {
-            guard let localCurrencyCode = Locale.autoupdatingCurrent.currencyCode else {
+            guard let localCurrencyCode = Locale.autoupdatingCurrent.currency?.identifier else {
                 return String(price)
             }
             return price.formatted(.currency(code: localCurrencyCode))

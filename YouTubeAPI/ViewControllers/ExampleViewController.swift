@@ -48,6 +48,7 @@ class ExampleViewController: UIViewController {
         super.viewDidLoad()
         
         view.layer.cornerRadius = 8
+        view.clipsToBounds = true
         
         view.addSubview(backgroungImage)
         backgroungImage.layer.cornerRadius = 8

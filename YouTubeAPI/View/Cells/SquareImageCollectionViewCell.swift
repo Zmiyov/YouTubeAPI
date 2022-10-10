@@ -19,7 +19,6 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 8
-//        stackView.frame = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
         
         return stackView
     }()
@@ -96,7 +95,6 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            stackView.widthAnchor.constraint(equalTo: stackView.heightAnchor, multiplier: 0.5)
         ])
     }
     
@@ -106,15 +104,6 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
     
     func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
         titleLabel.text = playlist.title
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        
-        formatter.locale = Locale.current
-        
-        let formattedString = formatter.string(for: playlist.viewCount)
-        print(formattedString)
-        print(playlist.viewCount)
         
         subtitleLabel.text = playlist.viewCount
         imageView.backgroundColor = .yellow

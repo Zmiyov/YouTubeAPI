@@ -32,17 +32,47 @@ class PlayerViewController: UIViewController {
         case play
         case pause
     }
+    
+    let networkController = NetworkController()
+    
     var playingState = false
     
-    var playlistID: String? 
+    let playlistID: String = "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"
     
-    let hostingView = YouTubePlayerHostingView(source: .playlist(id: "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
+    var playlistFromChannel: String?
+    
+    
+//    var hostingView = YouTubePlayerHostingView(source: .playlist(id: ""), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
+    
+    var hostingView: YouTubePlayerHostingView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        
+//        hostingView.frame = videoView.bounds
+//        videoView.addSubview(hostingView)
+        
+        
+        addVideoPlayerView(playlistID: self.playlistID)
+        configureMetadata()
+        setDuration()
+        getElapsedTime()
+        getViewCount()
+        print("Playlist Id did")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Will Appear")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("Did Appear")
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,20 +80,14 @@ class PlayerViewController: UIViewController {
         configureGradientLayer()
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
-        
-        hostingView.player.getPlaybackState { result in
-//            switch result {
-//
-//            case .success(let state):
-//
-//            case .failure(error):
-//
-//            }
+
+        print("Did layout")
+        if let playlistFromChannel = playlistFromChannel {
+            print("Playlist id in layout is", playlistFromChannel)
+//            addVideoPlayerView(playlistID: playlistFromChannel)
+            hostingView.player.source = .playlist(id: "PLHFlHpPjgk71PWkMe6CjZiQjJaUneFS28")
+            hostingView.player.configuration.autoPlay = true
         }
-        addVideoPlayerView()
-        configureMetadata()
-        setDuration()
-        getElapsedTime()
     }
     
     //MARK: - Actions
@@ -73,6 +97,8 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func previousVideoButton(_ sender: UIButton) {
+        playingState = true
+        playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
     }
     
@@ -90,6 +116,8 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func nextVideoButton(_ sender: UIButton) {
+        playingState = true
+        playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.nextVideo()
     }
   
@@ -99,7 +127,29 @@ class PlayerViewController: UIViewController {
         hostingView.player.set(volume: volume)
     }
     
+    //MARK: - fetch data
     
+    func getViewCount() {
+        
+        Task {
+            do {
+                let fetchedCount = try await networkController.getViewCountVideos(videoId: "175GAmhgzSk")
+                
+                let formatter = NumberFormatter()
+                formatter.numberStyle = NumberFormatter.Style.decimal
+                
+                formatter.locale = Locale(identifier: "fr_FR")
+                
+                guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
+//                print(String(describing: formattedString))
+                
+                self.amountOfViewsLabel.text = formattedString + " views"
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     //MARK: - Configure UI
     
     func configureGradientLayer() {
@@ -113,7 +163,12 @@ class PlayerViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
-    func addVideoPlayerView() {
+    func addVideoPlayerView(playlistID: String) {
+        
+        let player = YouTubePlayerHostingView(source: .playlist(id: playlistID), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
+        self.hostingView = player
+        
+        
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }

@@ -96,7 +96,8 @@ class MyPageViewController: UIPageViewController {
             }
         }
         myGroup.notify(queue: .main) {
-            print("Finished all requests.")
+            print("Finished all channel requests.")
+            
             self.showChannels()
         }
     }
@@ -115,7 +116,7 @@ class MyPageViewController: UIPageViewController {
             formatter.locale = Locale(identifier: "fr_FR")
             
             guard let formattedString = formatter.string(for: Int(subscriberCount)) else { return }
-            print(String(describing: formattedString))
+//            print(String(describing: formattedString))
             
             vc.amoontOfSubscribersLabel.text = formattedString + " subscribers"
             
@@ -137,7 +138,6 @@ class MyPageViewController: UIPageViewController {
     }
     
     @objc func tapChannel() {
-//        print("\(channels[currentControllerIndex].channelId)")
         var info = [String: String]()
         info["id"] = channels[currentControllerIndex].channelId
         NotificationCenter.default.post(name: .playlistID, object: nil, userInfo: info)
