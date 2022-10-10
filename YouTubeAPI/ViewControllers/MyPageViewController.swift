@@ -116,12 +116,8 @@ class MyPageViewController: UIPageViewController {
             
             let formatter = NumberFormatter()
             formatter.numberStyle = NumberFormatter.Style.decimal
-            
             formatter.locale = Locale(identifier: "fr_FR")
-            
             guard let formattedString = formatter.string(for: Int(subscriberCount)) else { return }
-//            print(String(describing: formattedString))
-            
             vc.amoontOfSubscribersLabel.text = formattedString + " subscribers"
             
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapChannel))
