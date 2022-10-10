@@ -58,7 +58,9 @@ class PlayerViewController: UIViewController {
         
         
         addVideoPlayerView(playlistID: self.playlistID)
-        configureMetadata()
+        configureMetadata { success in
+            self.videoNameLabel.text = success
+        }
         setDuration()
         getElapsedTime()
         getViewCount()
@@ -78,6 +80,9 @@ class PlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureGradientLayer()
+        setDuration()
+        getElapsedTime()
+        getViewCount()
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
 
@@ -85,8 +90,12 @@ class PlayerViewController: UIViewController {
         if let playlistFromChannel = playlistFromChannel {
             print("Playlist id in layout is", playlistFromChannel)
 //            addVideoPlayerView(playlistID: playlistFromChannel)
-            hostingView.player.source = .playlist(id: "PLHFlHpPjgk71PWkMe6CjZiQjJaUneFS28")
+//            hostingView.player.source = .playlist(id: "PLHFlHpPjgk71PWkMe6CjZiQjJaUneFS28")
+            hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
+            configureMetadata { success in
+                self.videoNameLabel.text = success
+            }
         }
     }
     
@@ -97,9 +106,13 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func previousVideoButton(_ sender: UIButton) {
+        hostingView.player.previousVideo()
         playingState = true
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
-        hostingView.player.previousVideo()
+        configureMetadata { success in
+            self.videoNameLabel.text = success
+        }
+        
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
@@ -113,12 +126,22 @@ class PlayerViewController: UIViewController {
             playingState = false
             playPauseButton.setImage(UIImage(named: "Play"), for: .normal)
         }
+        
     }
     
     @IBAction func nextVideoButton(_ sender: UIButton) {
-        playingState = true
+        
+        configureMetadata { success in
+            self.videoNameLabel.text = success
+        }
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
+        
+        
         hostingView.player.nextVideo()
+        playingState = true
+        
+    
+        view.layoutIfNeeded()
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -211,13 +234,17 @@ class PlayerViewController: UIViewController {
         })
     }
     
-    func configureMetadata() {
+    func configureMetadata(completion: @escaping (_ success: String) -> Void) {
+
+        
         hostingView.player.getPlaybackMetadata { result in
             switch result {
                 
             case .success(let playbackMetadata):
                 self.videoNameLabel.text = playbackMetadata.title
-                
+//                playbackMetadata = playbackMetadata.title
+//                print("Title", playbackMetadata.title)
+                completion(playbackMetadata.title)
             case .failure(let youTubePlayerAPIError):
                 print("Error", youTubePlayerAPIError)
             }

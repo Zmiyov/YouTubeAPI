@@ -87,6 +87,11 @@ class MainViewController: UIViewController {
         setupPlayer(playlistId: "", visibilityState: playerVisible)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func obserber(notification: Notification) {
         print("Observer")
         

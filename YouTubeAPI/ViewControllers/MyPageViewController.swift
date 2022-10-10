@@ -139,7 +139,7 @@ class MyPageViewController: UIPageViewController {
     
     @objc func tapChannel() {
         var info = [String: String]()
-        info["id"] = channels[currentControllerIndex].channelId
+        info["id"] = channels[currentControllerIndex].allVideoUploadsPlaylistId
         NotificationCenter.default.post(name: .playlistID, object: nil, userInfo: info)
     }
 }
