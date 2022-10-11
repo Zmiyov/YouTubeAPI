@@ -43,7 +43,7 @@ class PlayerViewController: UIViewController {
     
     var hostingView: YouTubePlayerHostingView!
     var playlistVideosIds = [String]()
-    var playingVideoIndex: Int?
+    var playingVideoIndex = 0
     
     var fullTime: Int?
     var elapsedTime: Int?
@@ -103,13 +103,17 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
         playingState = true
+        
+        if self.playingVideoIndex > 0 {
+            self.playingVideoIndex -= 1
+        }
 
         self.updateAllUI()
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
 
-//        updateAllUI()
+        updateAllUI()
         if playingState == false {
             hostingView.player.play()
             playingState = true
@@ -131,6 +135,10 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.nextVideo()
         playingState = true
+        
+        if self.playingVideoIndex <= self.playlistVideosIds.count {
+            self.playingVideoIndex += 1
+        }
 
         self.updateAllUI()
     }
@@ -147,6 +155,8 @@ class PlayerViewController: UIViewController {
         if let playlistFromChannel = self.playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
+            updateAllUI()
+            self.playingVideoIndex = 0
         }
     }
     
@@ -169,62 +179,81 @@ class PlayerViewController: UIViewController {
         
         Task {
             do {
-                print("task duration")
-                let duration = try await getDuration()
-                print("duration", duration)
-                self.setDuration(duration)
-            } catch {
-                print(error)
-            }
-        }
-        
-        Task {
-            do {
-                print("task elapsed time")
-                let elapsedTime = try await getElapsedTime()
-                print("Elapsed time", elapsedTime)
-                self.setElapsedTime(elapsedTime)
-            } catch {
-                print(error)
-            }
-        }
-        
-        Task {
-            do {
-                print("task title")
-                let title = try await configureMetadata()
-                print("Title", title)
-                self.setVideoName(title)
-            } catch {
-                print(error)
-            }
-        }
-        
-        Task {
-            do {
                 print("task getPlaylistIdArray")
                 let playlistIdArray = try await getPlaylistVideosIds()
                 print("playlistIdArray", playlistIdArray)
                 self.setPlaylistVideosIds(playlistIdArray)
                 
-                //Get video index
-                print("task playingVideoIndex")
-                let index = try await getPlayingVideoIndex()
-                print("playingVideoIndex", index)
-                self.setPlayingVideoIndex(index)
+//                //Get video index
+//                print("task playingVideoIndex")
+//                let index = try await getPlayingVideoIndex()
+//                print("getPlayingVideoIndex", index)
+//                self.setPlayingVideoIndex(index)
+                
+
+                
+                print("task title")
+                let title = try await configureMetadata()
+                print("Title", title)
+                self.setVideoName(title)
+                
+                print("task duration")
+                let duration = try await getDuration()
+                print("duration", duration)
+                self.setDuration(duration)
+                
+                print("task elapsed time")
+                let elapsedTime = try await getElapsedTime()
+                print("Elapsed time", elapsedTime)
+                self.setElapsedTime(elapsedTime)
                 
                 //Get views count
                 print("task getViewCountVideos")
-                let videoId = self.playlistVideosIds[index]
+                let videoId = self.playlistVideosIds[self.playingVideoIndex]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
                 print("fetched count", fetchedCount)
                 //Set views count
+
                 self.viewCount = fetchedCount
                 self.setViewCount(fetchedCount)
+                
             } catch {
                 print(error)
             }
         }
+        
+//        Task {
+//            do {
+//                print("task duration")
+//                let duration = try await getDuration()
+//                print("duration", duration)
+//                self.setDuration(duration)
+//            } catch {
+//                print(error)
+//            }
+//        }
+        
+//        Task {
+//            do {
+//                print("task elapsed time")
+//                let elapsedTime = try await getElapsedTime()
+//                print("Elapsed time", elapsedTime)
+//                self.setElapsedTime(elapsedTime)
+//            } catch {
+//                print(error)
+//            }
+//        }
+        
+//        Task {
+//            do {
+//                print("task title")
+//                let title = try await configureMetadata()
+//                print("Title", title)
+//                self.setVideoName(title)
+//            } catch {
+//                print(error)
+//            }
+//        }
     }
     
     //MARK: - Fetch data
@@ -244,7 +273,7 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setVideoName(_ name: String) {
-        print("set Title")
+        print("set Video name")
         self.videoNameLabel.text = name
     }
     
@@ -263,18 +292,18 @@ class PlayerViewController: UIViewController {
     }
 //    @MainActor
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
-        print("set Playlist Videos Ids")
+        print("setPlaylistVideosIds")
         self.playlistVideosIds = playlistIdArray
     }
     
     func getPlayingVideoIndex() async throws -> Int {
-        print("getPlayingVideoIndex")
+//        print("getPlayingVideoIndex")
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
             hostingView.player.getPlaylistIndex { result in
                 switch result {
                 case .success(let success):
                     inCont.resume(returning: success)
-                    print("getPlayingVideoIndex", success)
+//                    print("getPlayingVideoIndex", success)
                 case .failure(let failure):
                     print(failure)
                 }
@@ -283,13 +312,13 @@ class PlayerViewController: UIViewController {
     }
 //    @MainActor
     private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
-        print("set Playlist Videos Index")
+        print("setPlaylistVideosIndex")
         self.playingVideoIndex = playingVideoIndex
     }
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
-        print("Set view count")
+        print("SetViewCount")
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
@@ -314,7 +343,7 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setDuration(_ duration: Double) {
-        print("set Duration")
+        print("setDuration")
         
         let date = Date()
         let cal = Calendar(identifier: .gregorian)
@@ -344,7 +373,7 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setElapsedTime(_ elapsedTime: Double) {
-        print("setRecentTime")
+        print("setElapsedTime")
         
         let date = Date()
         let cal = Calendar(identifier: .gregorian)
