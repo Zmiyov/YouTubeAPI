@@ -108,12 +108,15 @@ class PlayerViewController: UIViewController {
             self.playingVideoIndex -= 1
         }
 
-        self.updateAllUI()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.updateAllUI()
+        }
+        
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
 
-        updateAllUI()
+//        updateAllUI()
         if playingState == false {
             hostingView.player.play()
             playingState = true
@@ -139,8 +142,10 @@ class PlayerViewController: UIViewController {
         if self.playingVideoIndex <= self.playlistVideosIds.count {
             self.playingVideoIndex += 1
         }
-
-        self.updateAllUI()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.updateAllUI()
+        }
+        
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -213,47 +218,12 @@ class PlayerViewController: UIViewController {
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
                 print("fetched count", fetchedCount)
                 //Set views count
-
-                self.viewCount = fetchedCount
                 self.setViewCount(fetchedCount)
                 
             } catch {
                 print(error)
             }
         }
-        
-//        Task {
-//            do {
-//                print("task duration")
-//                let duration = try await getDuration()
-//                print("duration", duration)
-//                self.setDuration(duration)
-//            } catch {
-//                print(error)
-//            }
-//        }
-        
-//        Task {
-//            do {
-//                print("task elapsed time")
-//                let elapsedTime = try await getElapsedTime()
-//                print("Elapsed time", elapsedTime)
-//                self.setElapsedTime(elapsedTime)
-//            } catch {
-//                print(error)
-//            }
-//        }
-        
-//        Task {
-//            do {
-//                print("task title")
-//                let title = try await configureMetadata()
-//                print("Title", title)
-//                self.setVideoName(title)
-//            } catch {
-//                print(error)
-//            }
-//        }
     }
     
     //MARK: - Fetch data
