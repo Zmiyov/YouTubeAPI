@@ -165,19 +165,9 @@ class PlayerViewController: UIViewController {
         }
     }
     
-//    func getPlaylist() {
-//
-//        Task {
-//            do {
-//                print("task playlistIdArray")
-//                let playlistIdArray = try await getPlaylistVideosIds()
-//                print("playlistIdArray", playlistIdArray)
-//                self.setPlaylistVideosIds(playlistIdArray)
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
+    func updateUIfromAPI() {
+        
+    }
     
     func updateAllUI() {
         print("Update all ui")
@@ -194,8 +184,6 @@ class PlayerViewController: UIViewController {
 //                let index = try await getPlayingVideoIndex()
 //                print("getPlayingVideoIndex", index)
 //                self.setPlayingVideoIndex(index)
-                
-
                 
                 print("task title")
                 let title = try await configureMetadata()

@@ -76,7 +76,29 @@ class NetworkController {
         
         let decoder = JSONDecoder()
         let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
+//        print("Title from", videoResponse.items![0].title)
         return videoResponse.items![0].viewCount!
+    }
+    
+    func getTitleOfVideo(videoId: String) async throws -> String {
+        
+        let apiVideoUrl = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&part=snippet&id=\(videoId)&key=\(Constants.apiKey)"
+        
+        let urlComponents = URLComponents(string: apiVideoUrl)!
+        
+        let (data, response) = try await URLSession.shared.data(from: urlComponents.url!)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw YouTubeItemError.videoItemNotFound
+        }
+        
+//        let json = try JSON(data: data)
+//        print(json)
+        
+        let decoder = JSONDecoder()
+        let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
+        print("Title from", videoResponse.items![0].title)
+        return videoResponse.items![0].title!
     }
     
     func getChannels(channelId: String) async throws -> ChannelModel {
