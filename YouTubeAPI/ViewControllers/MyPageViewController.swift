@@ -13,7 +13,6 @@ protocol MyPageViewControllerDelegate {
 
 class MyPageViewController: UIPageViewController {
     
-    
     var pages: [UIViewController] = [UIViewController]()
     var currentControllerIndex = 0
     
@@ -104,6 +103,8 @@ class MyPageViewController: UIPageViewController {
             self.showChannels()
         }
     }
+    
+//MARK: - Show Channels
     
     func showChannels() {
         

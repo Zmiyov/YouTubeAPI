@@ -46,7 +46,6 @@ class ContainerCollectionViewCell: UICollectionViewCell {
         thePageVC.view.clipsToBounds = true
         NSLayoutConstraint.activate([
             thePageVC.view.topAnchor.constraint(equalTo: myContainerView.topAnchor, constant: 0.0),
-//            thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor, constant: 0.0),
             thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor, constant: 0.0),
             thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor, constant: 0.0),
             thePageVC.view.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.65)
@@ -60,6 +59,5 @@ class ContainerCollectionViewCell: UICollectionViewCell {
 extension ContainerCollectionViewCell: MyPageViewControllerDelegate {
     func myPageViewControllerDelegate(_ controller: MyPageViewController, didSelect playlistId: String) {
         self.playlistId = playlistId
-//        print(playlistId)
     }
 }

@@ -68,11 +68,7 @@ class PlayerViewController: UIViewController {
         super.viewWillAppear(animated)
         print("will channel")
         
-        serialQueue.async {
-
-            self.updateAllUI()
-            
-        }
+        self.updateAllUI()
     }
     
     override func viewWillLayoutSubviews() {
@@ -101,12 +97,12 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
         playingState = true
-        print("Previous button")
-        updateAllUI()
+
+        self.updateAllUI()
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
-        print("Play button")
+
         updateAllUI()
         if playingState == false {
             hostingView.player.play()
@@ -129,8 +125,8 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.nextVideo()
         playingState = true
-        print("Next button")
-        updateAllUI()
+
+        self.updateAllUI()
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -155,7 +151,7 @@ class PlayerViewController: UIViewController {
                 print("task playlistIdArray")
                 let playlistIdArray = try await getPlaylistVideosIds()
                 print("playlistIdArray", playlistIdArray)
-                setPlaylistVideosIds(playlistIdArray)
+                self.setPlaylistVideosIds(playlistIdArray)
             } catch {
                 print(error)
             }
@@ -170,7 +166,7 @@ class PlayerViewController: UIViewController {
                 print("task duration")
                 let duration = try await getDuration()
                 print("duration", duration)
-                setDuration(duration)
+                self.setDuration(duration)
             } catch {
                 print(error)
             }
@@ -181,7 +177,7 @@ class PlayerViewController: UIViewController {
                 print("task elapsed time")
                 let elapsedTime = try await getElapsedTime()
                 print("Elapsed time", elapsedTime)
-                setElapsedTime(elapsedTime)
+                self.setElapsedTime(elapsedTime)
             } catch {
                 print(error)
             }
@@ -192,7 +188,7 @@ class PlayerViewController: UIViewController {
                 print("task title")
                 let title = try await configureMetadata()
                 print("Title", title)
-                setVideoName(title)
+                self.setVideoName(title)
             } catch {
                 print(error)
             }
@@ -200,19 +196,19 @@ class PlayerViewController: UIViewController {
         
         Task {
             do {
-                print("task playlistIdArray")
+                print("task getPlaylistIdArray")
                 let playlistIdArray = try await getPlaylistVideosIds()
                 print("playlistIdArray", playlistIdArray)
-                setPlaylistVideosIds(playlistIdArray)
+                self.setPlaylistVideosIds(playlistIdArray)
                 
                 //Get video index
                 print("task playingVideoIndex")
                 let index = try await getPlayingVideoIndex()
                 print("playingVideoIndex", index)
-                setPlayingVideoIndex(index)
+                self.setPlayingVideoIndex(index)
                 
                 //Get views count
-//                print(self.playlistVideosIds)
+                print("task getViewCountVideos")
                 let videoId = self.playlistVideosIds[index]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
                 print("fetched count", fetchedCount)
@@ -225,7 +221,7 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    //MARK: - fetch data
+    //MARK: - Fetch data
     
     func configureMetadata() async throws -> String {
         

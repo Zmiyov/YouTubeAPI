@@ -122,8 +122,6 @@ class NetworkController {
         
     }
     
-    
-    
     func fetchImage(url: String) async throws -> UIImage {
         
         let urlComponents = URLComponents(string: url)!

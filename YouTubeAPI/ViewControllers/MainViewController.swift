@@ -62,9 +62,7 @@ class MainViewController: UIViewController {
         let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
         collectionView.backgroundColor = darkGrey
         collectionView.delegate = self
-       
-        // MARK: Collection View Setup
-        
+
         collectionView.collectionViewLayout = createLayout()
         
         collectionView.register(ContainerCollectionViewCell.self, forCellWithReuseIdentifier: ContainerCollectionViewCell.reuseIdentifier)
@@ -72,11 +70,9 @@ class MainViewController: UIViewController {
         collectionView.register(SquareImageCollectionViewCell.self, forCellWithReuseIdentifier: SquareImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
                 
-
         fetchPlaylist1(playlistId: Constants.iosAcadememyPlaylistId) { success in
             self.getViewCount1()
         }
-        
         fetchPlaylist2(playlistId: Constants.infoCarPlaylistId) { success in
             self.getViewCount2()
         }
@@ -101,7 +97,6 @@ class MainViewController: UIViewController {
                 self.playerViewController.playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
                 self.playerViewController.setNewPlaylist()
                 handleButtonTap()
-                
             }
         }
     }
@@ -465,15 +460,6 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        print("Tap didselect")
-        
-    }
-}
-
 //MARK: - Activity Indicator
 
 extension MainViewController {
@@ -481,15 +467,12 @@ extension MainViewController {
     func createSpinnerView() {
         let child = SpinnerViewController()
 
-        // add the spinner view controller
         addChild(child)
         child.view.frame = view.frame
         view.addSubview(child.view)
         child.didMove(toParent: self)
 
-        // wait two seconds to simulate some work happening
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-            // then remove the spinner view controller
             child.willMove(toParent: nil)
             child.view.removeFromSuperview()
             child.removeFromParent()

@@ -14,9 +14,7 @@ struct PlaylistsModel: Decodable, Hashable {
     enum CodingKeys: String, CodingKey {
         
         case snippet
-        
         case playlistTitle = "title"
- 
     }
     
     init(from decoder: Decoder) throws {
@@ -24,6 +22,5 @@ struct PlaylistsModel: Decodable, Hashable {
         
         let snippetContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .snippet)
         self.playlistTitle = try snippetContainer.decode(String.self, forKey: .playlistTitle)
-        
     }
 }
