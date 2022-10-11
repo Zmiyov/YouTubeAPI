@@ -9,7 +9,7 @@
 import UIKit
 import YouTubePlayerKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UICollectionViewDelegate {
     
     enum SupplementaryViewKind {
         static let header = "header"
@@ -61,6 +61,7 @@ class MainViewController: UIViewController {
 
         let darkGrey = UIColor(red: 29.0/255.0, green: 27.0/255.0, blue: 38.0/255.0, alpha: 1.0)
         collectionView.backgroundColor = darkGrey
+        
         collectionView.delegate = self
 
         collectionView.collectionViewLayout = createLayout()
