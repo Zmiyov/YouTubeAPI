@@ -45,15 +45,12 @@ class PlayerViewController: UIViewController {
     var playlistVideosIds = [String]()
     var playingVideoIndex: Int?
     
-    
     var fullTime: Int?
     var elapsedTime: Int?
     var timelineTimer: Timer?
     var timelineValue: Timer?
     
-    
     var viewCount: String?
-//    let viewCountDispatchGroup = DispatchGroup()
     let serialQueue = DispatchQueue(label: "serialQueue")
     
     
@@ -72,14 +69,10 @@ class PlayerViewController: UIViewController {
         print("will channel")
         
         serialQueue.async {
-//            self.getPlaylistVideosIds()
-//            self.getPlayingVideoIndex()
-            
-            self.updateAllUI()
-//            self.getViewCount()
-        }
 
-        
+            self.updateAllUI()
+            
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -90,11 +83,9 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
 //        print("did layout channel")
-
     }
-    
-
     
     //MARK: - Actions
     
@@ -157,13 +148,22 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    func getPlaylist() {
+        
+        Task {
+            do {
+                print("task playlistIdArray")
+                let playlistIdArray = try await getPlaylistVideosIds()
+                print("playlistIdArray", playlistIdArray)
+                setPlaylistVideosIds(playlistIdArray)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     func updateAllUI() {
         print("Update all ui")
-        
-        
-//        getElapsedTime()
-        
-        
         
         Task {
             do {
@@ -171,6 +171,17 @@ class PlayerViewController: UIViewController {
                 let duration = try await getDuration()
                 print("duration", duration)
                 setDuration(duration)
+            } catch {
+                print(error)
+            }
+        }
+        
+        Task {
+            do {
+                print("task elapsed time")
+                let elapsedTime = try await getElapsedTime()
+                print("Elapsed time", elapsedTime)
+                setElapsedTime(elapsedTime)
             } catch {
                 print(error)
             }
@@ -193,13 +204,7 @@ class PlayerViewController: UIViewController {
                 let playlistIdArray = try await getPlaylistVideosIds()
                 print("playlistIdArray", playlistIdArray)
                 setPlaylistVideosIds(playlistIdArray)
-            } catch {
-                print(error)
-            }
-        }
-        
-        Task {
-            do {
+                
                 //Get video index
                 print("task playingVideoIndex")
                 let index = try await getPlayingVideoIndex()
@@ -207,7 +212,8 @@ class PlayerViewController: UIViewController {
                 setPlayingVideoIndex(index)
                 
                 //Get views count
-                let videoId = playlistVideosIds[index]
+//                print(self.playlistVideosIds)
+                let videoId = self.playlistVideosIds[index]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
                 print("fetched count", fetchedCount)
                 //Set views count
@@ -217,9 +223,6 @@ class PlayerViewController: UIViewController {
                 print(error)
             }
         }
-
-        
-
     }
     
     //MARK: - fetch data
@@ -237,14 +240,11 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    
     @MainActor
     private func setVideoName(_ name: String) {
         print("set Title")
         self.videoNameLabel.text = name
     }
-    
-    
     
     func getPlaylistVideosIds() async throws -> [String] {
         print("getPlaylistVideosIds")
@@ -259,14 +259,11 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    
     @MainActor
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
         print("set Playlist Videos Ids")
         self.playlistVideosIds = playlistIdArray
     }
-    
-    
     
     func getPlayingVideoIndex() async throws -> Int {
         print("getPlayingVideoIndex")
@@ -282,13 +279,11 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    
     @MainActor
     private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
         print("set Playlist Videos Index")
         self.playingVideoIndex = playingVideoIndex
     }
-    
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
@@ -301,7 +296,6 @@ class PlayerViewController: UIViewController {
         guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
         self.amountOfViewsLabel.text = formattedString + " views"
     }
-    
     
     func getDuration() async throws -> Double {
         print("getDuration")
@@ -316,7 +310,6 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    
     @MainActor
     private func setDuration(_ duration: Double) {
         print("set Duration")
@@ -333,34 +326,34 @@ class PlayerViewController: UIViewController {
         self.fullTimeLabel.text = resultString
     }
     
-    
-    
-    @objc func getElapsedTime() async throws {
+    @objc func getElapsedTime() async throws -> Double {
         print("getElapsedTime")
-        hostingView.player.getCurrentTime(completion: { result in
-            switch result {
-            case .success(let success):
-                let date = Date()
-                let cal = Calendar(identifier: .gregorian)
-                let start = cal.startOfDay(for: date)
-                let newDate = start.addingTimeInterval(success)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "mm:ss"
-                let resultString = formatter.string(from: newDate)
-                
-                self.setRecentTime(resultString)
-                self.elapsedTime = Int(success)
-                
-            case .failure(let failure):
-                print(failure)
-            }
-        })
+        
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
+            hostingView.player.getCurrentTime(completion: { result in
+                switch result {
+                case .success(let success):
+                    inCont.resume(returning: success)
+                case .failure(let failure):
+                    print(failure)
+                }
+            })
+        }
     }
-    
     @MainActor
-    private func setRecentTime(_ time: String) {
+    private func setElapsedTime(_ elapsedTime: Double) {
         print("setRecentTime")
-        self.recentTimeLabel.text = time
+        
+        let date = Date()
+        let cal = Calendar(identifier: .gregorian)
+        let start = cal.startOfDay(for: date)
+        let newDate = start.addingTimeInterval(elapsedTime)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "mm:ss"
+        let resultString = formatter.string(from: newDate)
+        
+        self.elapsedTime = Int(elapsedTime)
+        self.recentTimeLabel.text = resultString
     }
     
     //MARK: - Get all player data, hasn't used
@@ -417,64 +410,6 @@ class PlayerViewController: UIViewController {
         videoView.addSubview(hostingView)
     }
     
-    
-//    func getDuration() {
-//        print("getDuration")
-//        hostingView.player.getDuration { result in
-//            switch result {
-//            case .success(let success):
-//                let date = Date()
-//                let cal = Calendar(identifier: .gregorian)
-//                let start = cal.startOfDay(for: date)
-//                let newDate = start.addingTimeInterval(success)
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "mm:ss"
-//                let resultString = formatter.string(from: newDate)
-//
-//                self.setDuration(resultString)
-//                self.fullTime = Int(success)
-//            case .failure(let failure):
-//                print(failure)
-//            }
-//        }
-//    }
-//
-//    @MainActor
-//    private func setDuration(_ duration: String) {
-//        print("setDuration")
-//        self.fullTimeLabel.text = duration
-//    }
-    
-//    @objc func getElapsedTime() {
-//        print("getElapsedTime")
-//        hostingView.player.getCurrentTime(completion: { result in
-//            switch result {
-//            case .success(let success):
-//                let date = Date()
-//                let cal = Calendar(identifier: .gregorian)
-//                let start = cal.startOfDay(for: date)
-//                let newDate = start.addingTimeInterval(success)
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "mm:ss"
-//                let resultString = formatter.string(from: newDate)
-//
-//                self.setRecentTime(resultString)
-//                self.elapsedTime = Int(success)
-//
-//            case .failure(let failure):
-//                print(failure)
-//            }
-//        })
-//    }
-//
-//    @MainActor
-//    private func setRecentTime(_ time: String) {
-//        print("setRecentTime")
-//        self.recentTimeLabel.text = time
-//    }
-    
-    
-
 }
 
 extension DispatchQueue {
