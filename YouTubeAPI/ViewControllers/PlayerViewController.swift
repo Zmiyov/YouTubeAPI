@@ -9,7 +9,7 @@ import UIKit
 import YouTubePlayerKit
 
 class PlayerViewController: UIViewController {
-
+    
     @IBOutlet var handleArea: UIView!
     @IBOutlet var openCloseButton: UIButton!
     
@@ -44,18 +44,18 @@ class PlayerViewController: UIViewController {
     var hostingView: YouTubePlayerHostingView!
     var playlistVideosIds = [String]()
     var playingVideoIndex: Int?
-
+    
     
     var fullTime: Int?
     var elapsedTime: Int?
     var timelineTimer: Timer?
     var timelineValue: Timer?
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addVideoPlayerView(playlistID: self.playlistID)
-        
+        configureGradientLayer()
         print("did channel")
         
         let timelineSliderThumbImage = UIImage(named: "Line.png")
@@ -65,34 +65,37 @@ class PlayerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getPlaylistVideosIds()
-        
+        getPlayingVideoIndex()
+        updateAllUI()
         print("will channel")
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        getPlayingVideoIndex()
         
+        print("will layout channel")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("layout channel")
-        configureGradientLayer()
-        getViewCount()
-        setDuration()
-        getElapsedTime()
+        print("did layout channel")
+        
         
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
+            
+            
         }
         
-        Task {
-            configureMetadata { name in
-                self.setVideoName(name)
-            }
-        }
+//        Task {
+//            do {
+//                let title = try await configureMetadata()
+//                setVideoName(title)
+//            } catch {
+//                print(error)
+//            }
+//        }
     }
     
     //MARK: - Actions
@@ -109,15 +112,13 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
         playingState = true
-        
-        self.setDuration()
-        self.getElapsedTime()
-        self.getPlayingVideoIndex()
-        self.getViewCount()
+        print("Previous button")
+        updateAllUI()
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
-        
+        print("Play button")
+        updateAllUI()
         if playingState == false {
             hostingView.player.play()
             playingState = true
@@ -126,7 +127,6 @@ class PlayerViewController: UIViewController {
             self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
             self.timelineValue = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
             
-
         } else {
             hostingView.player.pause()
             playingState = false
@@ -140,11 +140,8 @@ class PlayerViewController: UIViewController {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.nextVideo()
         playingState = true
-        
-        self.setDuration()
-        self.getElapsedTime()
-        self.getPlayingVideoIndex()
-        self.getViewCount()
+        print("Next button")
+        updateAllUI()
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -156,7 +153,7 @@ class PlayerViewController: UIViewController {
     //MARK: - fetch data
     
     func getViewCount() {
-        
+        print("get view count")
         Task {
             do {
                 guard let index = playingVideoIndex else { return }
@@ -175,6 +172,12 @@ class PlayerViewController: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    @MainActor
+    private func setViewCount(_ formattedString: String) {
+        print("Set view count")
+        self.amountOfViewsLabel.text = formattedString + " views"
     }
     
     func getPlaylistVideosIds() {
@@ -221,12 +224,30 @@ class PlayerViewController: UIViewController {
 
     //MARK: - Configure UI
     
-    @MainActor
-    private func setViewCount(_ formattedString: String) {
-        self.amountOfViewsLabel.text = formattedString + " views"
+    func updateAllUI() {
+        print("Update all ui")
+        
+        getViewCount()
+        getDuration()
+        getElapsedTime()
+        
+        Task {
+            do {
+                print("task title")
+                let title = try await configureMetadata()
+                print("Title", title)
+                setVideoName(title)
+            } catch {
+                print(error)
+            }
+        }
     }
     
+
+    
+    @MainActor
     func configureGradientLayer() {
+        
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         let pink = UIColor(red: 238.0/255.0, green: 66.0/255.0, blue: 137.0/255.0, alpha: 1.0).cgColor
@@ -256,11 +277,10 @@ class PlayerViewController: UIViewController {
     }
     
     
-    func setDuration() {
+    func getDuration() {
         hostingView.player.getDuration { result in
             switch result {
             case .success(let success):
-                print("DuraTion", success)
                 let date = Date()
                 let cal = Calendar(identifier: .gregorian)
                 let start = cal.startOfDay(for: date)
@@ -269,9 +289,8 @@ class PlayerViewController: UIViewController {
                 formatter.dateFormat = "mm:ss"
                 let resultString = formatter.string(from: newDate)
                 
-                self.setFullTime(resultString)
+                self.setDuration(resultString)
                 self.fullTime = Int(success)
-                
             case .failure(let failure):
                 print(failure)
             }
@@ -279,7 +298,7 @@ class PlayerViewController: UIViewController {
     }
     
     @MainActor
-    private func setFullTime(_ duration: String) {
+    private func setDuration(_ duration: String) {
         self.fullTimeLabel.text = duration
     }
     
@@ -287,7 +306,6 @@ class PlayerViewController: UIViewController {
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
             case .success(let success):
-                print("Elapsed", success)
                 let date = Date()
                 let cal = Calendar(identifier: .gregorian)
                 let start = cal.startOfDay(for: date)
@@ -297,7 +315,6 @@ class PlayerViewController: UIViewController {
                 let resultString = formatter.string(from: newDate)
                 
                 self.setRecentTime(resultString)
-                print(success )
                 self.elapsedTime = Int(success)
                 
             case .failure(let failure):
@@ -311,15 +328,29 @@ class PlayerViewController: UIViewController {
         self.recentTimeLabel.text = time
     }
     
-    func configureMetadata(completion: @escaping (_ name: String) -> Void) async throws {
-
-        Task {
+//    func configureMetadata(completion: @escaping (_ name: String) -> Void) async throws {
+//
+//        Task {
+//            hostingView.player.getPlaybackMetadata { result in
+//                switch result {
+//
+//                case .success(let playbackMetadata):
+//                    completion(playbackMetadata.title)
+//
+//                case .failure(let youTubePlayerAPIError):
+//                    print("Error", youTubePlayerAPIError)
+//                }
+//            }
+//        }
+//    }
+    
+    func configureMetadata() async throws -> String {
+        
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
             hostingView.player.getPlaybackMetadata { result in
                 switch result {
-                    
                 case .success(let playbackMetadata):
-                    completion(playbackMetadata.title)
-                    
+                    inCont.resume(returning: playbackMetadata.title )
                 case .failure(let youTubePlayerAPIError):
                     print("Error", youTubePlayerAPIError)
                 }
@@ -329,6 +360,7 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setVideoName(_ name: String) {
+        print("setvideoname")
         self.videoNameLabel.text = name
     }
 }
