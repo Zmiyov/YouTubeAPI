@@ -74,13 +74,13 @@ class PlayerViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-//        print("will layout channel")
+        print("will layout channel")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        print("did layout channel")
+        print("did layout channel")
     }
     
     //MARK: - Actions
@@ -93,6 +93,12 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    @IBAction func timelineSlider(_ sender: UISlider) {
+        guard let duration = self.fullTime else { return }
+        let seekValue = round(Double(duration) * Double(sender.value))
+        self.hostingView.player.seek(to: seekValue, allowSeekAhead: false)
+    }
+    
     @IBAction func previousVideoButton(_ sender: UIButton) {
         playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
         hostingView.player.previousVideo()
@@ -103,7 +109,7 @@ class PlayerViewController: UIViewController {
     
     @IBAction func playPauseButton(_ sender: UIButton) {
 
-        updateAllUI()
+//        updateAllUI()
         if playingState == false {
             hostingView.player.play()
             playingState = true
@@ -144,19 +150,19 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    func getPlaylist() {
-        
-        Task {
-            do {
-                print("task playlistIdArray")
-                let playlistIdArray = try await getPlaylistVideosIds()
-                print("playlistIdArray", playlistIdArray)
-                self.setPlaylistVideosIds(playlistIdArray)
-            } catch {
-                print(error)
-            }
-        }
-    }
+//    func getPlaylist() {
+//
+//        Task {
+//            do {
+//                print("task playlistIdArray")
+//                let playlistIdArray = try await getPlaylistVideosIds()
+//                print("playlistIdArray", playlistIdArray)
+//                self.setPlaylistVideosIds(playlistIdArray)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
     
     func updateAllUI() {
         print("Update all ui")
@@ -255,7 +261,7 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    @MainActor
+//    @MainActor
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
         print("set Playlist Videos Ids")
         self.playlistVideosIds = playlistIdArray
@@ -275,7 +281,7 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    @MainActor
+//    @MainActor
     private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
         print("set Playlist Videos Index")
         self.playingVideoIndex = playingVideoIndex

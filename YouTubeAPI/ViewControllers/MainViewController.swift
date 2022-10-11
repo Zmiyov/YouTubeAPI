@@ -63,7 +63,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         collectionView.backgroundColor = darkGrey
         
         collectionView.delegate = self
-
         collectionView.collectionViewLayout = createLayout()
         
         collectionView.register(ContainerCollectionViewCell.self, forCellWithReuseIdentifier: ContainerCollectionViewCell.reuseIdentifier)
