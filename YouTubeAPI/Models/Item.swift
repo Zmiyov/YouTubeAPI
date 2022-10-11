@@ -11,7 +11,6 @@ enum Item: Hashable {
     case channel(ChannelModel)
     case playlist(PlaylistItemsVideoModel)
     case app(App)
-    case category(StoreCategory)
     
     var app: App? {
         if case .app(let app) = self {
@@ -21,47 +20,35 @@ enum Item: Hashable {
         }
     }
     
-    var category: StoreCategory? {
-        if case .category(let category) = self {
-            return category
-        } else {
-            return nil
-        }
-    }
-    
     static let promotedApps: [Item] = [
-        .app(App(promotedHeadline: "Now Trending", title: "Game Title", viewCount: "Game Description", price: 3.99)),
-//        .app(App(promotedHeadline: "Limited Time", title: "Game Title", subtitle: "Game Description", price: nil)),
-//        .app(App(promotedHeadline: "New Update", title: "Game Title", subtitle: "Game Description", price: nil)),
-//        .app(App(promotedHeadline: "Just Released", title: "Game Title", subtitle: "Game Description", price: nil))
+        .app(App(promotedHeadline: "Now Trending", title: "Playlist Title", viewCount: "Count")),
     ]
     
     static let landscapePlaylist: [Item] = [
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: 2.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: 9.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: 6.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title1", viewCount: "Game Description", price: nil)),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1"))
     ]
     
     static let squarePlaylist: [Item] = [
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: nil)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 3.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 4.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
-        .app(App(promotedHeadline: nil, title: "Game Title2", viewCount: "Game Description", price: 0.99)),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
+        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2"))
     ]
-
 }
 
 

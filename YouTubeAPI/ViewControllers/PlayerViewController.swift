@@ -82,14 +82,12 @@ class PlayerViewController: UIViewController {
         getViewCount()
         setDuration()
         getElapsedTime()
-//        getPlayingVideoIndex()
-//        getViewCount()
-
         
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
         }
+        
         Task {
             configureMetadata { name in
                 self.setVideoName(name)
@@ -313,7 +311,7 @@ class PlayerViewController: UIViewController {
         self.recentTimeLabel.text = time
     }
     
-    func configureMetadata(completion: @escaping (_ name: String) -> Void) {
+    func configureMetadata(completion: @escaping (_ name: String) -> Void) async throws {
 
         Task {
             hostingView.player.getPlaybackMetadata { result in
