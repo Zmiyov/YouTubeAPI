@@ -54,6 +54,7 @@ class PlayerViewController: UIViewController {
     
     var viewCount: String?
     let viewCountDispatchGroup = DispatchGroup()
+    let serialQueue = DispatchQueue(label: "serialQueue")
     
     
     override func viewDidLoad() {
@@ -68,21 +69,26 @@ class PlayerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getPlaylistVideosIds()
-        getPlayingVideoIndex()
-        updateAllUI()
         print("will channel")
+        
+        serialQueue.async {
+            self.getPlaylistVideosIds()
+            self.getPlayingVideoIndex()
+            self.getViewCount()
+            self.updateAllUI()
+        }
+
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        print("will layout channel")
+//        print("will layout channel")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("did layout channel")
+//        print("did layout channel")
 
     }
     
@@ -149,17 +155,48 @@ class PlayerViewController: UIViewController {
     
     //MARK: - fetch data
     
+
+    
+    func getPlaylistVideosIds() {
+        print("getPlaylistVideosIds")
+        
+        hostingView.player.getPlaylist { result in
+            switch result {
+            case .success(let success):
+                self.playlistVideosIds = success
+                print("getPlaylistVideosIds", success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func getPlayingVideoIndex() {
+        print("getPlayingVideoIndex")
+        
+        hostingView.player.getPlaylistIndex { result in
+            switch result {
+            case .success(let success):
+                self.playingVideoIndex = success
+                print("getPlayingVideoIndex", success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
     func getViewCount() {
         print("get view count")
         viewCountDispatchGroup.enter()
         
         Task {
             do {
-                print("Playing video index", self.playingVideoIndex)
+                print("Playing video index in view count", self.playingVideoIndex)
                 guard let index = self.playingVideoIndex else { return }
                 let videoId = playlistVideosIds[index]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
 
+                print("fetched count", fetchedCount)
                 self.viewCount = fetchedCount
                 viewCountDispatchGroup.leave()
             } catch {
@@ -167,6 +204,7 @@ class PlayerViewController: UIViewController {
             }
         }
         viewCountDispatchGroup.notify(queue: .main) {
+            print("viewCountDispatchGroup")
             guard let viewCount = self.viewCount else { return }
             self.setViewCount(viewCount)
         }
@@ -210,54 +248,33 @@ class PlayerViewController: UIViewController {
 //        self.amountOfViewsLabel.text = formattedString + " views"
 //    }
     
-    func getPlaylistVideosIds() {
-        
-        hostingView.player.getPlaylist { result in
-            switch result {
-            case .success(let success):
-                self.playlistVideosIds = success
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
+    //MARK: - Get all player data, hasn't used
     
-    func getPlayingVideoIndex() {
-        hostingView.player.getPlaylistIndex { result in
-            switch result {
-            case .success(let success):
-                self.playingVideoIndex = success
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func getData() {
-        
-        hostingView.player.getInformation { result in
-            switch result {
-            case .success(let success):
-                let volume = success.volume
-                print(volume)
-                let duration = success.duration
-                print(duration)
-                let currentTime = success.currentTime
-                print("current", currentTime)
-                let videoUrl = success.videoUrl
-                print(videoUrl)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
+//    func getData() {
+//
+//        hostingView.player.getInformation { result in
+//            switch result {
+//            case .success(let success):
+//                let volume = success.volume
+//                print(volume)
+//                let duration = success.duration
+//                print(duration)
+//                let currentTime = success.currentTime
+//                print("current", currentTime)
+//                let videoUrl = success.videoUrl
+//                print(videoUrl)
+//            case .failure(let failure):
+//                print(failure)
+//            }
+//        }
+//    }
 
     //MARK: - Configure UI
     
     func updateAllUI() {
         print("Update all ui")
         
-        getViewCount()
+        
         getDuration()
         getElapsedTime()
         
@@ -273,11 +290,9 @@ class PlayerViewController: UIViewController {
         }
     }
     
-
-    
     @MainActor
     func configureGradientLayer() {
-        
+        print("gradient")
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         let pink = UIColor(red: 238.0/255.0, green: 66.0/255.0, blue: 137.0/255.0, alpha: 1.0).cgColor
@@ -308,6 +323,7 @@ class PlayerViewController: UIViewController {
     
     
     func getDuration() {
+        print("getDuration")
         hostingView.player.getDuration { result in
             switch result {
             case .success(let success):
@@ -329,10 +345,12 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setDuration(_ duration: String) {
+        print("setDuration")
         self.fullTimeLabel.text = duration
     }
     
     @objc func getElapsedTime() {
+        print("getElapsedTime")
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
             case .success(let success):
@@ -355,6 +373,7 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setRecentTime(_ time: String) {
+        print("setRecentTime")
         self.recentTimeLabel.text = time
     }
     
