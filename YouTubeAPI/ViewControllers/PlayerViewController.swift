@@ -53,7 +53,7 @@ class PlayerViewController: UIViewController {
     
     
     var viewCount: String?
-    let viewCountDispatchGroup = DispatchGroup()
+//    let viewCountDispatchGroup = DispatchGroup()
     let serialQueue = DispatchQueue(label: "serialQueue")
     
     
@@ -160,8 +160,21 @@ class PlayerViewController: UIViewController {
     func updateAllUI() {
         print("Update all ui")
         
-        getDuration()
-        getElapsedTime()
+        
+//        getElapsedTime()
+        
+        
+        
+        Task {
+            do {
+                print("task duration")
+                let duration = try await getDuration()
+                print("duration", duration)
+                setDuration(duration)
+            } catch {
+                print(error)
+            }
+        }
         
         Task {
             do {
@@ -204,22 +217,8 @@ class PlayerViewController: UIViewController {
                 print(error)
             }
         }
-//
-//        Task {
-//
-//            do {
-//                print("task view count")
-//                guard let index = self.playingVideoIndex else { return }
-//                let videoId = playlistVideosIds[index]
-//                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-//
-//                print("fetched count", fetchedCount)
-//                self.viewCount = fetchedCount
-//                self.setViewCount(fetchedCount)
-//            } catch {
-//                print(error)
-//            }
-//        }
+
+        
 
     }
     
@@ -241,7 +240,7 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setVideoName(_ name: String) {
-        print("setvideoname")
+        print("set Title")
         self.videoNameLabel.text = name
     }
     
@@ -263,13 +262,13 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
-        print("setPlaylistVideosIds")
+        print("set Playlist Videos Ids")
         self.playlistVideosIds = playlistIdArray
     }
     
     
     
-    func getPlayingVideoIndex() async throws -> Int{
+    func getPlayingVideoIndex() async throws -> Int {
         print("getPlayingVideoIndex")
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
             hostingView.player.getPlaylistIndex { result in
@@ -286,36 +285,10 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
-        print("setPlaylistVideosIds")
+        print("set Playlist Videos Index")
         self.playingVideoIndex = playingVideoIndex
     }
     
-    
-    
-//    func getViewCount() {
-//        print("get view count")
-//        viewCountDispatchGroup.enter()
-//
-//        Task {
-//            do {
-//                print("Playing video index in view count", self.playingVideoIndex)
-//                guard let index = self.playingVideoIndex else { return }
-//                let videoId = playlistVideosIds[index]
-//                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-//
-//                print("fetched count", fetchedCount)
-//                self.viewCount = fetchedCount
-//                viewCountDispatchGroup.leave()
-//            } catch {
-//                print(error)
-//            }
-//        }
-//        viewCountDispatchGroup.notify(queue: .main) {
-//            print("viewCountDispatchGroup")
-//            guard let viewCount = self.viewCount else { return }
-//            self.setViewCount(viewCount)
-//        }
-//    }
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
@@ -324,45 +297,45 @@ class PlayerViewController: UIViewController {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.locale = Locale(identifier: "fr_FR")
-        
-        print("Fetched count", fetchedCount)
 
         guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
         self.amountOfViewsLabel.text = formattedString + " views"
     }
     
     
-    
-    func getDuration() {
+    func getDuration() async throws -> Double {
         print("getDuration")
-        hostingView.player.getDuration { result in
-            switch result {
-            case .success(let success):
-                let date = Date()
-                let cal = Calendar(identifier: .gregorian)
-                let start = cal.startOfDay(for: date)
-                let newDate = start.addingTimeInterval(success)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "mm:ss"
-                let resultString = formatter.string(from: newDate)
-                
-                self.setDuration(resultString)
-                self.fullTime = Int(success)
-            case .failure(let failure):
-                print(failure)
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
+            hostingView.player.getDuration { result in
+                switch result {
+                case .success(let success):
+                    inCont.resume(returning: success)
+                case .failure(let failure):
+                    print(failure)
+                }
             }
         }
     }
     
     @MainActor
-    private func setDuration(_ duration: String) {
-        print("setDuration")
-        self.fullTimeLabel.text = duration
+    private func setDuration(_ duration: Double) {
+        print("set Duration")
+        
+        let date = Date()
+        let cal = Calendar(identifier: .gregorian)
+        let start = cal.startOfDay(for: date)
+        let newDate = start.addingTimeInterval(duration)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "mm:ss"
+        let resultString = formatter.string(from: newDate)
+        
+        self.fullTime = Int(duration)
+        self.fullTimeLabel.text = resultString
     }
     
     
     
-    @objc func getElapsedTime() {
+    @objc func getElapsedTime() async throws {
         print("getElapsedTime")
         hostingView.player.getCurrentTime(completion: { result in
             switch result {
