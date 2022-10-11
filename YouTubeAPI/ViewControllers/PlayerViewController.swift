@@ -52,6 +52,10 @@ class PlayerViewController: UIViewController {
     var timelineValue: Timer?
     
     
+    var viewCount: String?
+    let viewCountDispatchGroup = DispatchGroup()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addVideoPlayerView(playlistID: self.playlistID)
@@ -82,8 +86,10 @@ class PlayerViewController: UIViewController {
 
     }
     
+    //MARK: - set ui
+    
     func setNewPlaylist() {
-        if let playlistFromChannel = playlistFromChannel {
+        if let playlistFromChannel = self.playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
         }
@@ -145,6 +151,8 @@ class PlayerViewController: UIViewController {
     
     func getViewCount() {
         print("get view count")
+        viewCountDispatchGroup.enter()
+        
         Task {
             do {
                 print("Playing video index", self.playingVideoIndex)
@@ -152,25 +160,29 @@ class PlayerViewController: UIViewController {
                 let videoId = playlistVideosIds[index]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
 
-                let formatter = NumberFormatter()
-                formatter.numberStyle = NumberFormatter.Style.decimal
-
-                formatter.locale = Locale(identifier: "fr_FR")
-                
-                print("Fetched count", fetchedCount)
-
-                guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
-
-                self.setViewCount(formattedString)
+                self.viewCount = fetchedCount
+                viewCountDispatchGroup.leave()
             } catch {
                 print(error)
             }
         }
+        viewCountDispatchGroup.notify(queue: .main) {
+            guard let viewCount = self.viewCount else { return }
+            self.setViewCount(viewCount)
+        }
     }
     
     @MainActor
-    private func setViewCount(_ formattedString: String) {
+    private func setViewCount(_ fetchedCount: String) {
         print("Set view count")
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.locale = Locale(identifier: "fr_FR")
+        
+        print("Fetched count", fetchedCount)
+
+        guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
         self.amountOfViewsLabel.text = formattedString + " views"
     }
     
