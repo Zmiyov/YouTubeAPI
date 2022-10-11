@@ -225,6 +225,28 @@ class PlayerViewController: UIViewController {
     
     //MARK: - fetch data
     
+    func configureMetadata() async throws -> String {
+        
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
+            hostingView.player.getPlaybackMetadata { result in
+                switch result {
+                case .success(let playbackMetadata):
+                    inCont.resume(returning: playbackMetadata.title )
+                case .failure(let youTubePlayerAPIError):
+                    print("Error", youTubePlayerAPIError)
+                }
+            }
+        }
+    }
+    
+    @MainActor
+    private func setVideoName(_ name: String) {
+        print("setvideoname")
+        self.videoNameLabel.text = name
+    }
+    
+    
+    
     func getPlaylistVideosIds() async throws -> [String] {
         print("getPlaylistVideosIds")
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<[String], Error>) in
@@ -245,6 +267,8 @@ class PlayerViewController: UIViewController {
         self.playlistVideosIds = playlistIdArray
     }
     
+    
+    
     func getPlayingVideoIndex() async throws -> Int{
         print("getPlayingVideoIndex")
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
@@ -252,7 +276,6 @@ class PlayerViewController: UIViewController {
                 switch result {
                 case .success(let success):
                     inCont.resume(returning: success)
-//                    self.playingVideoIndex = success
                     print("getPlayingVideoIndex", success)
                 case .failure(let failure):
                     print(failure)
@@ -267,30 +290,32 @@ class PlayerViewController: UIViewController {
         self.playingVideoIndex = playingVideoIndex
     }
     
-    func getViewCount() {
-        print("get view count")
-        viewCountDispatchGroup.enter()
-        
-        Task {
-            do {
-                print("Playing video index in view count", self.playingVideoIndex)
-                guard let index = self.playingVideoIndex else { return }
-                let videoId = playlistVideosIds[index]
-                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-
-                print("fetched count", fetchedCount)
-                self.viewCount = fetchedCount
-                viewCountDispatchGroup.leave()
-            } catch {
-                print(error)
-            }
-        }
-        viewCountDispatchGroup.notify(queue: .main) {
-            print("viewCountDispatchGroup")
-            guard let viewCount = self.viewCount else { return }
-            self.setViewCount(viewCount)
-        }
-    }
+    
+    
+//    func getViewCount() {
+//        print("get view count")
+//        viewCountDispatchGroup.enter()
+//
+//        Task {
+//            do {
+//                print("Playing video index in view count", self.playingVideoIndex)
+//                guard let index = self.playingVideoIndex else { return }
+//                let videoId = playlistVideosIds[index]
+//                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
+//
+//                print("fetched count", fetchedCount)
+//                self.viewCount = fetchedCount
+//                viewCountDispatchGroup.leave()
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        viewCountDispatchGroup.notify(queue: .main) {
+//            print("viewCountDispatchGroup")
+//            guard let viewCount = self.viewCount else { return }
+//            self.setViewCount(viewCount)
+//        }
+//    }
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
@@ -306,6 +331,64 @@ class PlayerViewController: UIViewController {
         self.amountOfViewsLabel.text = formattedString + " views"
     }
     
+    
+    
+    func getDuration() {
+        print("getDuration")
+        hostingView.player.getDuration { result in
+            switch result {
+            case .success(let success):
+                let date = Date()
+                let cal = Calendar(identifier: .gregorian)
+                let start = cal.startOfDay(for: date)
+                let newDate = start.addingTimeInterval(success)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "mm:ss"
+                let resultString = formatter.string(from: newDate)
+                
+                self.setDuration(resultString)
+                self.fullTime = Int(success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    @MainActor
+    private func setDuration(_ duration: String) {
+        print("setDuration")
+        self.fullTimeLabel.text = duration
+    }
+    
+    
+    
+    @objc func getElapsedTime() {
+        print("getElapsedTime")
+        hostingView.player.getCurrentTime(completion: { result in
+            switch result {
+            case .success(let success):
+                let date = Date()
+                let cal = Calendar(identifier: .gregorian)
+                let start = cal.startOfDay(for: date)
+                let newDate = start.addingTimeInterval(success)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "mm:ss"
+                let resultString = formatter.string(from: newDate)
+                
+                self.setRecentTime(resultString)
+                self.elapsedTime = Int(success)
+                
+            case .failure(let failure):
+                print(failure)
+            }
+        })
+    }
+    
+    @MainActor
+    private func setRecentTime(_ time: String) {
+        print("setRecentTime")
+        self.recentTimeLabel.text = time
+    }
     
     //MARK: - Get all player data, hasn't used
     
@@ -329,8 +412,6 @@ class PlayerViewController: UIViewController {
 //    }
 
     //MARK: - Configure UI
-    
-
     
     @MainActor
     func configureGradientLayer() {
@@ -364,81 +445,63 @@ class PlayerViewController: UIViewController {
     }
     
     
-    func getDuration() {
-        print("getDuration")
-        hostingView.player.getDuration { result in
-            switch result {
-            case .success(let success):
-                let date = Date()
-                let cal = Calendar(identifier: .gregorian)
-                let start = cal.startOfDay(for: date)
-                let newDate = start.addingTimeInterval(success)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "mm:ss"
-                let resultString = formatter.string(from: newDate)
-                
-                self.setDuration(resultString)
-                self.fullTime = Int(success)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
+//    func getDuration() {
+//        print("getDuration")
+//        hostingView.player.getDuration { result in
+//            switch result {
+//            case .success(let success):
+//                let date = Date()
+//                let cal = Calendar(identifier: .gregorian)
+//                let start = cal.startOfDay(for: date)
+//                let newDate = start.addingTimeInterval(success)
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "mm:ss"
+//                let resultString = formatter.string(from: newDate)
+//
+//                self.setDuration(resultString)
+//                self.fullTime = Int(success)
+//            case .failure(let failure):
+//                print(failure)
+//            }
+//        }
+//    }
+//
+//    @MainActor
+//    private func setDuration(_ duration: String) {
+//        print("setDuration")
+//        self.fullTimeLabel.text = duration
+//    }
     
-    @MainActor
-    private func setDuration(_ duration: String) {
-        print("setDuration")
-        self.fullTimeLabel.text = duration
-    }
-    
-    @objc func getElapsedTime() {
-        print("getElapsedTime")
-        hostingView.player.getCurrentTime(completion: { result in
-            switch result {
-            case .success(let success):
-                let date = Date()
-                let cal = Calendar(identifier: .gregorian)
-                let start = cal.startOfDay(for: date)
-                let newDate = start.addingTimeInterval(success)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "mm:ss"
-                let resultString = formatter.string(from: newDate)
-                
-                self.setRecentTime(resultString)
-                self.elapsedTime = Int(success)
-                
-            case .failure(let failure):
-                print(failure)
-            }
-        })
-    }
-    
-    @MainActor
-    private func setRecentTime(_ time: String) {
-        print("setRecentTime")
-        self.recentTimeLabel.text = time
-    }
+//    @objc func getElapsedTime() {
+//        print("getElapsedTime")
+//        hostingView.player.getCurrentTime(completion: { result in
+//            switch result {
+//            case .success(let success):
+//                let date = Date()
+//                let cal = Calendar(identifier: .gregorian)
+//                let start = cal.startOfDay(for: date)
+//                let newDate = start.addingTimeInterval(success)
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "mm:ss"
+//                let resultString = formatter.string(from: newDate)
+//
+//                self.setRecentTime(resultString)
+//                self.elapsedTime = Int(success)
+//
+//            case .failure(let failure):
+//                print(failure)
+//            }
+//        })
+//    }
+//
+//    @MainActor
+//    private func setRecentTime(_ time: String) {
+//        print("setRecentTime")
+//        self.recentTimeLabel.text = time
+//    }
     
     
-    func configureMetadata() async throws -> String {
-        
-        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
-            hostingView.player.getPlaybackMetadata { result in
-                switch result {
-                case .success(let playbackMetadata):
-                    inCont.resume(returning: playbackMetadata.title )
-                case .failure(let youTubePlayerAPIError):
-                    print("Error", youTubePlayerAPIError)
-                }
-            }
-        }
-    }
-    
-    @MainActor
-    private func setVideoName(_ name: String) {
-        print("setvideoname")
-        self.videoNameLabel.text = name
-    }
+
 }
 
 extension DispatchQueue {
