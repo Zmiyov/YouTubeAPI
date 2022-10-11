@@ -72,12 +72,13 @@ class PlayerViewController: UIViewController {
         print("will channel")
         
         serialQueue.async {
-            self.getPlaylistVideosIds()
+//            self.getPlaylistVideosIds()
             self.getPlayingVideoIndex()
-            self.getViewCount()
+            
             self.updateAllUI()
         }
 
+        self.getViewCount()
     }
     
     override func viewWillLayoutSubviews() {
@@ -92,14 +93,7 @@ class PlayerViewController: UIViewController {
 
     }
     
-    //MARK: - set ui
-    
-    func setNewPlaylist() {
-        if let playlistFromChannel = self.playlistFromChannel {
-            hostingView.player.source = .playlist(id: playlistFromChannel)
-            hostingView.player.configuration.autoPlay = true
-        }
-    }
+
     
     //MARK: - Actions
     
@@ -153,22 +147,68 @@ class PlayerViewController: UIViewController {
         hostingView.player.set(volume: volume)
     }
     
-    //MARK: - fetch data
+    //MARK: - Set UI
     
-
+    func setNewPlaylist() {
+        if let playlistFromChannel = self.playlistFromChannel {
+            hostingView.player.source = .playlist(id: playlistFromChannel)
+            hostingView.player.configuration.autoPlay = true
+        }
+    }
     
-    func getPlaylistVideosIds() {
-        print("getPlaylistVideosIds")
+    func updateAllUI() {
+        print("Update all ui")
         
-        hostingView.player.getPlaylist { result in
-            switch result {
-            case .success(let success):
-                self.playlistVideosIds = success
-                print("getPlaylistVideosIds", success)
-            case .failure(let failure):
-                print(failure)
+        getDuration()
+        getElapsedTime()
+        
+        Task {
+            do {
+                print("task title")
+                let title = try await configureMetadata()
+                print("Title", title)
+                setVideoName(title)
+            } catch {
+                print(error)
             }
         }
+        
+        Task {
+            do {
+                print("task playlistIdArray")
+                let playlistIdArray = try await getPlaylistVideosIds()
+                print("playlistIdArray", playlistIdArray)
+                setPlaylistVideosIds(playlistIdArray)
+            } catch {
+                print(error)
+            }
+        }
+        
+        
+    }
+    
+    //MARK: - fetch data
+    
+    func getPlaylistVideosIds() async throws -> [String] {
+        print("getPlaylistVideosIds")
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<[String], Error>) in
+            hostingView.player.getPlaylist { result in
+                switch result {
+                case .success(let success):
+                    inCont.resume(returning: success)
+//                    self.playlistVideosIds = success
+//                    print("getPlaylistVideosIds success", success)
+                case .failure(let failure):
+                    print(failure)
+                }
+            }
+        }
+    }
+    
+    @MainActor
+    private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
+        print("setPlaylistVideosIds")
+        self.playlistVideosIds = playlistIdArray
     }
     
     func getPlayingVideoIndex() {
@@ -224,29 +264,6 @@ class PlayerViewController: UIViewController {
         self.amountOfViewsLabel.text = formattedString + " views"
     }
     
-//    func getViewCount() async throws -> String {
-//        print("get view count")
-//        guard let index = playingVideoIndex else { return nil}
-//        let videoId = playlistVideosIds[index]
-//
-//        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
-//           networkController.getViewCountVideos(videoId: videoId)
-//
-//        }
-//    }
-    
-//    @MainActor
-//    private func setViewCount(_ fetchedCount: String) {
-//        print("Set view count")
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = NumberFormatter.Style.decimal
-//
-//        formatter.locale = Locale(identifier: "fr_FR")
-//
-//        guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
-//
-//        self.amountOfViewsLabel.text = formattedString + " views"
-//    }
     
     //MARK: - Get all player data, hasn't used
     
@@ -271,24 +288,7 @@ class PlayerViewController: UIViewController {
 
     //MARK: - Configure UI
     
-    func updateAllUI() {
-        print("Update all ui")
-        
-        
-        getDuration()
-        getElapsedTime()
-        
-        Task {
-            do {
-                print("task title")
-                let title = try await configureMetadata()
-                print("Title", title)
-                setVideoName(title)
-            } catch {
-                print(error)
-            }
-        }
-    }
+
     
     @MainActor
     func configureGradientLayer() {
@@ -377,21 +377,6 @@ class PlayerViewController: UIViewController {
         self.recentTimeLabel.text = time
     }
     
-//    func configureMetadata(completion: @escaping (_ name: String) -> Void) async throws {
-//
-//        Task {
-//            hostingView.player.getPlaybackMetadata { result in
-//                switch result {
-//
-//                case .success(let playbackMetadata):
-//                    completion(playbackMetadata.title)
-//
-//                case .failure(let youTubePlayerAPIError):
-//                    print("Error", youTubePlayerAPIError)
-//                }
-//            }
-//        }
-//    }
     
     func configureMetadata() async throws -> String {
         
