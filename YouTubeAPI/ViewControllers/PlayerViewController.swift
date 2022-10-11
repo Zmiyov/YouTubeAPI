@@ -73,12 +73,13 @@ class PlayerViewController: UIViewController {
         
         serialQueue.async {
 //            self.getPlaylistVideosIds()
-            self.getPlayingVideoIndex()
+//            self.getPlayingVideoIndex()
             
             self.updateAllUI()
+//            self.getViewCount()
         }
 
-        self.getViewCount()
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -184,7 +185,42 @@ class PlayerViewController: UIViewController {
             }
         }
         
-        
+        Task {
+            do {
+                //Get video index
+                print("task playingVideoIndex")
+                let index = try await getPlayingVideoIndex()
+                print("playingVideoIndex", index)
+                setPlayingVideoIndex(index)
+                
+                //Get views count
+                let videoId = playlistVideosIds[index]
+                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
+                print("fetched count", fetchedCount)
+                //Set views count
+                self.viewCount = fetchedCount
+                self.setViewCount(fetchedCount)
+            } catch {
+                print(error)
+            }
+        }
+//
+//        Task {
+//
+//            do {
+//                print("task view count")
+//                guard let index = self.playingVideoIndex else { return }
+//                let videoId = playlistVideosIds[index]
+//                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
+//
+//                print("fetched count", fetchedCount)
+//                self.viewCount = fetchedCount
+//                self.setViewCount(fetchedCount)
+//            } catch {
+//                print(error)
+//            }
+//        }
+
     }
     
     //MARK: - fetch data
@@ -196,8 +232,6 @@ class PlayerViewController: UIViewController {
                 switch result {
                 case .success(let success):
                     inCont.resume(returning: success)
-//                    self.playlistVideosIds = success
-//                    print("getPlaylistVideosIds success", success)
                 case .failure(let failure):
                     print(failure)
                 }
@@ -211,18 +245,26 @@ class PlayerViewController: UIViewController {
         self.playlistVideosIds = playlistIdArray
     }
     
-    func getPlayingVideoIndex() {
+    func getPlayingVideoIndex() async throws -> Int{
         print("getPlayingVideoIndex")
-        
-        hostingView.player.getPlaylistIndex { result in
-            switch result {
-            case .success(let success):
-                self.playingVideoIndex = success
-                print("getPlayingVideoIndex", success)
-            case .failure(let failure):
-                print(failure)
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
+            hostingView.player.getPlaylistIndex { result in
+                switch result {
+                case .success(let success):
+                    inCont.resume(returning: success)
+//                    self.playingVideoIndex = success
+                    print("getPlayingVideoIndex", success)
+                case .failure(let failure):
+                    print(failure)
+                }
             }
         }
+    }
+    
+    @MainActor
+    private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
+        print("setPlaylistVideosIds")
+        self.playingVideoIndex = playingVideoIndex
     }
     
     func getViewCount() {
