@@ -79,23 +79,14 @@ class PlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         print("did layout channel")
-        
-        
+
+    }
+    
+    func setNewPlaylist() {
         if let playlistFromChannel = playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
-            
-            
         }
-        
-//        Task {
-//            do {
-//                let title = try await configureMetadata()
-//                setVideoName(title)
-//            } catch {
-//                print(error)
-//            }
-//        }
     }
     
     //MARK: - Actions
@@ -156,17 +147,20 @@ class PlayerViewController: UIViewController {
         print("get view count")
         Task {
             do {
-                guard let index = playingVideoIndex else { return }
+                print("Playing video index", self.playingVideoIndex)
+                guard let index = self.playingVideoIndex else { return }
                 let videoId = playlistVideosIds[index]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-                
+
                 let formatter = NumberFormatter()
                 formatter.numberStyle = NumberFormatter.Style.decimal
-                
+
                 formatter.locale = Locale(identifier: "fr_FR")
                 
+                print("Fetched count", fetchedCount)
+
                 guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
-                
+
                 self.setViewCount(formattedString)
             } catch {
                 print(error)
@@ -179,6 +173,30 @@ class PlayerViewController: UIViewController {
         print("Set view count")
         self.amountOfViewsLabel.text = formattedString + " views"
     }
+    
+//    func getViewCount() async throws -> String {
+//        print("get view count")
+//        guard let index = playingVideoIndex else { return nil}
+//        let videoId = playlistVideosIds[index]
+//
+//        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
+//           networkController.getViewCountVideos(videoId: videoId)
+//
+//        }
+//    }
+    
+//    @MainActor
+//    private func setViewCount(_ fetchedCount: String) {
+//        print("Set view count")
+//        let formatter = NumberFormatter()
+//        formatter.numberStyle = NumberFormatter.Style.decimal
+//
+//        formatter.locale = Locale(identifier: "fr_FR")
+//
+//        guard let formattedString = formatter.string(for: Int(fetchedCount)) else { return }
+//
+//        self.amountOfViewsLabel.text = formattedString + " views"
+//    }
     
     func getPlaylistVideosIds() {
         

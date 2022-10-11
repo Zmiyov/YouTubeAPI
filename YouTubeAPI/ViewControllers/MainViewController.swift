@@ -99,8 +99,9 @@ class MainViewController: UIViewController {
                 self.playerViewController.playingState = true
                 self.playerViewController.playlistFromChannel = playlistId
                 self.playerViewController.playPauseButton.setImage(UIImage(named: "Pause"), for: .normal)
-                
+                self.playerViewController.setNewPlaylist()
                 handleButtonTap()
+                
             }
         }
     }
