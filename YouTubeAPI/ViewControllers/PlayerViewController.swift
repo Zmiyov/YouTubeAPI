@@ -56,7 +56,6 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         addVideoPlayerView(playlistID: self.playlistID)
         configureGradientLayer()
-        print("did channel")
         
         let timelineSliderThumbImage = UIImage(named: "Line.png")
         timeLineSlider.setThumbImage(timelineSliderThumbImage, for: .normal)
@@ -64,7 +63,6 @@ class PlayerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("will channel")
         
         self.updateUIfromAPI()
         self.updateAllUI()
@@ -175,22 +173,16 @@ class PlayerViewController: UIViewController {
         Task {
             do {
                 //Get playlist ids
-                print("task getPlaylistIdArray")
                 let playlistIdArray = try await getPlaylistVideosIds()
-                print("playlistIdArray", playlistIdArray)
                 self.setPlaylistVideosIds(playlistIdArray)
                 
                 //Get title
-                print("task getTitle")
                 let videoIdForTitle = self.playlistVideosIds[self.playingVideoIndex]
                 let fetchedTitle = try await networkController.getTitleOfVideo(videoId: videoIdForTitle)
-                print("fetched title", fetchedTitle)
 
                 //Get views count
-                print("task getViewCountVideos")
                 let videoId = self.playlistVideosIds[self.playingVideoIndex]
                 let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-                print("fetched count", fetchedCount)
                 
                 //Set ui
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
@@ -206,18 +198,15 @@ class PlayerViewController: UIViewController {
     }
     
     func updateAllUI() {
-        print("Update all ui")
         
         Task {
             do {
-                print("task duration")
+                //Get video duration
                 let duration = try await getDuration()
-                print("duration", duration)
                 self.setDuration(duration)
                 
-                print("task elapsed time")
+                //Get elapded time
                 let elapsedTime = try await getElapsedTime()
-                print("Elapsed time", elapsedTime)
                 self.setElapsedTime(elapsedTime)
             } catch {
                 print(error)
@@ -242,12 +231,12 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setVideoName(_ name: String) {
-        print("set Video name")
+
         self.videoNameLabel.text = name
     }
     
     func getPlaylistVideosIds() async throws -> [String] {
-        print("getPlaylistVideosIds")
+       
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<[String], Error>) in
             hostingView.player.getPlaylist { result in
                 switch result {
@@ -261,7 +250,7 @@ class PlayerViewController: UIViewController {
     }
 //    @MainActor
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
-        print("setPlaylistVideosIds")
+        
         self.playlistVideosIds = playlistIdArray
     }
     
@@ -281,7 +270,6 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
-        print("SetViewCount")
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
@@ -292,7 +280,7 @@ class PlayerViewController: UIViewController {
     }
     
     func getDuration() async throws -> Double {
-        print("getDuration")
+        
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
             hostingView.player.getDuration { result in
                 switch result {
@@ -306,7 +294,6 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setDuration(_ duration: Double) {
-        print("setDuration")
         
         let date = Date()
         let cal = Calendar(identifier: .gregorian)
@@ -321,7 +308,6 @@ class PlayerViewController: UIViewController {
     }
     
     @objc func getElapsedTime() async throws -> Double {
-        print("getElapsedTime")
         
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
             hostingView.player.getCurrentTime(completion: { result in
@@ -336,7 +322,6 @@ class PlayerViewController: UIViewController {
     }
     @MainActor
     private func setElapsedTime(_ elapsedTime: Double) {
-        print("setElapsedTime")
         
         let date = Date()
         let cal = Calendar(identifier: .gregorian)
@@ -354,7 +339,7 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     func configureGradientLayer() {
-        print("gradient")
+
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         let pink = UIColor(red: 238.0/255.0, green: 66.0/255.0, blue: 137.0/255.0, alpha: 1.0).cgColor
@@ -369,17 +354,13 @@ class PlayerViewController: UIViewController {
     @objc func setTimelineSlider() {
         
         Task{
-            print("TIMERRRR")
             let fullTime = try await self.getDuration()
-            print("FULLLTIMEEE", fullTime)
             let secondsInOnePercent = Float(fullTime) / 100
             self.setDuration(fullTime)
             
             let elapsedTime = try await self.getElapsedTime()
-            print("ELAPSEDTIMMEEE", elapsedTime)
             let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
             timeLineSlider.value = Float(timeLineValue)
-            print("TIMEVALUEEEE", timeLineValue)
             self.setElapsedTime(elapsedTime)
         }
     }
@@ -392,17 +373,3 @@ class PlayerViewController: UIViewController {
         videoView.addSubview(hostingView)
     }
 }
-
-extension DispatchQueue {
-    static public func asyncMainIfNeeded(work: @escaping () -> Void) {
-        if Thread.isMainThread {
-            work()
-            return
-        }
-        DispatchQueue.main.async {
-            work()
-        }
-    }
-}
-
-
