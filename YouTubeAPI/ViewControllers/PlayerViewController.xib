@@ -74,7 +74,7 @@
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hVv-vY-Qcc" userLabel="Timeline Slider">
                                             <rect key="frame" x="-2" y="-5.6666666666666288" width="362.66666666666669" height="31"/>
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
+                                            <color key="maximumTrackTintColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="0.79906250000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="timelineSlider:" destination="-1" eventType="valueChanged" id="uU3-KI-qe9"/>
                                             </connections>
@@ -199,7 +199,7 @@
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="Sound_Min" maximumValueImage="Sound_Max" translatesAutoresizingMaskIntoConstraints="NO" id="wGM-Ql-PTu" userLabel="Volume Slider">
                                             <rect key="frame" x="8" y="20.000000000000057" width="335" height="31"/>
                                             <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="maximumTrackTintColor" systemColor="systemGray5Color"/>
+                                            <color key="maximumTrackTintColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="0.80019097222222224" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="volumeSlider:" destination="-1" eventType="valueChanged" id="Egl-0T-38m"/>
@@ -261,9 +261,6 @@
         <image name="Prev" width="32" height="30"/>
         <image name="Sound_Max" width="25" height="25"/>
         <image name="Sound_Min" width="25" height="25"/>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
