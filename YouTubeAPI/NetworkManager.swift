@@ -76,7 +76,7 @@ class NetworkManager {
         
         let decoder = JSONDecoder()
         let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
-//        print("Title from", videoResponse.items![0].title)
+
         return videoResponse.items![0].viewCount!
     }
     
@@ -97,7 +97,7 @@ class NetworkManager {
         
         let decoder = JSONDecoder()
         let videoResponse = try decoder.decode(ResponseVideoItem.self, from: data)
-        print("Title from", videoResponse.items![0].title)
+
         return videoResponse.items![0].title!
     }
     
