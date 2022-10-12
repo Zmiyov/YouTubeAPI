@@ -12,7 +12,7 @@
 		A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */; };
 		A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C428EDC09C00E25651 /* VideoModel.swift */; };
 		A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */; };
-		A52C75CA28EDD9BD00E25651 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C928EDD9BD00E25651 /* NetworkController.swift */; };
+		A52C75CA28EDD9BD00E25651 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C928EDD9BD00E25651 /* NetworkManager.swift */; };
 		A52C75CC28EDE41500E25651 /* FullPlaylistVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */; };
 		A56E744E28F18C0D00724774 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = A56E744D28F18C0D00724774 /* YouTubePlayerKit */; };
 		A56E745128F20A0800724774 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A56E745028F20A0800724774 /* SwiftyJSON */; };
@@ -51,7 +51,7 @@
 		A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylististItem.swift; sourceTree = "<group>"; };
 		A52C75C428EDC09C00E25651 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		A52C75C628EDC0CE00E25651 /* ResponseVideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseVideoItem.swift; sourceTree = "<group>"; };
-		A52C75C928EDD9BD00E25651 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		A52C75C928EDD9BD00E25651 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPlaylistVideoModel.swift; sourceTree = "<group>"; };
 		A586DEC328EB95270006983B /* YouTubeAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubeAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A586DEC628EB95270006983B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 			children = (
 				A586DEC628EB95270006983B /* AppDelegate.swift */,
 				A586DEC828EB95280006983B /* SceneDelegate.swift */,
-				A52C75C928EDD9BD00E25651 /* NetworkController.swift */,
+				A52C75C928EDD9BD00E25651 /* NetworkManager.swift */,
 				A586DEE428EBA7060006983B /* Models */,
 				A59F1F3A28F00D2900BC4686 /* View */,
 				A52C75C828EDC9E200E25651 /* ViewControllers */,
@@ -394,7 +394,7 @@
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
 				A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */,
 				A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */,
-				A52C75CA28EDD9BD00E25651 /* NetworkController.swift in Sources */,
+				A52C75CA28EDD9BD00E25651 /* NetworkManager.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
 				A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */,
 				A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */,

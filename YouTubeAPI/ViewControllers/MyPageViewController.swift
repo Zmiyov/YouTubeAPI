@@ -18,7 +18,7 @@ class MyPageViewController: UIPageViewController {
     
     var delegatePlaylistId: MyPageViewControllerDelegate?
     
-    let networkManager = NetworkController()
+    let networkManager = NetworkManager()
     
     let query = "surfing"
     var channels = [SearchModel]()

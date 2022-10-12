@@ -101,7 +101,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkController) {
+    func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkManager) {
         titleLabel.text = playlist.title
         
         subtitleLabel.text = playlist.viewCount

@@ -36,7 +36,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
     let playlist2DispatchGroup = DispatchGroup()
     
     var sections = [Section]()
-    let networkController = NetworkController()
+    let networkController = NetworkManager()
 
     var playlistVideos1 = [PlaylistItemsVideoModel]()
     var playlistVideos2 = [PlaylistItemsVideoModel]()

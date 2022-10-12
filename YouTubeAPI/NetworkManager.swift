@@ -1,5 +1,5 @@
 //
-//  NetworkController.swift
+//  NetworkManager.swift
 //  YouTubeAPI
 //
 //  Created by Vladimir Pisarenko on 05.10.2022.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftyJSON
 
-class NetworkController {
+class NetworkManager {
     
     enum YouTubeItemError: Error, LocalizedError {
         case playlistItemNotFound

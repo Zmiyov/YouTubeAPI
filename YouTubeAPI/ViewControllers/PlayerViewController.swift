@@ -33,7 +33,7 @@ class PlayerViewController: UIViewController {
         case pause
     }
     
-    let networkController = NetworkController()
+    let networkController = NetworkManager()
     
     var playingState = false
     let playlistID: String = "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"
@@ -148,7 +148,7 @@ class PlayerViewController: UIViewController {
         hostingView.player.set(volume: volume)
     }
     
-    //MARK: - Set UI
+    //MARK: - Set UI when loaded new video
     
     func setNewPlaylist() {
         if let playlistFromChannel = self.playlistFromChannel {
@@ -208,27 +208,42 @@ class PlayerViewController: UIViewController {
                 //Get elapded time
                 let elapsedTime = try await getElapsedTime()
                 self.setElapsedTime(elapsedTime)
+                
+                //Get volume value
+                let currentVolume = try await self.getVolume()
+                volumeSlider.value = Float(currentVolume)
             } catch {
                 print(error)
             }
         }
     }
     
-    //MARK: - Fetch data
+    //MARK: - Fetch and set data
     
-    func configureMetadata() async throws -> String {
+    func getVolume() async throws -> Int {
         
-        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<String, Error>) in
-            hostingView.player.getPlaybackMetadata { result in
+        return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
+            hostingView.player.getVolume { result in
                 switch result {
-                case .success(let playbackMetadata):
-                    inCont.resume(returning: playbackMetadata.title )
-                case .failure(let youTubePlayerAPIError):
-                    print("Error", youTubePlayerAPIError)
+                case .success(let success):
+                    inCont.resume(returning: success)
+                case .failure(let failure):
+                    print(failure)
                 }
             }
         }
     }
+    
+    @MainActor
+    func setVolumeSlider() {
+        Task{
+            let currentVolume = try await self.getVolume()
+            
+            volumeSlider.value = Float(currentVolume)
+        }
+    }
+
+    
     @MainActor
     private func setVideoName(_ name: String) {
 
@@ -248,7 +263,7 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-//    @MainActor
+
     private func setPlaylistVideosIds(_ playlistIdArray: [String]) {
         
         self.playlistVideosIds = playlistIdArray
