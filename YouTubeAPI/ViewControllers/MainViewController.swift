@@ -116,6 +116,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
                 completion(true)
             } catch {
                 print(error)
+                Alert.alert(error: error, vc: self)
             }
         }
     }
@@ -132,6 +133,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
                 completion(true)
             } catch {
                 print(error)
+                Alert.alert(error: error, vc: self)
             }
         }
     }
@@ -157,6 +159,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
                     playlist1DispatchGroup.leave()
                 } catch {
                     print(error)
+                    Alert.alert(error: error, vc: self)
                 }
             }
         }
@@ -185,6 +188,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
                     playlist2DispatchGroup.leave()
                 } catch {
                     print(error)
+                    Alert.alert(error: error, vc: self)
                 }
             }
         }
@@ -349,7 +353,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         } else {
             animateTransitionIfNeeded(state: .expanded, duration: 0.9)
         }
-        
     }
     
     func deleteVisualEffect(state: PlayerState) {

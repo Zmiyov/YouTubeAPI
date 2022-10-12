@@ -30,6 +30,7 @@
 		A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A592EF7428EF7BB500D6F23E /* ResponseSearchItem.swift */; };
 		A59F1F4328F0176A00BC4686 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59F1F4128F0176A00BC4686 /* PlayerViewController.swift */; };
 		A59F1F4428F0176A00BC4686 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */; };
+		A5B3102328F6A34600AF7807 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B3102228F6A34600AF7807 /* Alert.swift */; };
 		A5C78B6128F22937009601B3 /* PlaylistsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6028F22937009601B3 /* PlaylistsModel.swift */; };
 		A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */; };
 		A5C78B6528F453D3009601B3 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */; };
@@ -69,6 +70,7 @@
 		A592EF7428EF7BB500D6F23E /* ResponseSearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSearchItem.swift; sourceTree = "<group>"; };
 		A59F1F4128F0176A00BC4686 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		A59F1F4228F0176A00BC4686 /* PlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
+		A5B3102228F6A34600AF7807 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A5C78B6028F22937009601B3 /* PlaylistsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsModel.swift; sourceTree = "<group>"; };
 		A5C78B6228F22963009601B3 /* ResponsePlaylistists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylistists.swift; sourceTree = "<group>"; };
 		A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				A5DE815528EF08CA0053CDC1 /* ChannelChildVCs */,
 				A56E744B28F0412400724774 /* PlayerViewController */,
 				A5C78B6428F453D3009601B3 /* SpinnerViewController.swift */,
+				A5B3102228F6A34600AF7807 /* Alert.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,
 				A5C78B6328F22963009601B3 /* ResponsePlaylistists.swift in Sources */,
 				A52C75C728EDC0CE00E25651 /* ResponseVideoItem.swift in Sources */,
+				A5B3102328F6A34600AF7807 /* Alert.swift in Sources */,
 				A52C75CA28EDD9BD00E25651 /* NetworkManager.swift in Sources */,
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
 				A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */,

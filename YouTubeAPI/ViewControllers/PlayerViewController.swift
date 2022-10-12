@@ -193,6 +193,7 @@ class PlayerViewController: UIViewController {
                 
             } catch {
                 print(error)
+                Alert.alert(error: error, vc: self)
             }
         }
     }
@@ -214,6 +215,7 @@ class PlayerViewController: UIViewController {
                 volumeSlider.value = Float(currentVolume)
             } catch {
                 print(error)
+                Alert.alert(error: error, vc: self)
             }
         }
     }
@@ -233,16 +235,6 @@ class PlayerViewController: UIViewController {
             }
         }
     }
-    
-    @MainActor
-    func setVolumeSlider() {
-        Task{
-            let currentVolume = try await self.getVolume()
-            
-            volumeSlider.value = Float(currentVolume)
-        }
-    }
-
     
     @MainActor
     private func setVideoName(_ name: String) {

@@ -76,6 +76,7 @@ class MyPageViewController: UIPageViewController {
                 completion(true)
             } catch {
                 print(error)
+                Alert.alert(error: error, vc: self)
             }
         }
     }
@@ -131,6 +132,7 @@ class MyPageViewController: UIPageViewController {
                     vc.backgroungImage.image = try await networkManager.fetchImage(url: urlString )
                 } catch {
                     print(error)
+                    Alert.alert(error: error, vc: self)
                 }
             }
             
