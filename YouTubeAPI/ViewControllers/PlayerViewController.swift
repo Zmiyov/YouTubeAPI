@@ -68,6 +68,7 @@ class PlayerViewController: UIViewController {
         super.viewWillAppear(animated)
         print("will channel")
         
+        self.updateUIfromAPI()
         self.updateAllUI()
     }
     
@@ -107,6 +108,8 @@ class PlayerViewController: UIViewController {
         if self.playingVideoIndex > 0 {
             self.playingVideoIndex -= 1
         }
+        
+        self.updateUIfromAPI()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.updateAllUI()
@@ -142,6 +145,9 @@ class PlayerViewController: UIViewController {
         if self.playingVideoIndex <= self.playlistVideosIds.count {
             self.playingVideoIndex += 1
         }
+        
+        self.updateUIfromAPI()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.updateAllUI()
         }
@@ -160,13 +166,52 @@ class PlayerViewController: UIViewController {
         if let playlistFromChannel = self.playlistFromChannel {
             hostingView.player.source = .playlist(id: playlistFromChannel)
             hostingView.player.configuration.autoPlay = true
-            updateAllUI()
             self.playingVideoIndex = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.updateUIfromAPI()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.updateAllUI()
+            }
         }
     }
     
     func updateUIfromAPI() {
         
+        Task {
+            do {
+                //Get playlist ids
+                print("task getPlaylistIdArray")
+                let playlistIdArray = try await getPlaylistVideosIds()
+                print("playlistIdArray", playlistIdArray)
+                self.setPlaylistVideosIds(playlistIdArray)
+                
+                //Get title
+                print("task getTitle")
+                let videoIdForTitle = self.playlistVideosIds[self.playingVideoIndex]
+                let fetchedTitle = try await networkController.getTitleOfVideo(videoId: videoIdForTitle)
+                print("fetched title", fetchedTitle)
+
+                //Get views count
+                print("task getViewCountVideos")
+                let videoId = self.playlistVideosIds[self.playingVideoIndex]
+                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
+                print("fetched count", fetchedCount)
+                
+                //Set ui
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    //Set title
+                    self.setVideoName(fetchedTitle)
+                    //Set views count
+                    self.setViewCount(fetchedCount)
+                }
+                
+            } catch {
+                print(error)
+            }
+        }
     }
     
     func updateAllUI() {
@@ -174,21 +219,6 @@ class PlayerViewController: UIViewController {
         
         Task {
             do {
-                print("task getPlaylistIdArray")
-                let playlistIdArray = try await getPlaylistVideosIds()
-                print("playlistIdArray", playlistIdArray)
-                self.setPlaylistVideosIds(playlistIdArray)
-                
-//                //Get video index
-//                print("task playingVideoIndex")
-//                let index = try await getPlayingVideoIndex()
-//                print("getPlayingVideoIndex", index)
-//                self.setPlayingVideoIndex(index)
-                
-                print("task title")
-                let title = try await configureMetadata()
-                print("Title", title)
-                self.setVideoName(title)
                 
                 print("task duration")
                 let duration = try await getDuration()
@@ -199,14 +229,6 @@ class PlayerViewController: UIViewController {
                 let elapsedTime = try await getElapsedTime()
                 print("Elapsed time", elapsedTime)
                 self.setElapsedTime(elapsedTime)
-                
-                //Get views count
-                print("task getViewCountVideos")
-                let videoId = self.playlistVideosIds[self.playingVideoIndex]
-                let fetchedCount = try await networkController.getViewCountVideos(videoId: videoId)
-                print("fetched count", fetchedCount)
-                //Set views count
-                self.setViewCount(fetchedCount)
                 
             } catch {
                 print(error)
@@ -269,10 +291,10 @@ class PlayerViewController: UIViewController {
         }
     }
 //    @MainActor
-    private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
-        print("setPlaylistVideosIndex")
-        self.playingVideoIndex = playingVideoIndex
-    }
+//    private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
+//        print("setPlaylistVideosIndex")
+//        self.playingVideoIndex = playingVideoIndex
+//    }
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
@@ -383,12 +405,19 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     @objc func setTimelineSlider() {
+        print("TIMERRRR")
         guard let fullTime = self.fullTime else { return }
+        print("FULLLTIMEEE", fullTime)
         let secondsInOnePercent = Float(fullTime) / 100
-        guard let elapsedTime = self.elapsedTime else { return }
         
-        let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
-        timeLineSlider.value = Float(timeLineValue)
+        Task{
+            let elapsedTime = try await self.getElapsedTime()
+            print("ELAPSEDTIMMEEE", elapsedTime)
+            let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
+            timeLineSlider.value = Float(timeLineValue)
+            print("TIMEVALUEEEE", timeLineValue)
+            self.setElapsedTime(elapsedTime)
+        }
     }
     
     @MainActor
