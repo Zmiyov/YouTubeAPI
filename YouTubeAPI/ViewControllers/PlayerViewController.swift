@@ -36,9 +36,7 @@ class PlayerViewController: UIViewController {
     let networkController = NetworkController()
     
     var playingState = false
-    
     let playlistID: String = "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"
-    
     var playlistFromChannel: String?
     
     var hostingView: YouTubePlayerHostingView!
@@ -72,17 +70,6 @@ class PlayerViewController: UIViewController {
         self.updateAllUI()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        print("will layout channel")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        print("did layout channel")
-    }
     
     //MARK: - Actions
     
@@ -115,11 +102,12 @@ class PlayerViewController: UIViewController {
             self.updateAllUI()
         }
         
+        self.timelineTimer?.invalidate()
+        self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
     }
     
     @IBAction func playPauseButton(_ sender: UIButton) {
 
-//        updateAllUI()
         if playingState == false {
             hostingView.player.play()
             playingState = true
@@ -152,6 +140,8 @@ class PlayerViewController: UIViewController {
             self.updateAllUI()
         }
         
+        self.timelineTimer?.invalidate()
+        self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
     }
   
     @IBAction func volumeSlider(_ sender: UISlider) {
@@ -175,6 +165,8 @@ class PlayerViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.updateAllUI()
             }
+            
+            self.timelineTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setTimelineSlider), userInfo: nil, repeats: true)
         }
     }
     
@@ -202,9 +194,8 @@ class PlayerViewController: UIViewController {
                 
                 //Set ui
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    //Set title
+                    
                     self.setVideoName(fetchedTitle)
-                    //Set views count
                     self.setViewCount(fetchedCount)
                 }
                 
@@ -219,7 +210,6 @@ class PlayerViewController: UIViewController {
         
         Task {
             do {
-                
                 print("task duration")
                 let duration = try await getDuration()
                 print("duration", duration)
@@ -229,7 +219,6 @@ class PlayerViewController: UIViewController {
                 let elapsedTime = try await getElapsedTime()
                 print("Elapsed time", elapsedTime)
                 self.setElapsedTime(elapsedTime)
-                
             } catch {
                 print(error)
             }
@@ -277,24 +266,18 @@ class PlayerViewController: UIViewController {
     }
     
     func getPlayingVideoIndex() async throws -> Int {
-//        print("getPlayingVideoIndex")
+        
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
             hostingView.player.getPlaylistIndex { result in
                 switch result {
                 case .success(let success):
                     inCont.resume(returning: success)
-//                    print("getPlayingVideoIndex", success)
                 case .failure(let failure):
                     print(failure)
                 }
             }
         }
     }
-//    @MainActor
-//    private func setPlayingVideoIndex(_ playingVideoIndex: Int) {
-//        print("setPlaylistVideosIndex")
-//        self.playingVideoIndex = playingVideoIndex
-//    }
     
     @MainActor
     private func setViewCount(_ fetchedCount: String) {
@@ -366,27 +349,6 @@ class PlayerViewController: UIViewController {
         self.elapsedTime = Int(elapsedTime)
         self.recentTimeLabel.text = resultString
     }
-    
-    //MARK: - Get all player data, hasn't used
-    
-//    func getData() {
-//
-//        hostingView.player.getInformation { result in
-//            switch result {
-//            case .success(let success):
-//                let volume = success.volume
-//                print(volume)
-//                let duration = success.duration
-//                print(duration)
-//                let currentTime = success.currentTime
-//                print("current", currentTime)
-//                let videoUrl = success.videoUrl
-//                print(videoUrl)
-//            case .failure(let failure):
-//                print(failure)
-//            }
-//        }
-//    }
 
     //MARK: - Configure UI
     
@@ -405,12 +367,14 @@ class PlayerViewController: UIViewController {
     
     @MainActor
     @objc func setTimelineSlider() {
-        print("TIMERRRR")
-        guard let fullTime = self.fullTime else { return }
-        print("FULLLTIMEEE", fullTime)
-        let secondsInOnePercent = Float(fullTime) / 100
         
         Task{
+            print("TIMERRRR")
+            let fullTime = try await self.getDuration()
+            print("FULLLTIMEEE", fullTime)
+            let secondsInOnePercent = Float(fullTime) / 100
+            self.setDuration(fullTime)
+            
             let elapsedTime = try await self.getElapsedTime()
             print("ELAPSEDTIMMEEE", elapsedTime)
             let timeLineValue = (Float(elapsedTime) / secondsInOnePercent)
@@ -427,7 +391,6 @@ class PlayerViewController: UIViewController {
         hostingView.frame = videoView.bounds
         videoView.addSubview(hostingView)
     }
-    
 }
 
 extension DispatchQueue {
