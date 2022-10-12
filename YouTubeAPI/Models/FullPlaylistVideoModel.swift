@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
-struct FullPlaylistVideoModel {
+struct PlaylistVideosModel: Hashable {
     
-    var thumbnail: String?
-    var title: String?
-    var viewCount: String?
-    var videoId: String?
+    let title: String
+    let viewCount: String
+    
+    let color = UIColor.random
 }

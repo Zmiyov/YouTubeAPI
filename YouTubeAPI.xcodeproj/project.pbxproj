@@ -39,7 +39,7 @@
 		A5E6EEC628EC9AEC008DF5FA /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC528EC9AEC008DF5FA /* MyPageViewController.swift */; };
 		A5E6EEC828EC9C7C008DF5FA /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */; };
 		A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */; };
-		A5E813B028EBAFD900A676C7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813AF28EBAFD900A676C7 /* App.swift */; };
+		A5E813B028EBAFD900A676C7 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813AF28EBAFD900A676C7 /* Channel.swift */; };
 		A5E813B228EBB02900A676C7 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813B128EBB02900A676C7 /* UIColor+.swift */; };
 		DEAD35ECD9514AEE7D9579D7 /* libPods-YouTubeAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE6BD69D6C39B45DFDC207 /* libPods-YouTubeAPI.a */; };
 /* End PBXBuildFile section */
@@ -79,7 +79,7 @@
 		A5E6EEC528EC9AEC008DF5FA /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		A5E6EEC728EC9C7C008DF5FA /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCollectionViewCell.swift; sourceTree = "<group>"; };
-		A5E813AF28EBAFD900A676C7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		A5E813AF28EBAFD900A676C7 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		A5E813B128EBB02900A676C7 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		FAAE6BD69D6C39B45DFDC207 /* libPods-YouTubeAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YouTubeAPI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -234,7 +234,7 @@
 				A52C75C128EDBF4700E25651 /* API video models */,
 				A52C75C028EDB40400E25651 /* API playlist items model */,
 				A586DEE528EBA7330006983B /* Item.swift */,
-				A5E813AF28EBAFD900A676C7 /* App.swift */,
+				A5E813AF28EBAFD900A676C7 /* Channel.swift */,
 				A52C75CB28EDE41400E25651 /* FullPlaylistVideoModel.swift */,
 			);
 			path = Models;
@@ -391,7 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E813B028EBAFD900A676C7 /* App.swift in Sources */,
+				A5E813B028EBAFD900A676C7 /* Channel.swift in Sources */,
 				A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */,
 				A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */,
 				A586DECB28EB95280006983B /* MainViewController.swift in Sources */,

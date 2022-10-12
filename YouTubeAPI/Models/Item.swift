@@ -8,46 +8,54 @@
 import Foundation
 
 enum Item: Hashable {
-    case channel(ChannelModel)
-    case playlist(PlaylistItemsVideoModel)
-    case app(App)
     
-    var app: App? {
-        if case .app(let app) = self {
-            return app
+    case channel(Channel)
+    case playlist(PlaylistVideosModel)
+    
+    var channel: Channel? {
+        if case .channel(let channel) = self {
+            return channel
+        } else {
+            return nil
+        }
+    }
+    
+    var playlist: PlaylistVideosModel? {
+        if case .playlist(let playlist) = self {
+            return playlist
         } else {
             return nil
         }
     }
     
     static let promotedApps: [Item] = [
-        .app(App(promotedHeadline: "Now Trending", title: "Playlist Title", viewCount: "Count")),
+        .channel(Channel(title: "Playlist Title", viewCount: "Count"))
     ]
     
     static let landscapePlaylist: [Item] = [
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title1", viewCount: "Count1"))
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title1", viewCount: "Count1"))
     ]
     
     static let squarePlaylist: [Item] = [
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2")),
-        .app(App(promotedHeadline: nil, title: "Playlist Title2", viewCount: "Count2"))
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2")),
+        .playlist(PlaylistVideosModel(title: "Playlist Title2", viewCount: "Count2"))
     ]
 }
 

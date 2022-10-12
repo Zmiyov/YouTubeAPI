@@ -1,5 +1,5 @@
 //
-//  App.swift
+//  Channel.swift
 //  YouTubeAPI
 //
 //  Created by Vladimir Pisarenko on 04.10.2022.
@@ -7,9 +7,7 @@
 
 import UIKit
 
-struct App: Hashable {
-    
-    let promotedHeadline: String?
+struct Channel: Hashable {
     
     let title: String
     let viewCount: String
