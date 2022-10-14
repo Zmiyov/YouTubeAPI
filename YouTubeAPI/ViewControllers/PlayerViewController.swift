@@ -377,6 +377,16 @@ class PlayerViewController: UIViewController {
         let player = YouTubePlayerHostingView(source: .playlist(id: playlistID), configuration: .init(autoPlay: false, showControls: false, loopEnabled: false))
         self.hostingView = player
         hostingView.frame = videoView.bounds
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
         videoView.addSubview(hostingView)
+        
+        NSLayoutConstraint.activate([
+            hostingView.leadingAnchor.constraint(equalTo: videoView.leadingAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: videoView.trailingAnchor),
+            hostingView.topAnchor.constraint(equalTo: videoView.topAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: videoView.bottomAnchor),
+            hostingView.centerXAnchor.constraint(equalTo: videoView.centerXAnchor),
+            hostingView.centerYAnchor.constraint(equalTo: videoView.centerYAnchor)
+        ])
     }
 }
