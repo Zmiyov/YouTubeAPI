@@ -27,13 +27,10 @@ class ContainerCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         addSubview(myContainerView)
         
-        thePageVC = MyPageViewController()
-        thePageVC.delegatePlaylistId = self
-        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
-        thePageVC.view.layer.cornerRadius = 8
-        thePageVC.view.clipsToBounds = true
+        setPageVC()
         myContainerView.addSubview(thePageVC.view)
 
         setConstraints()
@@ -41,6 +38,14 @@ class ContainerCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setPageVC() {
+        thePageVC = MyPageViewController()
+        thePageVC.delegatePlaylistId = self
+        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
+        thePageVC.view.layer.cornerRadius = 8
+        thePageVC.view.clipsToBounds = true
     }
     
     private func setConstraints() {
