@@ -13,19 +13,19 @@ protocol MyPageViewControllerDelegate {
 
 class MyPageViewController: UIPageViewController {
     
-    var pages: [UIViewController] = [UIViewController]()
-    var currentControllerIndex = 0
+    private var pages: [UIViewController] = [UIViewController]()
+    private var currentControllerIndex = 0
     
     var delegatePlaylistId: MyPageViewControllerDelegate?
     
-    let networkManager = NetworkManager()
+    private let networkManager = NetworkManager()
     
-    let query = "surfing"
-    var channels = [SearchModel]()
-    let myGroup = DispatchGroup()
+    private let query = "surfing"
+    private var channels = [SearchModel]()
+    private let myGroup = DispatchGroup()
     
-    var tTime: Timer!
-    var index = 0
+    private var tTime: Timer!
+    private var index = 0
     
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -53,7 +53,8 @@ class MyPageViewController: UIPageViewController {
         tTime.invalidate()
     }
     
-    @objc func changeSlide() {
+    @objc
+    private func changeSlide() {
         index += 1
         if index < self.pages.count {
             setViewControllers([pages[index]], direction: .forward, animated: true, completion: nil)
@@ -66,7 +67,7 @@ class MyPageViewController: UIPageViewController {
     
     //MARK: - Fetching Data
     
-    func getChannels(completion: @escaping (_ success: Bool) -> Void) {
+    private func getChannels(completion: @escaping (_ success: Bool) -> Void) {
         
         Task {
             do {
@@ -81,7 +82,7 @@ class MyPageViewController: UIPageViewController {
         }
     }
     
-    func getUploadsAndSubscriberCount() {
+    private func getUploadsAndSubscriberCount() {
         for i in 0..<channels.count {
             myGroup.enter()
             
@@ -107,7 +108,7 @@ class MyPageViewController: UIPageViewController {
     
 //MARK: - Show Channels
     
-    func showChannels() {
+    private func showChannels() {
         
         for i in 0..<channels.count {
             let vc = ExampleViewController()
@@ -141,7 +142,8 @@ class MyPageViewController: UIPageViewController {
         
     }
     
-    @objc func tapChannel() {
+    @objc
+    private func tapChannel() {
         var info = [String: String]()
         info["id"] = channels[currentControllerIndex].allVideoUploadsPlaylistId
         NotificationCenter.default.post(name: .playlistID, object: nil, userInfo: info)

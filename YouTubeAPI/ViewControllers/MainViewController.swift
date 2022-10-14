@@ -11,48 +11,48 @@ import YouTubePlayerKit
 
 class MainViewController: UIViewController, UICollectionViewDelegate {
     
-    enum SupplementaryViewKind {
+    private enum SupplementaryViewKind {
         static let header = "header"
     }
         
     // MARK: Section Definitions
-    enum Section: Hashable {
+    private enum Section: Hashable {
         case uiPageVC
         case landscape(String)
         case square(String)
 
     }
     
-    enum PlayerState {
+    private enum PlayerState {
         case expanded
         case collapsed
     }
 
     @IBOutlet var collectionView: UICollectionView!
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
-    let playlist1DispatchGroup = DispatchGroup()
-    let playlist2DispatchGroup = DispatchGroup()
+    private let playlist1DispatchGroup = DispatchGroup()
+    private let playlist2DispatchGroup = DispatchGroup()
     
-    var sections = [Section]()
-    let networkController = NetworkManager()
+    private var sections = [Section]()
+    private let networkController = NetworkManager()
 
-    var playlistVideos1 = [PlaylistItemsVideoModel]()
-    var playlistVideos2 = [PlaylistItemsVideoModel]()
+    private var playlistVideos1 = [PlaylistItemsVideoModel]()
+    private var playlistVideos2 = [PlaylistItemsVideoModel]()
     
-    var playlist1Title: String?
-    var playlist2Title: String?
+    private var playlist1Title: String?
+    private var playlist2Title: String?
     
-    var playerViewController: PlayerViewController!
-    var visualEffectView: UIVisualEffectView!
+    private var playerViewController: PlayerViewController!
+    private var visualEffectView: UIVisualEffectView!
     
-    let playerViewHandleAreaHeight: CGFloat = 50
+    private let playerViewHandleAreaHeight: CGFloat = 50
     
-    var playerVisible = false
+    private var playerVisible = false
     
-    var runningAnimations = [UIViewPropertyAnimator]()
-    var animationProgressWhenInterrupted: CGFloat = 0
+    private var runningAnimations = [UIViewPropertyAnimator]()
+    private var animationProgressWhenInterrupted: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +87,8 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc func obserber(notification: Notification) {
+    @objc
+    private func obserber(notification: Notification) {
 
         if let dict = notification.userInfo as NSDictionary? {
             if let playlistId = dict["id"] as? String {
@@ -104,7 +105,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: - Fetching Data
     
-    func fetchPlaylist1(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
+    private func fetchPlaylist1(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
         
         Task {
             do {
@@ -121,7 +122,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func fetchPlaylist2(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
+    private func fetchPlaylist2(playlistId: String, completion: @escaping (_ success: Bool) -> Void) {
         
         Task {
             do {
@@ -138,7 +139,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func getViewCount1() {
+    private func getViewCount1() {
 
         for i in 0..<playlistVideos1.count {
             playlist1DispatchGroup.enter()
@@ -168,7 +169,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func getViewCount2() {
+    private func getViewCount2() {
         for i in 0..<playlistVideos2.count {
             playlist2DispatchGroup.enter()
             
@@ -199,7 +200,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: - Collection View Data Source
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
             let supplementaryItemContentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
@@ -265,7 +266,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         return layout
     }
     
-    func configureDataSource() {
+    private func configureDataSource() {
         // MARK: Data Source Initialization
         dataSource = .init(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             let section = self.sections[indexPath.section]
@@ -328,7 +329,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: - Setup player VC
     
-    func setupPlayer(playlistId: String, visibilityState: Bool) {
+    private func setupPlayer(playlistId: String, visibilityState: Bool) {
 
         self.playerVisible = visibilityState
         
@@ -347,7 +348,8 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         playerViewController.openCloseButton.addTarget(self, action: #selector(MainViewController.handleButtonTap), for: .touchUpInside)
     }
     
-    @objc func handleButtonTap() {
+    @objc
+    private func handleButtonTap() {
         if playerVisible {
             animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
         } else {
@@ -355,7 +357,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func deleteVisualEffect(state: PlayerState) {
+    private func deleteVisualEffect(state: PlayerState) {
         switch state {
         case .expanded:
             visualEffectView = UIVisualEffectView()
@@ -370,7 +372,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func changeButtonImage(state: PlayerState) {
+    private func changeButtonImage(state: PlayerState) {
         switch state {
         case .expanded:
             let image = UIImage(named: "Close_Open.png")
@@ -382,7 +384,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc
-    func handleCardPan (recognizer:UIPanGestureRecognizer) {
+    private func handleCardPan (recognizer:UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
             if playerVisible {
@@ -403,7 +405,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func animateTransitionIfNeeded (state: PlayerState, duration: TimeInterval) {
+    private func animateTransitionIfNeeded (state: PlayerState, duration: TimeInterval) {
         
         deleteVisualEffect(state: state)
         changeButtonImage(state: state)
@@ -440,7 +442,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    func startInteractiveTransition(state: PlayerState, duration: TimeInterval) {
+    private func startInteractiveTransition(state: PlayerState, duration: TimeInterval) {
         if runningAnimations.isEmpty {
             animateTransitionIfNeeded(state: state, duration: duration)
         }
@@ -450,13 +452,13 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
         }
     }
 
-    func updateInteractiveTransition(fractionCompleted: CGFloat) {
+    private func updateInteractiveTransition(fractionCompleted: CGFloat) {
         for animation in runningAnimations {
             animation.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
         }
     }
 
-    func continueInteractiveTransition() {
+    private func continueInteractiveTransition() {
         for animation in runningAnimations {
             animation.continueAnimation(withTimingParameters: nil, durationFactor: 0)
         }
@@ -467,7 +469,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate {
 
 extension MainViewController {
     
-    func createSpinnerView() {
+    private func createSpinnerView() {
         let child = SpinnerViewController()
 
         addChild(child)

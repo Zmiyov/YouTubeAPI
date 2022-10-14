@@ -28,28 +28,28 @@ class PlayerViewController: UIViewController {
     
     @IBOutlet var volumeSlider: UISlider!
     
-    enum PlayingMode {
+    private enum PlayingMode {
         case play
         case pause
     }
     
-    let networkController = NetworkManager()
+    private let networkController = NetworkManager()
     
     var playingState = false
-    let playlistID: String = "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"
+    private let playlistID: String = "PLHFlHpPjgk706qEJf9fkclIhdhTkH49Tb"
     var playlistFromChannel: String?
     
-    var hostingView: YouTubePlayerHostingView!
-    var playlistVideosIds = [String]()
-    var playingVideoIndex = 0
+    private var hostingView: YouTubePlayerHostingView!
+    private var playlistVideosIds = [String]()
+    private var playingVideoIndex = 0
     
-    var fullTime: Int?
-    var elapsedTime: Int?
-    var timelineTimer: Timer?
-    var timelineValue: Timer?
+    private var fullTime: Int?
+    private var elapsedTime: Int?
+    private var timelineTimer: Timer?
+    private var timelineValue: Timer?
     
-    var viewCount: String?
-    let serialQueue = DispatchQueue(label: "serialQueue")
+    private var viewCount: String?
+    private let serialQueue = DispatchQueue(label: "serialQueue")
     
     
     override func viewDidLoad() {
@@ -168,7 +168,7 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    func updateUIfromAPI() {
+    private func updateUIfromAPI() {
         
         Task {
             do {
@@ -198,7 +198,7 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    func updateAllUI() {
+    private func updateAllUI() {
         
         Task {
             do {
@@ -222,7 +222,7 @@ class PlayerViewController: UIViewController {
     
     //MARK: - Fetch and set data
     
-    func getVolume() async throws -> Int {
+    private func getVolume() async throws -> Int {
         
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
             hostingView.player.getVolume { result in
@@ -242,7 +242,7 @@ class PlayerViewController: UIViewController {
         self.videoNameLabel.text = name
     }
     
-    func getPlaylistVideosIds() async throws -> [String] {
+    private func getPlaylistVideosIds() async throws -> [String] {
        
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<[String], Error>) in
             hostingView.player.getPlaylist { result in
@@ -261,7 +261,7 @@ class PlayerViewController: UIViewController {
         self.playlistVideosIds = playlistIdArray
     }
     
-    func getPlayingVideoIndex() async throws -> Int {
+    private func getPlayingVideoIndex() async throws -> Int {
         
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Int, Error>) in
             hostingView.player.getPlaylistIndex { result in
@@ -286,7 +286,7 @@ class PlayerViewController: UIViewController {
         self.amountOfViewsLabel.text = formattedString + " views"
     }
     
-    func getDuration() async throws -> Double {
+    private func getDuration() async throws -> Double {
         
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
             hostingView.player.getDuration { result in
@@ -314,7 +314,8 @@ class PlayerViewController: UIViewController {
         self.fullTimeLabel.text = resultString
     }
     
-    @objc func getElapsedTime() async throws -> Double {
+    @objc
+    private func getElapsedTime() async throws -> Double {
         
         return try await withCheckedThrowingContinuation { (inCont: CheckedContinuation<Double, Error>) in
             hostingView.player.getCurrentTime(completion: { result in
@@ -345,7 +346,7 @@ class PlayerViewController: UIViewController {
     //MARK: - Configure UI
     
     @MainActor
-    func configureGradientLayer() {
+    private func configureGradientLayer() {
 
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
@@ -358,7 +359,8 @@ class PlayerViewController: UIViewController {
     }
     
     @MainActor
-    @objc func setTimelineSlider() {
+    @objc
+    private func setTimelineSlider() {
         
         Task{
             let fullTime = try await self.getDuration()
