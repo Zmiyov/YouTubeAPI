@@ -19,6 +19,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
@@ -29,7 +30,8 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         imageView.backgroundColor = .green
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageView
     }()
     
@@ -66,7 +68,24 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         stackView.addArrangedSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        labelStackView.addArrangedSubview(titleLabel)
+        labelStackView.addArrangedSubview(subtitleLabel)
+
+        stackView.addArrangedSubview(labelStackView)
+
+        addSubview(stackView)
+        
+        setConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Set constrains
+    
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: stackView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
@@ -75,20 +94,15 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
         
-        labelStackView.addArrangedSubview(titleLabel)
-        labelStackView.addArrangedSubview(subtitleLabel)
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor),
             subtitleLabel.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor)
         ])
         
-        stackView.addArrangedSubview(labelStackView)
         NSLayoutConstraint.activate([
             labelStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor)
         ])
         
-        addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -97,9 +111,7 @@ class SquareImageCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //MARK: - Configure cell
     
     func configureCell(_ playlist: PlaylistItemsVideoModel, networkManager: NetworkManager) {
         titleLabel.text = playlist.title
