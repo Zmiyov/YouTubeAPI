@@ -16,7 +16,9 @@ class ExampleViewController: UIViewController {
         image.backgroundColor = .brown
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
-
+        image.layer.cornerRadius = 8
+        image.clipsToBounds = true
+        
         return image
     }()
 
@@ -46,23 +48,25 @@ class ExampleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         
         view.addSubview(backgroungImage)
-        backgroungImage.layer.cornerRadius = 8
-        backgroungImage.clipsToBounds = true
+        view.addSubview(channelNameLabel)
+        view.addSubview(amoontOfSubscribersLabel)
+        
+        setConstraints()
+    }
+    
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             backgroungImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroungImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroungImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             backgroungImage.widthAnchor.constraint(equalTo: view.widthAnchor),
             backgroungImage.heightAnchor.constraint(equalTo: backgroungImage.widthAnchor, multiplier: 0.55)
-            ])
+        ])
         
-        view.addSubview(channelNameLabel)
-        view.addSubview(amoontOfSubscribersLabel)
         NSLayoutConstraint.activate([
             channelNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             channelNameLabel.bottomAnchor.constraint(equalTo: amoontOfSubscribersLabel.topAnchor, constant: -3),
