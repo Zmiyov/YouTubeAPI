@@ -41,6 +41,7 @@
 		A5E6EECA28ECB176008DF5FA /* ContainerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */; };
 		A5E813B028EBAFD900A676C7 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813AF28EBAFD900A676C7 /* Channel.swift */; };
 		A5E813B228EBB02900A676C7 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E813B128EBB02900A676C7 /* UIColor+.swift */; };
+		A5E9596A28FD352C00438451 /* ConstantsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9596928FD352C00438451 /* ConstantsNew.swift */; };
 		DEAD35ECD9514AEE7D9579D7 /* libPods-YouTubeAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAE6BD69D6C39B45DFDC207 /* libPods-YouTubeAPI.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		A5E6EEC928ECB176008DF5FA /* ContainerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5E813AF28EBAFD900A676C7 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		A5E813B128EBB02900A676C7 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		A5E9596928FD352C00438451 /* ConstantsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsNew.swift; sourceTree = "<group>"; };
 		FAAE6BD69D6C39B45DFDC207 /* libPods-YouTubeAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YouTubeAPI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				A52C75B028ED779600E25651 /* Constants.swift */,
+				A5E9596928FD352C00438451 /* ConstantsNew.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				A586DEE628EBA7330006983B /* Item.swift in Sources */,
 				A592EF7328EF7B9200D6F23E /* SearchModel.swift in Sources */,
 				A59F1F4328F0176A00BC4686 /* PlayerViewController.swift in Sources */,
+				A5E9596A28FD352C00438451 /* ConstantsNew.swift in Sources */,
 				A5C78B6128F22937009601B3 /* PlaylistsModel.swift in Sources */,
 				A52C75CC28EDE41500E25651 /* FullPlaylistVideoModel.swift in Sources */,
 				A5DE815228EF00A20053CDC1 /* ChannelModel.swift in Sources */,
