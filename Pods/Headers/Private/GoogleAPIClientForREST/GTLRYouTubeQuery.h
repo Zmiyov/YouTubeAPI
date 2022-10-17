@@ -1,0 +1,1 @@
+../../../GoogleAPIClientForREST/Sources/GeneratedServices/YouTube/Public/GoogleAPIClientForREST/GTLRYouTubeQuery.h

@@ -1,0 +1,1 @@
+../../../GoogleAPIClientForREST/Sources/Core/Public/GoogleAPIClientForREST/GTLRQuery.h
