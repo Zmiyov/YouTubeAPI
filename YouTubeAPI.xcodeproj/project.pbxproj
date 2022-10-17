@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A52C75B128ED779600E25651 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75B028ED779600E25651 /* Constants.swift */; };
 		A52C75BD28EDB2E400E25651 /* PlaylistItemsVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BC28EDB2E400E25651 /* PlaylistItemsVideoModel.swift */; };
 		A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */; };
 		A52C75C528EDC09C00E25651 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52C75C428EDC09C00E25651 /* VideoModel.swift */; };
@@ -48,7 +47,6 @@
 /* Begin PBXFileReference section */
 		8471FB9A45A5432094AC9E8C /* Pods-YouTubeAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.release.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.release.xcconfig"; sourceTree = "<group>"; };
 		86AC03B5ED8673E3860B448D /* Pods-YouTubeAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YouTubeAPI.debug.xcconfig"; path = "Target Support Files/Pods-YouTubeAPI/Pods-YouTubeAPI.debug.xcconfig"; sourceTree = "<group>"; };
-		A52C75B028ED779600E25651 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A52C75BC28EDB2E400E25651 /* PlaylistItemsVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemsVideoModel.swift; sourceTree = "<group>"; };
 		A52C75BE28EDB34300E25651 /* ResponsePlaylististItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlaylististItem.swift; sourceTree = "<group>"; };
 		A52C75C428EDC09C00E25651 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 		A52C75AF28ED776A00E25651 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				A52C75B028ED779600E25651 /* Constants.swift */,
 				A5E9596928FD352C00438451 /* ConstantsNew.swift */,
 			);
 			path = Constants;
@@ -405,7 +402,6 @@
 				A586DEC728EB95270006983B /* AppDelegate.swift in Sources */,
 				A592EF7528EF7BB500D6F23E /* ResponseSearchItem.swift in Sources */,
 				A52C75BF28EDB34300E25651 /* ResponsePlaylististItem.swift in Sources */,
-				A52C75B128ED779600E25651 /* Constants.swift in Sources */,
 				A52C75BD28EDB2E400E25651 /* PlaylistItemsVideoModel.swift in Sources */,
 				A5C78B6528F453D3009601B3 /* SpinnerViewController.swift in Sources */,
 				A586DEE028EB9FE00006983B /* SquareImageCollectionViewCell.swift in Sources */,
